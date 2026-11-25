@@ -61,22 +61,26 @@ export default function LoginPage() {
         </Link>
       </div>
 
-      <div className="w-full max-w-[440px] mx-auto my-12 sheet crop p-8 sm:p-10">
-        <div className="flex items-center gap-4 pb-6 mb-6 border-b border-[var(--color-rule)]">
-          <div className="principal-portrait">
+      <div className="w-full max-w-[440px] mx-auto my-12 sheet p-8 sm:p-10">
+        <div className="flex flex-col items-center text-center pb-6 mb-6 border-b border-[var(--color-rule)]">
+          {/* Row 1: Image in its own row */}
+          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[var(--color-accent)] shadow-sm">
             <img
-              src="/images/afif-editorial-portrait.jpg"
-              width={2048}
-              height={2048}
-              alt="Muhammad Norafif, Perunding Hartanah"
+              src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
+              width={2752}
+              height={1536}
+              alt="Muhammad Norafif, Perunding Berdaftar Maxxan Realty"
+              className="w-full h-full object-cover object-top"
             />
           </div>
+
+          {/* Row 2: Text in its own row */}
           <div>
-            <h1 className="font-display text-[var(--text-2xl)] leading-[1.1] text-[var(--color-ink)]">
-              Portal Ejen &amp; CRM
+            <h1 className="font-display text-[var(--text-2xl)] leading-[1.15] text-[var(--color-ink)]">
+              Agent Login &amp; CRM
             </h1>
-            <p className="text-sm text-[var(--color-muted)] mt-1">
-              Log masuk untuk akses inventori dan rekod leads
+            <p className="text-sm text-[var(--color-muted)] mt-1.5 max-w-[32ch] mx-auto">
+              Log masuk untuk akses inventori hartanah dan rekod leads
             </p>
           </div>
         </div>
@@ -135,7 +139,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="btn btn--primary crop w-full mt-2"
+            className="btn btn--primary w-full mt-2"
           >
             {loading
               ? "Sedang memproses..."

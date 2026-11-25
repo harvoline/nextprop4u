@@ -121,11 +121,11 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <div className="relative w-8 h-8 rounded-[2px] overflow-hidden border border-[var(--color-accent)]">
             <Image
-              src="/images/afif-editorial-portrait.jpg"
-              alt="Afif"
+              src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
+              alt="Muhammad Norafif"
               width={32}
               height={32}
-              className="object-cover"
+              className="object-cover object-top"
             />
           </div>
           <div>
