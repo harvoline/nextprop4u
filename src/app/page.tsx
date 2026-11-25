@@ -17,7 +17,7 @@ import {
 export default function LandingPage() {
   const whatsappNumber = "601158683907";
   const generalWhatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Hai Afif, saya lihat website anda. Saya berminat untuk dapatkan konsultasi hartanah di kawasan Klang/Shah Alam."
+    "Hai Afif, saya lihat website anda. Saya berminat untuk dapatkan konsultasi hartanah di kawasan Kuala Lumpur & Selangor."
   )}`;
 
   const services = [
@@ -26,7 +26,7 @@ export default function LandingPage() {
       subtitle: "Untuk Pemilik Rumah (Owners)",
       tag: "Maksimumkan Nilai Jualan",
       description:
-        "Bantu pemilik rumah di Klang & Shah Alam pasarkan hartanah pada harga tepat, tapis pembeli berkualiti, dan urus rundingan hingga selesai.",
+        "Bantu pemilik rumah di Kuala Lumpur & Selangor pasarkan hartanah pada harga tepat, tapis pembeli berkualiti, dan urus rundingan hingga selesai.",
       features: [
         "Semakan Nilai Pasaran (Market Value) percuma",
         "Pemasaran TikTok, FB Ads, dan portal hartanah",
@@ -35,7 +35,7 @@ export default function LandingPage() {
       ],
       ctaText: "WhatsApp: Bincang Jualan Rumah",
       ctaUrl: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        "Hai Afif, saya pemilik rumah di Klang/Shah Alam dan ingin jual hartanah saya. Boleh bantu semak nilai pasaran?"
+        "Hai Afif, saya pemilik rumah di Kuala Lumpur / Selangor dan ingin jual hartanah saya. Boleh bantu semak nilai pasaran?"
       )}`,
       icon: TrendingUp,
       badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
@@ -54,7 +54,7 @@ export default function LandingPage() {
       ],
       ctaText: "WhatsApp: Semak Kelayakan Loan",
       ctaUrl: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        "Hai Afif, saya sedang mencari rumah di kawasan Klang/Meru/Shah Alam. Boleh bantu semak kelayakan pinjaman percuma?"
+        "Hai Afif, saya sedang mencari rumah di kawasan Kuala Lumpur / Selangor. Boleh bantu semak kelayakan pinjaman percuma?"
       )}`,
       icon: Home,
       badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
@@ -73,7 +73,7 @@ export default function LandingPage() {
       ],
       ctaText: "WhatsApp: Urus Sewa Rumah",
       ctaUrl: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        "Hai Afif, saya mencari / ingin sewakan rumah di kawasan Klang/Meru/Shah Alam. Boleh bantu?"
+        "Hai Afif, saya mencari / ingin sewakan rumah di kawasan Kuala Lumpur / Selangor. Boleh bantu?"
       )}`,
       icon: Key,
       badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
@@ -90,7 +90,7 @@ export default function LandingPage() {
       a: "Khidmat semakan kelayakan pinjaman, cadangan senarai rumah, dan rundingan pembelian bagi pihak pembeli subsale adalah PERCUMA. Komisen agensi dibayar sepenuhnya oleh pihak penjual.",
     },
     {
-      q: "Berapa lama anggaran masa untuk rumah terjual di Klang / Meru / Shah Alam?",
+      q: "Berapa lama anggaran masa untuk rumah terjual di Kuala Lumpur & Selangor?",
       a: "Dengan penetapan harga yang tepat mengikut market value JPPH dan pemasaran agresif di TikTok, Reels serta portal hartanah, purata masa mendapatkan pembeli serius biasanya antara 1 hingga 3 bulan.",
     },
     {
@@ -103,7 +103,7 @@ export default function LandingPage() {
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
       {/* Top Announcement Bar */}
       <div className="bg-slate-900 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium">
-        <span>🚀 Khidmat Hartanah Berdaftar Maxxan Realty di Klang, Meru, Bukit Raja & Shah Alam. </span>
+        <span>🚀 Khidmat Hartanah Berdaftar Maxxan Realty di Kuala Lumpur & Selangor (Berpangkalan di Setapak). </span>
         <a
           href={generalWhatsappUrl}
           className="underline hover:text-emerald-400 font-bold ml-1 inline-flex items-center gap-1"
@@ -173,7 +173,7 @@ export default function LandingPage() {
 
               <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight sm:leading-tight">
                 Urusan Jual, Beli & Sewa Hartanah{" "}
-                <span className="text-emerald-600">Lebih Mudah & Telus</span> di Klang & Shah Alam
+                <span className="text-emerald-600">Lebih Mudah & Telus</span> di Kuala Lumpur & Selangor
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
@@ -242,7 +242,7 @@ export default function LandingPage() {
                   <div className="w-full space-y-2.5 text-left text-xs">
                     <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
                       <span className="text-slate-500">Kawasan Utama:</span>
-                      <span className="font-semibold text-slate-800">Klang, Meru, Shah Alam</span>
+                      <span className="font-semibold text-slate-800">Kuala Lumpur & Selangor (Pangkalan: Setapak)</span>
                     </div>
                     <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50">
                       <span className="text-slate-500">Agensi:</span>
@@ -352,7 +352,7 @@ export default function LandingPage() {
                 Kelebihan Bekerjasama
               </h2>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-                Kenapa Ramai Memilih Muhammad Norafif di Klang & Shah Alam?
+                Kenapa Ramai Memilih Muhammad Norafif di Kuala Lumpur & Selangor?
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Industri hartanah memerlukan kejujuran, ketelitian data pasaran, serta rangkaian peguam dan pegawai bank yang responsif. Kami memastikan setiap transaksi diuruskan secara profesional dan selamat.
