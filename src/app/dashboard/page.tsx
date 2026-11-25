@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { createClient } from "../../lib/supabase/client";
 import {
   MessageCircle,
   Copy,
@@ -148,8 +149,16 @@ export default function DashboardPage() {
             <ExternalLink className="w-3 h-3" />
           </Link>
           <button
-            onClick={() => (window.location.href = "/login")}
-            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1"
+            onClick={async () => {
+              try {
+                const supabase = createClient();
+                await supabase.auth.signOut();
+              } catch (err) {
+                console.error("Signout error:", err);
+              }
+              window.location.href = "/login";
+            }}
+            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1 cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Log Keluar</span>

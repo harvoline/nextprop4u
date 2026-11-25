@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "../../lib/supabase/client";
 import { BrandMark } from "../../components/BrandMark";
@@ -12,6 +12,54 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const errorParam = params.get("error");
+    const errorDesc = params.get("error_description");
+
+    if (errorDesc) {
+      setError(decodeURIComponent(errorDesc).replace(/\+/g, " "));
+      return;
+    } else if (errorParam) {
+      setError("Pautan pengesahan telah tamat tempoh atau tidak sah. Sila mohon pautan baharu.");
+      return;
+    }
+
+    if (code) {
+      setLoading(true);
+      setMessage("Mengesahkan sesi log masuk anda...");
+      const supabase = createClient();
+      supabase.auth.exchangeCodeForSession(code).then(({ data, error: exchangeError }) => {
+        if (exchangeError) {
+          console.error("Code exchange error:", exchangeError);
+          setError("Pautan log masuk telah tamat tempoh atau telah digunakan. Sila mohon pautan baharu di bawah.");
+          setLoading(false);
+          setMessage(null);
+        } else if (data.session) {
+          const redirectTo = params.get("redirectTo") || "/dashboard";
+          window.location.href = redirectTo;
+        }
+      });
+    }
+
+    const supabase = createClient();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session && (event === "SIGNED_IN" || event === "TOKEN_REFRESHED")) {
+        const redirectTo = params.get("redirectTo") || "/dashboard";
+        window.location.href = redirectTo;
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +86,7 @@ export default function LoginPage() {
           email: normalizedEmail,
           options: {
             shouldCreateUser: false,
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?redirectTo=/dashboard`,
           },
         });
         if (otpError) throw otpError;
