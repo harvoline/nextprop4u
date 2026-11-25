@@ -1,22 +1,21 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 
-export function HeroSpecimen({
-  generalWhatsappUrl,
-}: {
-  generalWhatsappUrl: string;
-}) {
+export function HeroSpecimen({ generalWhatsappUrl }: { generalWhatsappUrl: string }) {
   const [zoomOpen, setZoomOpen] = useState(false);
 
-  // Close lightbox on Escape key
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setZoomOpen(false);
+      if (e.key === "Escape") {
+        setZoomOpen(false);
+      }
     };
     if (zoomOpen) {
       window.addEventListener("keydown", onKeyDown);
       document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
     return () => {
       window.removeEventListener("keydown", onKeyDown);
@@ -27,34 +26,32 @@ export function HeroSpecimen({
   return (
     <section className="hero-section studio-proof studio-proof--fade">
       <div className="container">
-        {/* Top Editorial Identity Header */}
-        <div className="hero-mast-top" data-reveal>
-          <div className="hero-mast-eyebrow">
-            <span className="hero-pill">
-              <span className="hero-pill-dot" />
-              Perunding Berdaftar Maxxan Realty
-            </span>
-            <span className="hero-mast-sep">/</span>
-            <span className="hero-mast-agency">Maxxan Realty Sdn Bhd</span>
-            <span className="hero-mast-sep">/</span>
-            <span className="hero-mast-loc">Lokasi Utama: Setapak, KL (Liputan KL &amp; Selangor)</span>
-          </div>
-
-          <div className="hero-name-banner">
-            <span className="hero-name-wordmark">Muhammad Norafif</span>
-          </div>
-        </div>
-
         {/* Hero 2-Column Stage: Left Copy & Trust Highlights, Right Grand Portrait */}
         <div className="stage-grid">
           <div className="stage-copy" data-reveal>
             <div className="stage-copy__main">
+              {/* Identity & Name moved directly to left side above headline */}
+              <div className="hero-identity-left">
+                <div className="hero-identity-badges">
+                  <span className="hero-pill">
+                    <span className="hero-pill-dot" />
+                    Perunding Berdaftar Maxxan Realty
+                  </span>
+                  <span className="hero-agency-tag">
+                    Maxxan Realty Sdn Bhd
+                  </span>
+                </div>
+                <div className="hero-name-left">
+                  Muhammad Norafif
+                </div>
+              </div>
+
               <h1>Urus hartanah Kuala Lumpur dan Selangor.</h1>
               <p className="lead">
                 Semakan nilai pasaran JPPH, saringan kelayakan pinjaman bank dan pengurusan guaman lengkap dari carian hingga serahan kunci.
               </p>
 
-              {/* 4 Trust Highlights */}
+              {/* 3 Trust Highlights (Julat Transaksi removed) */}
               <div className="hero-highlights">
                 <div className="hero-highlight-item">
                   <span className="hero-highlight-label">Lokasi Utama</span>
@@ -66,11 +63,7 @@ export function HeroSpecimen({
                 </div>
                 <div className="hero-highlight-item">
                   <span className="hero-highlight-label">Status Agensi</span>
-                  <strong className="hero-highlight-val">Agensi Maxxan Realty</strong>
-                </div>
-                <div className="hero-highlight-item">
-                  <span className="hero-highlight-label">Julat Transaksi</span>
-                  <strong className="hero-highlight-val">Sewa RM 700+ | Jual RM 2.0M</strong>
+                  <strong className="hero-highlight-val">Maxxan Realty Sdn Bhd</strong>
                 </div>
               </div>
 
@@ -97,7 +90,7 @@ export function HeroSpecimen({
               >
                 <div className="hero-portrait-image-wrap">
                   <img
-                    src="/images/afif-editorial-portrait.jpg"
+                    src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
                     width={2048}
                     height={2048}
                     alt="Potret rasmi Muhammad Norafif, Perunding Berdaftar Maxxan Realty"
@@ -181,7 +174,7 @@ export function HeroSpecimen({
 
             <div className="hero-lightbox-media">
               <img
-                src="/images/afif-editorial-portrait.jpg"
+                src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
                 width={2048}
                 height={2048}
                 alt="Potret rasmi Muhammad Norafif, resolusi penuh 2K"

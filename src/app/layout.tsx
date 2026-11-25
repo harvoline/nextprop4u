@@ -73,7 +73,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "RealEstateAgent",
               name: "Muhammad Norafif, Maxxan Realty",
-              image: "https://nextprop4u.com/images/afif-editorial-portrait.jpg",
+              image: "https://nextprop4u.com/images/please_follow_my_picture_and_3de36cdc_2K.jpg",
               telephone: "+601158683907",
               url: "https://nextprop4u.com",
               address: {

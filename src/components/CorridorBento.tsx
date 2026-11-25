@@ -17,13 +17,13 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                 <figure
                   className="bento-lead__photo"
                   data-slot="corridor"
-                  data-alt="Deretan rumah teres dua tingkat kontemporari dengan fasad konkrit dan skrin kayu"
+                  data-alt="Deretan rumah teres dua tingkat di Kuala Lumpur dan Selangor"
                 >
                   <img
                     src="/images/bukit-raja-terrace-row.jpg"
                     width={2752}
                     height={1536}
-                    alt="Deretan rumah teres dua tingkat kontemporari dengan fasad konkrit dan skrin kayu merbau"
+                    alt="Deretan rumah teres dua tingkat di Kuala Lumpur dan Selangor"
                   />
                 </figure>
               </div>
@@ -107,7 +107,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                 Ampang, Cheras, Kajang &amp; Bangi
               </h3>
               <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-                Kediaman pegangan bebas, kondominium transit serta zon perumahan koridor timur dan selatan Lembah Klang.
+                Kediaman freehold, kondominium berhampiran transit serta kawasan perumahan timur dan selatan Lembah Klang.
               </p>
             </div>
             <div className="pt-3 mt-2 border-t border-[var(--color-rule)] text-xs text-[var(--color-muted)]">

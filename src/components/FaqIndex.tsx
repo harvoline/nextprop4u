@@ -1,11 +1,11 @@
 const FAQS = [
   {
-    q: "Adakah pembeli rumah sub-sale perlu membayar fi ejen?",
-    a: "Percuma untuk pembeli sub-sale. Semakan kelayakan DSR, viewing unit dan rundingan Perjanjian Jual Beli (S&P / SPA) tidak dikenakan caj kerana fi agensi dibayar penjual.",
+    q: "Adakah pembeli rumah sub-sale perlu membayar fee ejen?",
+    a: "Percuma untuk pembeli sub-sale. Semakan kelayakan DSR, viewing unit dan rundingan Perjanjian Jual Beli (S&P / SPA) tidak dikenakan caj kerana fee agensi dibayar oleh penjual.",
   },
   {
-    q: "Berapakah fi bagi urusan menjual atau menyewakan unit?",
-    a: "Tiada bayaran pendahuluan sebelum transaksi selesai. Fi standard ialah 3.24% (termasuk SST) bagi jualan berjaya, atau satu bulan sewa bagi perjanjian setahun.",
+    q: "Berapakah fee bagi urusan menjual atau menyewakan unit?",
+    a: "Tiada bayaran pendahuluan sebelum transaksi selesai. Fee standard ialah 3.24% (termasuk SST) bagi jualan berjaya, atau satu bulan sewa bagi perjanjian setahun.",
   },
   {
     q: "Apakah dokumen asas untuk permohonan pinjaman atau sewaan?",
@@ -30,7 +30,7 @@ export function FaqIndex({ whatsappUrl }: { whatsappUrl: string }) {
               Soalan Lazim Khidmat &amp; Urusan
             </h2>
             <p className="lead mt-4 text-[var(--color-ink-2)]">
-              Kadar fi agensi, semakan nilai pasaran dan garis masa transaksi.
+              Kadar fee agensi, semakan nilai pasaran dan garis masa transaksi.
             </p>
             <p className="mt-6">
               <a
