@@ -339,9 +339,9 @@
 
 .hero-identity-badges {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-xs);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
   margin-bottom: var(--space-xs);
 }
 
@@ -654,33 +654,101 @@
 }
 
 @media (max-width: 60rem) {
-  .crop {
-    --crop-off: 6px;
-    --crop-len: 6px;
-  }
   .hero-section {
     min-height: auto;
     padding-top: var(--space-xs);
     padding-bottom: var(--space-lg);
+    overflow-x: hidden;
   }
+
   .stage-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-lg);
+    gap: var(--space-md);
+    width: 100%;
   }
+
+  /* 1. Mobile: Move portrait image ABOVE hero text */
+  .hero-portrait-stage {
+    order: -1;
+    width: 100%;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  .hero-portrait-image-wrap {
+    aspect-ratio: 16 / 10;
+    max-height: 360px;
+  }
+
+  /* 2. Mobile: Hero text adapts and wraps smoothly to screen width */
+  .stage-copy {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .stage-copy__main {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .hero-identity-left {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-name-left {
+    font-size: clamp(2rem, 7.5vw, 2.8rem);
+    line-height: 1.08;
+    word-break: break-word;
+    max-width: 100%;
+  }
+
   .stage-copy h1 {
-    font-size: clamp(1.625rem, 6.4vw, 2.2rem);
+    font-size: clamp(1.4rem, 5.5vw, 1.85rem);
+    line-height: 1.16;
+    max-width: 100%;
+    word-break: break-word;
   }
-  .stage-actions {
-    flex-wrap: nowrap;
-    gap: var(--space-xs);
-  }
-  .stage-actions .btn {
-    min-height: 44px;
-    padding: 0 var(--space-md);
+
+  .stage-copy .lead {
     font-size: var(--text-sm);
+    line-height: 1.5;
+    max-width: 100%;
   }
+
   .hero-highlights {
     grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: var(--space-sm);
+  }
+
+  .hero-highlight-val {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* 3. Mobile: Buttons adapt to screen size and wrap vertically */
+  .stage-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-xs);
+    padding-top: var(--space-xs);
+  }
+
+  .stage-actions .btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 var(--space-md);
+    font-size: var(--text-sm);
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
 }
 

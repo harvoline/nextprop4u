@@ -33,13 +33,13 @@ export function HeroSpecimen({ generalWhatsappUrl }: { generalWhatsappUrl: strin
               {/* Identity & Name moved directly to left side above headline */}
               <div className="hero-identity-left">
                 <div className="hero-identity-badges">
-                  <span className="hero-pill">
+                  <div className="hero-pill">
                     <span className="hero-pill-dot" />
                     Perunding Berdaftar Maxxan Realty
-                  </span>
-                  <span className="hero-agency-tag">
+                  </div>
+                  <div className="hero-agency-tag">
                     Maxxan Realty Sdn Bhd
-                  </span>
+                  </div>
                 </div>
                 <div className="hero-name-left">
                   Muhammad Norafif
@@ -91,8 +91,8 @@ export function HeroSpecimen({ generalWhatsappUrl }: { generalWhatsappUrl: strin
                 <div className="hero-portrait-image-wrap">
                   <img
                     src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
-                    width={2048}
-                    height={2048}
+                    width={2752}
+                    height={1536}
                     alt="Potret rasmi Muhammad Norafif, Perunding Berdaftar Maxxan Realty"
                     className="hero-portrait-img"
                     fetchPriority="high"
@@ -175,8 +175,8 @@ export function HeroSpecimen({ generalWhatsappUrl }: { generalWhatsappUrl: strin
             <div className="hero-lightbox-media">
               <img
                 src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
-                width={2048}
-                height={2048}
+                width={2752}
+                height={1536}
                 alt="Potret rasmi Muhammad Norafif, resolusi penuh 2K"
                 className="hero-lightbox-img"
               />
