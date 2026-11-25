@@ -128,9 +128,9 @@ export default function LoginPage() {
       </div>
 
       <div className="w-full max-w-[440px] mx-auto my-12 sheet p-8 sm:p-10">
-        <div className="flex flex-col items-center text-center pb-6 mb-6 border-b border-[var(--color-rule)]">
+        <div className="flex flex-col items-center text-center pb-6 mb-6 border-b border-[var(--color-rule)] w-full">
           {/* Row 1: Image in its own row */}
-          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[var(--color-accent)] shadow-sm">
+          <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[var(--color-accent)] shadow-sm shrink-0">
             <img
               src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
               width={2752}
@@ -141,11 +141,17 @@ export default function LoginPage() {
           </div>
 
           {/* Row 2: Text in its own row */}
-          <div>
-            <h1 className="font-display text-[var(--text-2xl)] leading-[1.15] text-[var(--color-ink)]">
+          <div className="w-full flex flex-col items-center text-center">
+            <h1
+              className="w-full max-w-full font-display text-[var(--text-2xl)] leading-[1.15] text-[var(--color-ink)] text-center mx-auto"
+              style={{ textAlign: "center" }}
+            >
               Agent Login &amp; CRM
             </h1>
-            <p className="text-sm text-[var(--color-muted)] mt-1.5 max-w-[32ch] mx-auto">
+            <p
+              className="w-full max-w-[32ch] text-sm text-[var(--color-muted)] mt-1.5 mx-auto text-center"
+              style={{ textAlign: "center" }}
+            >
               Log masuk untuk akses inventori hartanah dan rekod leads
             </p>
           </div>
@@ -154,7 +160,7 @@ export default function LoginPage() {
         {message && (
           <div
             role="status"
-            className="mb-5 p-3.5 rounded-[2px] border border-[var(--color-ink)] bg-[var(--color-paper-2)] text-sm text-[var(--color-ink)]"
+            className="mb-5 p-3.5 rounded-[2px] border border-[var(--color-ink)] bg-[var(--color-paper-2)] text-sm text-center text-[var(--color-ink)]"
           >
             {message}
           </div>
@@ -163,7 +169,7 @@ export default function LoginPage() {
         {error && (
           <div
             role="alert"
-            className="mb-5 p-3.5 rounded-[2px] border border-[var(--color-accent)] bg-[var(--color-paper-2)] text-sm text-[var(--color-ink)]"
+            className="mb-5 p-3.5 rounded-[2px] border border-[var(--color-accent)] bg-[var(--color-paper-2)] text-sm text-center text-[var(--color-ink)]"
           >
             {error}
           </div>
