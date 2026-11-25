@@ -2,23 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ejen Hartanah Klang, Meru & Shah Alam | Afif Maxxan Realty",
+  title: "Perunding Hartanah Kuala Lumpur & Selangor | Afif Maxxan Realty",
   description:
-    "Khidmat jual, beli & sewa rumah di Klang, Meru, Bandar Bukit Raja & Shah Alam bersama Muhammad Norafif (Maxxan Realty). Semak kelayakan & nilai pasaran percuma!",
+    "Khidmat jual, beli & sewa rumah di Kuala Lumpur & Selangor bersama Muhammad Norafif (Maxxan Realty). Berpangkalan di Setapak, merangkumi seluruh Kuala Lumpur & Selangor.",
   keywords: [
-    "ejen hartanah klang",
-    "perunding hartanah shah alam",
-    "jual rumah meru klang",
-    "rumah bandar bukit raja",
+    "perunding hartanah kuala lumpur",
+    "perunding hartanah selangor",
+    "ejen hartanah setapak",
+    "jual rumah kl",
     "ejen hartanah maxxan realty",
-    "rumah sewa klang",
-    "first home buyer klang valley",
+    "rumah sewa selangor",
+    "first home buyer kl selangor",
   ],
   authors: [{ name: "Muhammad Norafif" }],
   openGraph: {
-    title: "Muhammad Norafif | Perunding Hartanah Maxxan Realty (Klang & Shah Alam)",
+    title: "Muhammad Norafif | Perunding Hartanah Maxxan Realty (KL & Selangor)",
     description:
-      "Konsultasi percuma semakan kelayakan pinjaman & anggaran nilai pasaran rumah di Klang, Meru, Bandar Bukit Raja dan Shah Alam. Hubungi +6011-58683907.",
+      "Konsultasi percuma semakan kelayakan pinjaman & anggaran nilai pasaran rumah di Kuala Lumpur & Selangor. Berpangkalan di Setapak. Hubungi +6011-58683907.",
     url: "https://afif-property.com",
     siteName: "Afif Property — Maxxan Realty",
     images: [
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ejen Hartanah Klang & Shah Alam | Afif Maxxan Realty",
+    title: "Perunding Hartanah KL & Selangor | Afif Maxxan Realty",
     description:
-      "Khidmat jual, beli & sewa rumah di Klang, Meru, Bukit Raja & Shah Alam. Hubungi +6011-58683907.",
+      "Khidmat jual, beli & sewa rumah di Kuala Lumpur & Selangor. Berpangkalan di Setapak. Hubungi +6011-58683907.",
     images: ["/afif.jpg"],
   },
 };
@@ -61,11 +61,11 @@ export default function RootLayout({
               url: "https://afif-property.com",
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Klang",
+                addressLocality: "Setapak",
                 addressRegion: "Selangor",
                 addressCountry: "MY",
               },
-              areaServed: ["Klang", "Meru", "Bandar Bukit Raja", "Shah Alam"],
+              areaServed: ["Kuala Lumpur", "Selangor", "Setapak", "Wangsa Maju", "Ampang", "Petaling Jaya", "Subang Jaya", "Gombak", "Cheras"],
               priceRange: "RM 700 - RM 2,000,000",
             }),
           }}
