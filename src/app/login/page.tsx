@@ -19,12 +19,25 @@ export default function LoginPage() {
     setError(null);
     setMessage(null);
 
+    const normalizedEmail = email.trim().toLowerCase();
+    const allowedEmails = [
+      "mohd.norafif@gmail.com",
+      ...(process.env.NEXT_PUBLIC_ADMIN_EMAIL ? [process.env.NEXT_PUBLIC_ADMIN_EMAIL.toLowerCase()] : []),
+    ];
+
+    if (!allowedEmails.includes(normalizedEmail)) {
+      setLoading(false);
+      setError("Akses disekat: Portal CRM ini dikhaskan untuk Muhammad Norafif (NextProp4U) sahaja.");
+      return;
+    }
+
     try {
       const supabase = createClient();
       if (isMagicLink) {
         const { error: otpError } = await supabase.auth.signInWithOtp({
-          email,
+          email: normalizedEmail,
           options: {
+            shouldCreateUser: false,
             emailRedirectTo: `${window.location.origin}/dashboard`,
           },
         });
@@ -32,7 +45,7 @@ export default function LoginPage() {
         setMessage("Pautan log masuk (Magic Link) telah dihantar ke emel anda.");
       } else {
         const { error: pwdError } = await supabase.auth.signInWithPassword({
-          email,
+          email: normalizedEmail,
           password,
         });
         if (pwdError) throw pwdError;

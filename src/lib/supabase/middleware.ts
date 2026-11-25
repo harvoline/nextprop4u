@@ -40,14 +40,21 @@ export async function updateSession(request: NextRequest) {
   const isProtectedPath = request.nextUrl.pathname.startsWith("/dashboard");
   const isAuthPath = request.nextUrl.pathname.startsWith("/login");
 
-  if (!user && isProtectedPath) {
+  const allowedEmails = [
+    "mohd.norafif@gmail.com",
+    ...(process.env.NEXT_PUBLIC_ADMIN_EMAIL ? [process.env.NEXT_PUBLIC_ADMIN_EMAIL.toLowerCase()] : []),
+  ];
+
+  const isAuthorized = user?.email && allowedEmails.includes(user.email.toLowerCase());
+
+  if (isProtectedPath && (!user || !isAuthorized)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("redirectTo", request.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
 
-  if (user && isAuthPath) {
+  if (user && isAuthorized && isAuthPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
