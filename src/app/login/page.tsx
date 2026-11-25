@@ -85,7 +85,7 @@ export default function LoginPage() {
         const { error: otpError } = await supabase.auth.signInWithOtp({
           email: normalizedEmail,
           options: {
-            shouldCreateUser: false,
+            shouldCreateUser: true,
             emailRedirectTo: `${window.location.origin}/auth/callback?redirectTo=/dashboard`,
           },
         });
@@ -100,7 +100,12 @@ export default function LoginPage() {
         window.location.href = "/dashboard";
       }
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : null;
+      let msg = err instanceof Error ? err.message : null;
+      if (msg && msg.toLowerCase().includes("rate limit")) {
+        msg = "Had penghantaran emel Supabase dicapai (rate limit). Sila tunggu 10-15 minit atau gunakan mod 'Gunakan kata laluan biasa'.";
+      } else if (msg && msg.toLowerCase().includes("invalid login credentials")) {
+        msg = "Kata laluan tidak sah atau akaun belum didaftarkan di Supabase.";
+      }
       setError(msg || "Ralat semasa log masuk. Sila cuba lagi.");
     } finally {
       setLoading(false);

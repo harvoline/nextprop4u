@@ -41,10 +41,13 @@ export async function GET(request: Request) {
         } else {
           return NextResponse.redirect(`${origin}${next}`);
         }
+      } else {
+        const errorMsg = encodeURIComponent(error.message || "Pautan pengesahan tidak sah.");
+        return NextResponse.redirect(`${origin}/login?error=auth_callback_failed&error_description=${errorMsg}`);
       }
     }
   }
 
-  // Return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/login?error=auth_callback_failed`);
+  // Return the user to login with instructions
+  return NextResponse.redirect(`${origin}/login?error=auth_callback_failed&error_description=${encodeURIComponent("Pautan log masuk tidak sah atau telah tamat tempoh.")}`);
 }
