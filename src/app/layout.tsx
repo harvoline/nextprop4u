@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     siteName: "NextProp4U, Muhammad Norafif (Maxxan Realty)",
     images: [
       {
-        url: "/images/bukit-raja-corner-villa.jpg",
-        width: 2048,
-        height: 1536,
-        alt: "Kediaman sudut moden tropika Kuala Lumpur dan Selangor oleh Muhammad Norafif, NextProp4U",
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Muhammad Norafif - Perunding Berdaftar Maxxan Realty | NextProp4U (+6011-5868 3907)",
       },
     ],
     locale: "ms_MY",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "Ejen Hartanah Kuala Lumpur & Selangor | Muhammad Norafif, Maxxan Realty",
     description:
       "Fokus utama di Setapak, KL. Khidmat jual, beli dan sewa rumah seluruh Kuala Lumpur dan Selangor. Hubungi +6011-5868 3907.",
-    images: ["/images/bukit-raja-corner-villa.jpg"],
+    images: ["/images/og-image.jpg"],
   },
 };
 
