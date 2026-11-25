@@ -46,9 +46,9 @@ export function HeroSpecimen({ generalWhatsappUrl }: { generalWhatsappUrl: strin
                 </div>
               </div>
 
-              <h1>Urus hartanah Kuala Lumpur dan Selangor.</h1>
+              <h1>Ejen Hartanah Setapak, Kuala Lumpur &amp; Selangor</h1>
               <p className="lead">
-                Semakan nilai pasaran JPPH, saringan kelayakan pinjaman bank dan pengurusan guaman lengkap dari carian hingga serahan kunci.
+                Perunding Berdaftar Maxxan Realty untuk khidmat jual, beli dan sewa rumah. Semakan nilai pasaran JPPH, saringan had pinjaman bank (DSR) serta pengurusan guaman lengkap dari carian hingga serahan kunci.
               </p>
 
               {/* 3 Trust Highlights (Julat Transaksi removed) */}

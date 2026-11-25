@@ -3,7 +3,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
     <section id="koridor" className="studio-section" aria-labelledby="heading-liputan">
       <div className="container">
         <div className="section-head-split" data-reveal>
-          <h2 id="heading-liputan">Setapak, Kuala Lumpur dan Seluruh Selangor</h2>
+          <h2 id="heading-liputan">Kawasan Liputan: Setapak, Wangsa Maju, KL &amp; Selangor</h2>
           <p className="lead">
             Fokus utama di Setapak dengan liputan harian merangkumi kawasan sekitar Kuala Lumpur serta Selangor.
           </p>
