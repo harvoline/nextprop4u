@@ -27,10 +27,10 @@ export function FaqIndex({ whatsappUrl }: { whatsappUrl: string }) {
               id="heading-soalan"
               style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-section)", lineHeight: 1.04, letterSpacing: "var(--tracking-display)", color: "var(--color-ink)", fontWeight: 400 }}
             >
-              Soalan Lazim LPPEH &amp; Urusan
+              Soalan Lazim Khidmat &amp; Urusan
             </h2>
             <p className="lead mt-4 text-[var(--color-ink-2)]">
-              Komisen LPPEH, semakan nilai JPPH dan garis masa transaksi.
+              Kadar fi agensi, semakan nilai pasaran dan garis masa transaksi.
             </p>
             <p className="mt-6">
               <a

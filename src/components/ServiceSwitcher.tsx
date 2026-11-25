@@ -49,7 +49,7 @@ const SERVICES: Record<
       "Kiraan had pinjaman bank (DSR 60%) berpandukan slip gaji 3 bulan sebelum viewing",
       "Tiada yuran ejen kepada pembeli unit sub-sale (komisen ditanggung penjual)",
       "Akses unit sub-sale, pembiayaan LPPSA atau bank serta semakan duti setem pembeli rumah pertama",
-      "Pengendalian wang tempahan dan surat tawaran rasmi menerusi akaun klien berlesen",
+      "Pengendalian surat tawaran rasmi dan dokumen urusan di bawah agensi Maxxan Realty",
     ],
     image: "/images/klang-courtyard-living.jpg",
     width: 2400,
@@ -111,7 +111,7 @@ export function ServiceSwitcher() {
         <div className="section-head-split" data-reveal>
           <h2 id="heading-khidmat">Jual, Beli &amp; Sewa di Bawah Maxxan Realty</h2>
           <p className="lead">
-            Aliran kerja berdaftar LPPEH untuk pemilik rumah, khidmat percuma pembeli sub-sale serta perjanjian sewaan mati setem LHDN.
+            Aliran kerja berdaftar Maxxan Realty untuk pemilik rumah, khidmat percuma pembeli sub-sale serta perjanjian sewaan rasmi.
           </p>
         </div>
 
@@ -142,7 +142,7 @@ export function ServiceSwitcher() {
             id="service-tabpanel"
             role="tabpanel"
             aria-labelledby={`service-tab-${active}`}
-            className="sheet crop dossier-panel"
+            className="sheet dossier-panel"
           >
             <div className="flex flex-col justify-between">
               <div>
@@ -161,14 +161,14 @@ export function ServiceSwitcher() {
               </div>
 
               <div className="pt-2">
-                <a href={whatsappUrl} className="btn btn--primary crop">
+                <a href={whatsappUrl} className="btn btn--primary">
                   {current.ctaLabel}
                 </a>
               </div>
             </div>
 
             <div className="dossier-plate-wrap">
-              <div className="crop crop--plate">
+              <div className="">
                 <figure
                   className="dossier-plate"
                   data-slot="service"

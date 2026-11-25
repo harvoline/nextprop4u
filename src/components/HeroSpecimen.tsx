@@ -32,7 +32,7 @@ export function HeroSpecimen({
           <div className="hero-mast-eyebrow">
             <span className="hero-pill">
               <span className="hero-pill-dot" />
-              Perunding Hartanah Berdaftar
+              Perunding Berdaftar Maxxan Realty
             </span>
             <span className="hero-mast-sep">/</span>
             <span className="hero-mast-agency">Maxxan Realty Sdn Bhd</span>
@@ -65,8 +65,8 @@ export function HeroSpecimen({
                   <strong className="hero-highlight-val">Seluruh KL &amp; Selangor</strong>
                 </div>
                 <div className="hero-highlight-item">
-                  <span className="hero-highlight-label">Pematuhan Sah</span>
-                  <strong className="hero-highlight-val">Akaun Klien LPPEH</strong>
+                  <span className="hero-highlight-label">Status Agensi</span>
+                  <strong className="hero-highlight-val">Agensi Maxxan Realty</strong>
                 </div>
                 <div className="hero-highlight-item">
                   <span className="hero-highlight-label">Julat Transaksi</span>
@@ -76,10 +76,10 @@ export function HeroSpecimen({
 
               {/* Action Buttons */}
               <div className="stage-actions">
-                <a href={generalWhatsappUrl} className="btn btn--primary crop">
+                <a href={generalWhatsappUrl} className="btn btn--primary">
                   WhatsApp Afif (+6011-5868 3907)
                 </a>
-                <a href="#kalkulator" className="btn btn--quiet crop">
+                <a href="#kalkulator" className="btn btn--quiet">
                   Semak Kelayakan DSR
                 </a>
               </div>
@@ -88,19 +88,19 @@ export function HeroSpecimen({
 
           {/* Right: Grand, High-Definition Featured Portrait of Muhammad Norafif with Zoom Lightbox */}
           <div className="hero-portrait-stage" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-            <div className="sheet crop crop--plate hero-portrait-card">
+            <div className="sheet hero-portrait-card">
               <button
                 type="button"
                 onClick={() => setZoomOpen(true)}
                 className="hero-portrait-button group"
-                aria-label="Besarkan potret rasmi Muhammad Norafif (klik untuk zum)"
+                aria-label="Besarkan potret rasmi Muhammad Norafif (klik untuk zoom)"
               >
                 <div className="hero-portrait-image-wrap">
                   <img
                     src="/images/afif-editorial-portrait.jpg"
                     width={2048}
                     height={2048}
-                    alt="Potret editorial rasmi Muhammad Norafif, Perunding Hartanah Berdaftar Maxxan Realty"
+                    alt="Potret rasmi Muhammad Norafif, Perunding Berdaftar Maxxan Realty"
                     className="hero-portrait-img"
                     fetchPriority="high"
                   />
@@ -124,7 +124,7 @@ export function HeroSpecimen({
                         <line x1="11" y1="8" x2="11" y2="14" />
                         <line x1="8" y1="11" x2="14" y2="11" />
                       </svg>
-                      Klik untuk besarkan potret
+                      Klik untuk zoom potret
                     </span>
                   </div>
                 </div>
@@ -133,14 +133,14 @@ export function HeroSpecimen({
               <div className="hero-portrait-caption">
                 <div className="min-w-0">
                   <strong className="hero-portrait-caption-name">Muhammad Norafif</strong>
-                  <span className="hero-portrait-caption-role">Perunding Hartanah Berdaftar (LPPEH)</span>
+                  <span className="hero-portrait-caption-role">Perunding Berdaftar Maxxan Realty</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setZoomOpen(true)}
                   className="hero-portrait-caption-action"
                 >
-                  Zum Resolusi Penuh ↗
+                  Zoom Resolusi Penuh ↗
                 </button>
               </div>
             </div>
@@ -166,7 +166,7 @@ export function HeroSpecimen({
               <div>
                 <strong className="text-base font-display text-[var(--color-paper)]">Muhammad Norafif</strong>
                 <span className="text-xs text-[var(--color-paper-2)] block">
-                  Perunding Hartanah Maxxan Realty Sdn Bhd · Berpangkalan di Setapak, KL
+                  Perunding Berdaftar Maxxan Realty · Berpangkalan di Setapak, KL
                 </span>
               </div>
               <button

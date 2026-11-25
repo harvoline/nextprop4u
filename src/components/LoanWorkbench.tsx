@@ -141,7 +141,7 @@ export function LoanWorkbench() {
           </div>
 
           {/* Right column: tactile single-sheet studio workbench */}
-          <div className="sheet crop workbench-sheet" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+          <div className="sheet workbench-sheet" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
             <div className="seg-bar" role="tablist" aria-label="Mod semakan hartanah">
               <button
                 ref={(el) => {
@@ -287,7 +287,7 @@ export function LoanWorkbench() {
                   </div>
 
                   <div className="flex flex-wrap items-center justify-between gap-4">
-                    <a href={loanWhatsappHref} className="btn btn--primary crop whitespace-nowrap">
+                    <a href={loanWhatsappHref} className="btn btn--primary whitespace-nowrap">
                       Semak Melalui WhatsApp
                     </a>
                     <p className="text-xs text-[var(--color-muted)] max-w-[30ch] m-0">
@@ -386,7 +386,7 @@ export function LoanWorkbench() {
                   </div>
 
                   <div className="flex flex-wrap items-center justify-between gap-4">
-                    <a href={mandateWhatsappHref} className="btn btn--primary crop whitespace-nowrap">
+                    <a href={mandateWhatsappHref} className="btn btn--primary whitespace-nowrap">
                       Hantar ke WhatsApp Afif
                     </a>
                     <p className="text-xs text-[var(--color-muted)] max-w-[34ch] m-0">

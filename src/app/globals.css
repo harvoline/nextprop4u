@@ -20,10 +20,6 @@
 .studio-proof {
   position: relative;
   background-color: var(--color-paper);
-  background-image:
-    var(--grain),
-    radial-gradient(circle at 1px 1px, var(--color-dot) 1px, transparent 1.4px);
-  background-size: 144px 144px, 24px 24px;
 }
 
 .studio-proof--fade::after {
@@ -60,22 +56,7 @@
 }
 
 .crop::before {
-  content: "";
-  position: absolute;
-  inset: calc(-1 * var(--crop-off));
-  pointer-events: none;
-  z-index: var(--z-raised);
-  background:
-    linear-gradient(var(--color-mark), var(--color-mark)) 0 var(--crop-off) / var(--crop-len) 1px no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) var(--crop-off) 0 / 1px var(--crop-len) no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) 100% var(--crop-off) / var(--crop-len) 1px no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) calc(100% - var(--crop-off)) 0 / 1px var(--crop-len) no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) 0 calc(100% - var(--crop-off)) / var(--crop-len) 1px no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) var(--crop-off) 100% / 1px var(--crop-len) no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) 100% calc(100% - var(--crop-off)) / var(--crop-len) 1px no-repeat,
-    linear-gradient(var(--color-mark), var(--color-mark)) calc(100% - var(--crop-off)) 100% / 1px var(--crop-len) no-repeat;
-  opacity: 0.85;
-  transition: opacity var(--dur-short) var(--ease-out);
+  display: none !important;
 }
 
 /* Printed sheet elevation: --shadow-sheet on paper pieces without colliding hairline borders */
@@ -116,12 +97,7 @@
 }
 
 .btn::after {
-  content: "";
-  position: absolute;
-  inset: 2px;
-  border: var(--rule-hair) solid var(--color-mark);
-  pointer-events: none;
-  border-radius: 1px;
+  display: none !important;
 }
 
 .btn--primary {
@@ -838,8 +814,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius-card);
-  outline: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
-  outline-offset: -1px;
+  /* outline removed */
 }
 
 .bento-side {
@@ -981,8 +956,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius-card);
-  outline: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
-  outline-offset: -1px;
+  /* outline removed */
 }
 
 @media (max-width: 60rem) {

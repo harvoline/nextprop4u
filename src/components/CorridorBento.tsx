@@ -11,9 +11,9 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
 
         <div className="bento-grid">
           {/* Lead Bento Cell (7 columns): Setapak, Wangsa Maju & Kuala Lumpur */}
-          <article className="sheet crop bento-lead" data-reveal>
+          <article className="sheet bento-lead" data-reveal>
             <div>
-              <div className="bento-lead-sheet crop crop--plate mb-4">
+              <div className="bento-lead-sheet mb-4">
                 <figure
                   className="bento-lead__photo"
                   data-slot="corridor"
@@ -50,7 +50,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
 
           {/* Right stacked column (5 columns): Selangor West/South Zone + Owner Valuation Prompt */}
           <div className="bento-side">
-            <article className="sheet crop bento-cell" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+            <article className="sheet bento-cell" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
               <div>
                 <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
                   Petaling Jaya, Subang &amp; Damansara
@@ -65,7 +65,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
               </div>
             </article>
 
-            <article className="sheet crop bento-cell" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
+            <article className="sheet bento-cell" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
               <div>
                 <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
                   Aktif Menerima Listing Pemilik
@@ -87,7 +87,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
           </div>
 
           {/* Bottom 3 asymmetric regional Selangor bands (4 columns each) */}
-          <article className="sheet crop bento-cell bento-bottom-a" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+          <article className="sheet bento-cell bento-bottom-a" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
             <div>
               <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
                 Shah Alam, Klang &amp; Setia Alam
@@ -101,7 +101,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
             </div>
           </article>
 
-          <article className="sheet crop bento-cell bento-bottom-b" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
+          <article className="sheet bento-cell bento-bottom-b" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
             <div>
               <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
                 Ampang, Cheras, Kajang &amp; Bangi
@@ -115,7 +115,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
             </div>
           </article>
 
-          <article className="sheet crop bento-cell bento-bottom-c" data-reveal style={{ "--i": 3 } as React.CSSProperties}>
+          <article className="sheet bento-cell bento-bottom-c" data-reveal style={{ "--i": 3 } as React.CSSProperties}>
             <div>
               <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
                 Gombak, Selayang &amp; Rawang

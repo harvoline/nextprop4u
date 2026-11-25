@@ -25,7 +25,7 @@ export function MastFooter({
               Muhammad Norafif
             </p>
             <p className="text-sm text-[var(--color-ink-2)]">
-              Perunding Hartanah Berdaftar, Maxxan Realty Sdn Bhd
+              Perunding Berdaftar Maxxan Realty
             </p>
             <p className="text-sm text-[var(--color-muted)]">
               Berpangkalan di Setapak, Kuala Lumpur. Liputan seluruh KL dan Selangor
@@ -46,7 +46,7 @@ export function MastFooter({
 
         <div className="mast-legal">
           <p>
-            Semua transaksi hartanah melalui agensi berdaftar yang dikawal selia oleh Lembaga Penilai, Pentaksir, Ejen Harta Tanah dan Pengurus Harta (LPPEH).
+            Perkhidmatan perundingan hartanah profesional di bawah naungan agensi Maxxan Realty Sdn Bhd.
           </p>
           <p className="text-xs text-[var(--color-muted)]">
             Hak Cipta © 2026 Muhammad Norafif, NextProp4U.

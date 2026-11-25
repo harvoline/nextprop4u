@@ -78,14 +78,14 @@ export function StudioNavbar({ whatsappUrl }: { whatsappUrl: string }) {
             <Link href="/login" className="nav-link">
               Portal Ejen
             </Link>
-            <a href={whatsappUrl} className="btn btn--quiet btn--sm crop">
+            <a href={whatsappUrl} className="btn btn--quiet btn--sm">
               WhatsApp Afif
             </a>
           </nav>
 
           <button
             type="button"
-            className="nav-toggle crop crop--thumb"
+            className="nav-toggle"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav-drawer"
             onClick={() => setMenuOpen((v) => !v)}
@@ -115,7 +115,7 @@ export function StudioNavbar({ whatsappUrl }: { whatsappUrl: string }) {
             <Link href="/login" className="nav-link" onClick={() => setMenuOpen(false)}>
               Portal Ejen
             </Link>
-            <a href={whatsappUrl} className="btn btn--primary crop">
+            <a href={whatsappUrl} className="btn btn--primary">
               WhatsApp Afif
             </a>
           </nav>

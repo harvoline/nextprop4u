@@ -1,8 +1,8 @@
 const PILLARS = [
   {
     num: "01",
-    title: "Perunding Sah Berdaftar LPPEH",
-    desc: "Setiap dokumen penawaran, wang tempahan dan perjanjian rasmi diurus menerusi akaun klien berlesen di bawah Maxxan Realty Sdn Bhd.",
+    title: "Perunding Berdaftar Maxxan Realty",
+    desc: "Setiap dokumen penawaran, surat setuju beli dan khidmat rundingan diurus secara profesional di bawah naungan agensi Maxxan Realty Sdn Bhd.",
   },
   {
     num: "02",
@@ -30,9 +30,9 @@ export function AdvisoryBand() {
     >
       <div className="container">
         <div className="section-head-split" data-reveal>
-          <h2 id="heading-pendekatan">Data Transaksi JPPH &amp; Pematuhan LPPEH</h2>
+          <h2 id="heading-pendekatan">Data Pasaran Terkini &amp; Khidmat Maxxan Realty</h2>
           <p className="lead">
-            Setiap dokumen tawaran, rujukan nilai hartanah dan wang tempahan diurus menerusi akaun klien berlesen Maxxan Realty.
+            Setiap dokumen tawaran, rujukan nilai hartanah dan khidmat nasihat diurus secara telus di bawah agensi Maxxan Realty.
           </p>
         </div>
 
