@@ -1,324 +1,196 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-interface SpecimenMetrics {
-  ascY: number;
-  capY: number;
-  xY: number;
-  baseY: number;
-  descY: number;
-  ascUnits: number;
-  capUnits: number;
-  xUnits: number;
-  descUnits: number;
-  spaceX: number;
-  spaceMidLocalY: number;
-  spaceUnits: number;
-  xboxPx: number;
-  pointerX: number | null;
-  pointerUnits: number | null;
-  fontSizePx: number;
-}
+import { useEffect, useState } from "react";
 
 export function HeroSpecimen({
   generalWhatsappUrl,
 }: {
   generalWhatsappUrl: string;
 }) {
-  const frameRef = useRef<HTMLDivElement>(null);
-  const wordRef = useRef<HTMLSpanElement>(null);
-  const [m, setM] = useState<SpecimenMetrics>({
-    ascY: 32,
-    capY: 40,
-    xY: 56,
-    baseY: 98,
-    descY: 120,
-    ascUnits: 805,
-    capUnits: 702,
-    xUnits: 525,
-    descUnits: 254,
-    spaceX: 430,
-    spaceMidLocalY: 44,
-    spaceUnits: 288,
-    xboxPx: 30,
-    pointerX: null,
-    pointerUnits: null,
-    fontSizePx: 92,
-  });
+  const [zoomOpen, setZoomOpen] = useState(false);
 
+  // Close lightbox on Escape key
   useEffect(() => {
-    const measure = () => {
-      if (!wordRef.current) return;
-      const r = wordRef.current.getBoundingClientRect();
-      const frameTop = frameRef.current
-        ? frameRef.current.getBoundingClientRect().top
-        : r.top;
-      const topOff = Math.max(0, r.top - frameTop);
-      const cs = getComputedStyle(wordRef.current);
-      const fs = parseFloat(cs.fontSize) || 92;
-
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      ctx.font = `${cs.fontWeight} ${fs}px ${cs.fontFamily}`;
-      const mCap = ctx.measureText("M");
-      const mAsc = ctx.measureText("f");
-      const mX = ctx.measureText("x");
-      const mDesc = ctx.measureText("p");
-      const wFirst = ctx.measureText("Muhammad").width;
-      const wWithSpace = ctx.measureText("Muhammad ").width;
-
-      const fontAsc = mCap.fontBoundingBoxAscent || fs * 0.86;
-      const fontDesc = mCap.fontBoundingBoxDescent || fs * 0.22;
-      const baseLocal = r.height * 0.5 + (fontAsc - fontDesc) * 0.5;
-
-      const capPx = mCap.actualBoundingBoxAscent || fs * 0.7;
-      const ascPx = Math.max(capPx + 3, mAsc.actualBoundingBoxAscent || fs * 0.8);
-      const xPx = mX.actualBoundingBoxAscent || fs * 0.525;
-      const descPx = mDesc.actualBoundingBoxDescent || fs * 0.254;
-      let spaceCenterPx = Math.round(wFirst + (wWithSpace - wFirst) * 0.5);
-      let spaceGapPx = Math.max(10, wWithSpace - wFirst);
-
-      // Measure real DOM inter-word gap between "Muhammad" and "Norafif"
-      const textNode = wordRef.current.firstChild;
-      if (textNode && textNode.nodeType === Node.TEXT_NODE) {
-        try {
-          const rg1 = document.createRange();
-          rg1.setStart(textNode, 0);
-          rg1.setEnd(textNode, 8);
-          const rg2 = document.createRange();
-          rg2.setStart(textNode, 9);
-          rg2.setEnd(textNode, 16);
-          const r1 = rg1.getBoundingClientRect();
-          const r2 = rg2.getBoundingClientRect();
-          const gap = r2.left - r1.right;
-          if (gap > 4) {
-            spaceGapPx = gap;
-            spaceCenterPx = Math.round(r1.right - r.left + gap * 0.5);
-          }
-        } catch {}
-      }
-
-      const toUnits = (px: number) => Math.round((px / fs) * 1000);
-      const xboxSize = Math.round(Math.min(32, Math.max(16, xPx * 0.68)) / 4) * 4;
-
-      setM((prev) => ({
-        ...prev,
-        ascY: Math.round(topOff + baseLocal - ascPx),
-        capY: Math.round(topOff + baseLocal - capPx),
-        xY: Math.round(topOff + baseLocal - xPx),
-        baseY: Math.round(topOff + baseLocal),
-        descY: Math.round(topOff + baseLocal + descPx),
-        ascUnits: toUnits(ascPx),
-        capUnits: toUnits(capPx),
-        xUnits: toUnits(xPx),
-        descUnits: toUnits(descPx),
-        spaceX: spaceCenterPx,
-        spaceMidLocalY: Math.round(baseLocal - xPx * 0.5),
-        spaceUnits: toUnits(spaceGapPx),
-        xboxPx: xboxSize,
-        fontSizePx: fs,
-      }));
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomOpen(false);
     };
-
-    measure();
-    window.addEventListener("resize", measure);
-    const ro =
-      typeof ResizeObserver !== "undefined" && wordRef.current
-        ? new ResizeObserver(measure)
-        : null;
-    if (ro && wordRef.current) ro.observe(wordRef.current);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(measure);
+    if (zoomOpen) {
+      window.addEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "hidden";
     }
     return () => {
-      window.removeEventListener("resize", measure);
-      ro?.disconnect();
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
     };
-  }, []);
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!wordRef.current) return;
-    const r = wordRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(r.width, e.clientX - r.left));
-    const units = Math.round((x / (m.fontSizePx || 92)) * 1000);
-    setM((prev) => ({ ...prev, pointerX: Math.round(x), pointerUnits: units }));
-  };
+  }, [zoomOpen]);
 
   return (
     <section className="hero-section studio-proof studio-proof--fade">
       <div className="container">
-        {/* Studio Construction Specimen Bar matching Studio editorial blueprint anatomy */}
-        <div className="specimen-stage">
-          <div className="specimen-meta-bar">
-            <span>Portofolio Rasmi</span>
-            <span className="specimen-meta-mid">Hedvig Letters Serif, unit per 1000</span>
-            <span className="specimen-meta-mobile-font">Hedvig Letters Serif</span>
-            <span className="specimen-meta-desktop">
-              {m.pointerUnits !== null
-                ? `Angkup X +${m.pointerUnits} u`
-                : "Tuding aksara untuk ukur"}
+        {/* Top Editorial Identity Header */}
+        <div className="hero-mast-top" data-reveal>
+          <div className="hero-mast-eyebrow">
+            <span className="hero-pill">
+              <span className="hero-pill-dot" />
+              Perunding Hartanah Berdaftar
             </span>
+            <span className="hero-mast-sep">/</span>
+            <span className="hero-mast-agency">Maxxan Realty Sdn Bhd</span>
+            <span className="hero-mast-sep">/</span>
+            <span className="hero-mast-loc">Berpangkalan di Setapak, KL (Liputan KL &amp; Selangor)</span>
           </div>
 
-          <div
-            className="specimen-row"
-            style={{ "--xbox-sz": `${m.xboxPx}px` } as React.CSSProperties}
-            onPointerMove={handlePointerMove}
-            onPointerLeave={() =>
-              setM((prev) => ({ ...prev, pointerX: null, pointerUnits: null }))
-            }
-          >
-            {/* Left registration target crosshair */}
-            <div className="reg-target" aria-hidden="true" />
-
-            {/* Outer horizontal scale frame + centered 1x*1x square clear-space box */}
-            <div ref={frameRef} className="specimen-track">
-              {/* 5 Real Typographic Guides spanning the full horizontal rule track */}
-              <div className="guide-line guide-line--asc" style={{ top: `${m.ascY}px` }} aria-hidden="true" />
-              <div className="guide-line guide-line--cap" style={{ top: `${m.capY}px` }} aria-hidden="true" />
-              <div className="guide-line guide-line--x" style={{ top: `${m.xY}px` }} aria-hidden="true" />
-              <div className="guide-line guide-line--base" style={{ top: `${m.baseY}px` }} aria-hidden="true" />
-              <div className="guide-line guide-line--desc" style={{ top: `${m.descY}px` }} aria-hidden="true" />
-
-              <div className="specimen-frame">
-                {/* 4 Square x clear-space boxes extending cleanly above Ascender & below Basal */}
-                <div className="xbox xbox--tl" aria-hidden="true">x</div>
-                <div className="xbox xbox--tr" aria-hidden="true">x</div>
-                <div className="xbox xbox--bl" aria-hidden="true">x</div>
-                <div className="xbox xbox--br" aria-hidden="true">x</div>
-
-                <div className="specimen-word-wrap">
-                  <div className="specimen-word-inner">
-                    {/* Resting inter-word caliper centered cleanly at mid x-height (zero serif collision) */}
-                    <span
-                      className="specimen-space-tag"
-                      style={{ left: `${m.spaceX}px`, top: `${m.spaceMidLocalY}px` }}
-                      aria-hidden="true"
-                    >
-                      +{m.spaceUnits}
-                    </span>
-
-                    {/* Interactive live caliper only shown on pointer hover */}
-                    {m.pointerX !== null && (
-                      <div
-                        className="guide-caliper"
-                        style={{ left: `${m.pointerX}px` }}
-                        aria-hidden="true"
-                      />
-                    )}
-                    <span ref={wordRef} className="specimen-wordmark">
-                      Muhammad Norafif
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right metric scale labels anchored relative to Baseline 0 */}
-            <div className="specimen-scale" aria-live="off">
-              <span className="scale-lbl" style={{ top: `${Math.max(4, m.ascY - 7)}px` }}>
-                Ascender +{m.ascUnits}
-              </span>
-              <span
-                className="scale-lbl"
-                style={{ top: `${Math.max(m.ascY + 7, m.capY)}px` }}
-              >
-                Cap +{m.capUnits}
-              </span>
-              <span className="scale-lbl" style={{ top: `${m.xY}px` }}>
-                x-height +{m.xUnits}
-              </span>
-              <span className="scale-lbl scale-lbl--base" style={{ top: `${m.baseY}px` }}>
-                Basal 0
-              </span>
-              <span className="scale-lbl" style={{ top: `${m.descY}px` }}>
-                Descender -{m.descUnits}
-              </span>
-            </div>
-
-            {/* Right registration target crosshair */}
-            <div className="reg-target" aria-hidden="true" />
-          </div>
-
-          {/* Mobile compact metric bar labeling all 5 levels clearly */}
-          <div className="specimen-mobile-scale" aria-hidden="true">
-            <span>Asc +{m.ascUnits}</span>
-            <span>Cap +{m.capUnits}</span>
-            <span>x +{m.xUnits}</span>
-            <span>Basal 0</span>
-            <span>Desc -{m.descUnits}</span>
+          <div className="hero-name-banner">
+            <span className="hero-name-wordmark">Muhammad Norafif</span>
           </div>
         </div>
 
-        {/* Hero Stage Grid: 4.5 / 7.5 asymmetric monograph split so architectural plate dominates 60%+ viewport height */}
+        {/* Hero 2-Column Stage: Left Copy & Trust Highlights, Right Grand Portrait */}
         <div className="stage-grid">
-          <div className="stage-copy">
+          <div className="stage-copy" data-reveal>
             <div className="stage-copy__main">
               <h1>Urus hartanah Kuala Lumpur dan Selangor.</h1>
               <p className="lead">
-                Semakan nilai JPPH, kelayakan pinjaman bank dan guaman penuh.
+                Semakan nilai pasaran JPPH, saringan kelayakan pinjaman bank dan pengurusan guaman lengkap dari carian hingga serahan kunci.
               </p>
+
+              {/* 4 Trust Highlights */}
+              <div className="hero-highlights">
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-label">Pangkalan Utama</span>
+                  <strong className="hero-highlight-val">Setapak, Kuala Lumpur</strong>
+                </div>
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-label">Kawasan Liputan</span>
+                  <strong className="hero-highlight-val">Seluruh KL &amp; Selangor</strong>
+                </div>
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-label">Pematuhan Sah</span>
+                  <strong className="hero-highlight-val">Akaun Klien LPPEH</strong>
+                </div>
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-label">Julat Transaksi</span>
+                  <strong className="hero-highlight-val">Sewa RM 700+ | Jual RM 2.0M</strong>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
               <div className="stage-actions">
                 <a href={generalWhatsappUrl} className="btn btn--primary crop">
-                  WhatsApp Afif
+                  WhatsApp Afif (+6011-5868 3907)
                 </a>
                 <a href="#kalkulator" className="btn btn--quiet crop">
-                  Semak kelayakan
+                  Semak Kelayakan DSR
                 </a>
               </div>
             </div>
+          </div>
 
-            {/* Integrated Principal Identity Row with dedicated outer crop-marked portrait sheet */}
-            <div className="principal-inline">
-              <div className="principal-portrait-frame crop crop--thumb">
-                <div className="principal-portrait">
+          {/* Right: Grand, High-Definition Featured Portrait of Muhammad Norafif with Zoom Lightbox */}
+          <div className="hero-portrait-stage" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+            <div className="sheet crop crop--plate hero-portrait-card">
+              <button
+                type="button"
+                onClick={() => setZoomOpen(true)}
+                className="hero-portrait-button group"
+                aria-label="Besarkan potret rasmi Muhammad Norafif (klik untuk zum)"
+              >
+                <div className="hero-portrait-image-wrap">
                   <img
                     src="/images/afif-editorial-portrait.jpg"
                     width={2048}
                     height={2048}
-                    alt="Muhammad Norafif, Perunding Hartanah Maxxan Realty"
+                    alt="Potret editorial rasmi Muhammad Norafif, Perunding Hartanah Berdaftar Maxxan Realty"
+                    className="hero-portrait-img"
+                    fetchPriority="high"
                   />
+                  {/* Subtle interactive zoom prompt overlay */}
+                  <div className="hero-portrait-overlay">
+                    <span className="hero-zoom-badge">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        <line x1="11" y1="8" x2="11" y2="14" />
+                        <line x1="8" y1="11" x2="14" y2="11" />
+                      </svg>
+                      Klik untuk besarkan potret
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="principal-meta">
-                <div className="principal-name">Muhammad Norafif</div>
-                <div className="principal-role">
-                  Perunding Hartanah Maxxan Realty, Setapak KL
-                </div>
-                <div className="principal-areas tabular-nums">
-                  Sewa dari RM 700, Jualan hingga RM 2.0M
-                </div>
-              </div>
-            </div>
-          </div>
+              </button>
 
-          {/* Dedicated Right Architectural Plate Stage: outer .crop sheet avoids [data-slot] overflow:hidden clip */}
-          <div className="stage-photo-wrap">
-            <div className="stage-photo-sheet crop crop--plate">
-              <figure
-                className="stage-photo-frame"
-                data-slot="hero"
-                data-alt="Kediaman sudut moden tropika di Kuala Lumpur dan Selangor"
-              >
-                <img
-                  src="/images/bukit-raja-corner-villa.jpg"
-                  width={2048}
-                  height={1536}
-                  alt="Kediaman sudut dua tingkat moden tropika dengan halaman kolam refleksi di Lembah Klang"
-                  style={{ objectPosition: "50% 48%" }}
-                  fetchPriority="high"
-                />
-              </figure>
-            </div>
-            <div className="ratio-redline" aria-hidden="true">
-              <span>4:3</span>
+              <div className="hero-portrait-caption">
+                <div className="min-w-0">
+                  <strong className="hero-portrait-caption-name">Muhammad Norafif</strong>
+                  <span className="hero-portrait-caption-role">Perunding Hartanah Berdaftar (LPPEH)</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setZoomOpen(true)}
+                  className="hero-portrait-caption-action"
+                >
+                  Zum Resolusi Penuh ↗
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Fullscreen High-Resolution Lightbox Modal */}
+      {zoomOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Potret rasmi Muhammad Norafif"
+          className="hero-lightbox"
+          onClick={() => setZoomOpen(false)}
+        >
+          <div className="hero-lightbox-backdrop" />
+          <div
+            className="hero-lightbox-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="hero-lightbox-header">
+              <div>
+                <strong className="text-base font-display text-[var(--color-paper)]">Muhammad Norafif</strong>
+                <span className="text-xs text-[var(--color-paper-2)] block">
+                  Perunding Hartanah Maxxan Realty Sdn Bhd · Berpangkalan di Setapak, KL
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setZoomOpen(false)}
+                className="hero-lightbox-close"
+                aria-label="Tutup paparan potret"
+              >
+                ✕ Tutup
+              </button>
+            </div>
+
+            <div className="hero-lightbox-media">
+              <img
+                src="/images/afif-editorial-portrait.jpg"
+                width={2048}
+                height={2048}
+                alt="Potret rasmi Muhammad Norafif, resolusi penuh 2K"
+                className="hero-lightbox-img"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

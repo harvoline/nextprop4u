@@ -182,9 +182,6 @@ export function ServiceSwitcher() {
                   />
                 </figure>
               </div>
-              <div className="ratio-redline" aria-hidden="true">
-                <span>4:3</span>
-              </div>
             </div>
           </div>
         </div>

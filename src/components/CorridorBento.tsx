@@ -13,24 +13,19 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
           {/* Lead Bento Cell (7 columns): Setapak, Wangsa Maju & Kuala Lumpur */}
           <article className="sheet crop bento-lead" data-reveal>
             <div>
-              <div className="bento-lead-plate-wrap">
-                <div className="bento-lead-sheet crop crop--plate">
-                  <figure
-                    className="bento-lead__photo"
-                    data-slot="corridor"
-                    data-alt="Deretan rumah teres dua tingkat kontemporari dengan fasad konkrit dan skrin kayu"
-                  >
-                    <img
-                      src="/images/bukit-raja-terrace-row.jpg"
-                      width={2752}
-                      height={1536}
-                      alt="Deretan rumah teres dua tingkat kontemporari dengan fasad konkrit dan skrin kayu merbau"
-                    />
-                  </figure>
-                </div>
-                <div className="ratio-redline" aria-hidden="true">
-                  <span>16:9</span>
-                </div>
+              <div className="bento-lead-sheet crop crop--plate mb-4">
+                <figure
+                  className="bento-lead__photo"
+                  data-slot="corridor"
+                  data-alt="Deretan rumah teres dua tingkat kontemporari dengan fasad konkrit dan skrin kayu"
+                >
+                  <img
+                    src="/images/bukit-raja-terrace-row.jpg"
+                    width={2752}
+                    height={1536}
+                    alt="Deretan rumah teres dua tingkat kontemporari dengan fasad konkrit dan skrin kayu merbau"
+                  />
+                </figure>
               </div>
               <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
                 Setapak, Wangsa Maju &amp; Kuala Lumpur
