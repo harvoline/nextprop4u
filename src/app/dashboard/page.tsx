@@ -86,7 +86,7 @@ export default function DashboardPage() {
       name: "PENDUDUK WANGSA MAJU & MELAWATI",
       members: "48,000",
       url: "https://www.facebook.com/groups/240093863116518/",
-      focus: "Bandar Bukit Raja (Landed & Commercial)",
+      focus: "Wangsa Maju, Setapak & Melawati",
     },
     {
       name: "Rumah Sewa Kuala Lumpur & Gombak",
@@ -115,13 +115,13 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
       {/* Top Navbar */}
-      <nav className="bg-slate-900 text-white px-4 sm:px-6 py-3 border-b border-slate-800 flex items-center justify-between">
+      <nav className="bg-[var(--color-ink)] text-[var(--color-paper)] px-4 sm:px-6 py-3 border-b border-[color-mix(in_oklab,var(--color-paper)_18%,transparent)] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-emerald-500">
+          <div className="relative w-8 h-8 rounded-[2px] overflow-hidden border border-[var(--color-accent)]">
             <Image
-              src="/afif.jpg"
+              src="/images/afif-editorial-portrait.jpg"
               alt="Afif"
               width={32}
               height={32}
@@ -129,11 +129,11 @@ export default function DashboardPage() {
             />
           </div>
           <div>
-            <div className="font-bold text-sm leading-tight">
-              Muhammad Norafif | CRM Hub
+            <div className="font-display text-base leading-tight">
+              Muhammad Norafif, Portal CRM
             </div>
-            <div className="text-[10px] text-emerald-400 font-semibold">
-              Maxxan Realty • Lead Matching System
+            <div className="text-[11px] text-[var(--color-accent)] font-medium">
+              Maxxan Realty Sdn Bhd, Pengurusan Leads
             </div>
           </div>
         </div>
@@ -142,14 +142,14 @@ export default function DashboardPage() {
           <Link
             href="/"
             target="_blank"
-            className="text-xs text-slate-300 hover:text-white flex items-center gap-1 bg-slate-800 px-2.5 py-1.5 rounded-lg"
+            className="text-xs text-[var(--color-paper)] hover:text-[var(--color-accent)] flex items-center gap-1 border border-[color-mix(in_oklab,var(--color-paper)_25%,transparent)] px-3 py-1.5 rounded-[2px]"
           >
             <span>Laman Utama</span>
             <ExternalLink className="w-3 h-3" />
           </Link>
           <button
             onClick={() => (window.location.href = "/login")}
-            className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1"
+            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Log Keluar</span>
@@ -160,94 +160,94 @@ export default function DashboardPage() {
       {/* Main Content Area */}
       <main className="max-w-6xl w-full mx-auto p-4 sm:p-6 space-y-6">
         {/* KPI Summary Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase">
-              Total Inquiries
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="sheet p-4">
+            <div className="text-xs font-medium text-[var(--color-muted)]">
+              Jumlah Pertanyaan
             </div>
-            <div className="text-2xl font-extrabold text-slate-900 mt-1">44</div>
-            <div className="text-[10px] text-emerald-600 font-semibold mt-0.5">
+            <div className="font-display text-3xl text-[var(--color-ink)] mt-1 tabular-nums">44</div>
+            <div className="text-xs text-[var(--color-accent)] font-medium mt-0.5 tabular-nums">
               +13 hari ini
             </div>
           </div>
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase">
-              Matched Units
+          <div className="sheet p-4">
+            <div className="text-xs font-medium text-[var(--color-muted)]">
+              Unit Dipadankan
             </div>
-            <div className="text-2xl font-extrabold text-slate-900 mt-1">56</div>
-            <div className="text-[10px] text-slate-500 font-semibold mt-0.5">
-              Telegram & Owners
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase">
-              Direct Landlords
-            </div>
-            <div className="text-2xl font-extrabold text-slate-900 mt-1">6</div>
-            <div className="text-[10px] text-emerald-600 font-semibold mt-0.5">
-              Proprietary Stock
+            <div className="font-display text-3xl text-[var(--color-ink)] mt-1 tabular-nums">56</div>
+            <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
+              Telegram &amp; Pemilik
             </div>
           </div>
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase">
-              Gold Alerts
+          <div className="sheet p-4">
+            <div className="text-xs font-medium text-[var(--color-muted)]">
+              Pemilik Langsung
             </div>
-            <div className="text-2xl font-extrabold text-amber-600 mt-1">12</div>
-            <div className="text-[10px] text-amber-700 font-semibold mt-0.5">
-              Exact Match Priority
+            <div className="font-display text-3xl text-[var(--color-ink)] mt-1 tabular-nums">6</div>
+            <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
+              Stok Terus Agensi
+            </div>
+          </div>
+          <div className="sheet p-4">
+            <div className="text-xs font-medium text-[var(--color-muted)]">
+              Padanan Keutamaan
+            </div>
+            <div className="font-display text-3xl text-[var(--color-accent)] mt-1 tabular-nums">12</div>
+            <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
+              Tindak Balas Segera
             </div>
           </div>
         </div>
 
         {/* Tab & Controls Bar */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="sheet p-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
             <button
               onClick={() => setActiveTab("leads")}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 ${
                 activeTab === "leads"
-                  ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
+                  : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
               <Users className="w-3.5 h-3.5" />
-              <span>Social Leads CRM ({sampleLeads.length})</span>
+              <span>Leads Sosial CRM ({sampleLeads.length})</span>
             </button>
             <button
               onClick={() => setActiveTab("groups")}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 ${
                 activeTab === "groups"
-                  ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
+                  : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
               <Building className="w-3.5 h-3.5" />
-              <span>Resident Groups (8)</span>
+              <span>Kumpulan Komuniti (8)</span>
             </button>
           </div>
 
           {activeTab === "leads" && (
             <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-              <span className="text-xs font-semibold text-slate-500">Draft:</span>
+              <span className="text-xs font-medium text-[var(--color-muted)]">Draf:</span>
               <button
                 onClick={() => setApproach("A")}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${
+                className={`px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition ${
                   approach === "A"
-                    ? "bg-emerald-600 text-white"
-                    : "bg-slate-100 text-slate-700"
+                    ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)] border-[var(--color-ink)]"
+                    : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)]"
                 }`}
               >
-                Approach A (Targeted)
+                Pendekatan A (Terus)
               </button>
               <button
                 onClick={() => setApproach("B")}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition ${
+                className={`px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition ${
                   approach === "B"
-                    ? "bg-emerald-600 text-white"
-                    : "bg-slate-100 text-slate-700"
+                    ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)] border-[var(--color-ink)]"
+                    : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)]"
                 }`}
               >
-                Approach B (Consultative)
+                Pendekatan B (Konsultatif)
               </button>
             </div>
           )}
@@ -265,59 +265,59 @@ export default function DashboardPage() {
               return (
                 <div
                   key={lead.id}
-                  className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4"
+                  className="sheet p-5 space-y-4"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-3">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-slate-900 text-base">
+                      <span className="font-display text-lg text-[var(--color-ink)]">
                         {lead.name}
                       </span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold">
+                      <span className="text-xs px-2 py-0.5 rounded-[2px] border border-[var(--color-rule)] bg-[var(--color-paper-2)] text-[var(--color-ink-2)] font-medium">
                         {lead.platform}
                       </span>
                       {lead.isGold && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center gap-1">
-                          <Sparkles className="w-3 h-3 text-amber-600" />
-                          <span>🔥 GOLD ALERT: EXACT MATCH</span>
+                        <span className="text-xs px-2 py-0.5 rounded-[2px] bg-[var(--color-accent)] text-[var(--color-accent-ink)] font-medium flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" />
+                          <span>Padanan Keutamaan</span>
                         </span>
                       )}
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-semibold text-slate-500">
+                      <span className="text-xs font-medium text-[var(--color-muted)]">
                         Status:
                       </span>
-                      <span className="text-xs px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
+                      <span className="text-xs px-2.5 py-1 rounded-[2px] bg-[var(--color-paper-2)] text-[var(--color-ink)] font-medium border border-[var(--color-rule)]">
                         {lead.stage}
                       </span>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs bg-slate-50 p-3 rounded-xl">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs bg-[var(--color-paper-2)] p-3 rounded-[2px] border border-[var(--color-rule)]">
                     <div>
-                      <span className="text-slate-500">Kawasan:</span>{" "}
-                      <span className="font-bold text-slate-800">{lead.area}</span>
+                      <span className="text-[var(--color-muted)]">Kawasan:</span>{" "}
+                      <span className="font-semibold text-[var(--color-ink)]">{lead.area}</span>
                     </div>
                     <div>
-                      <span className="text-slate-500">Bajet:</span>{" "}
-                      <span className="font-bold text-emerald-700">
+                      <span className="text-[var(--color-muted)]">Bajet:</span>{" "}
+                      <span className="font-semibold text-[var(--color-accent)] tabular-nums">
                         {lead.budget}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-500">Jenis:</span>{" "}
-                      <span className="font-bold text-slate-800">{lead.type}</span>
+                      <span className="text-[var(--color-muted)]">Jenis:</span>{" "}
+                      <span className="font-semibold text-[var(--color-ink)]">{lead.type}</span>
                     </div>
                   </div>
 
-                  <div className="text-xs text-slate-600 bg-amber-50/40 p-3 rounded-xl border border-amber-100">
-                    <span className="font-bold text-amber-900">Post Asal: </span>
+                  <div className="text-xs text-[var(--color-ink-2)] bg-[var(--color-paper)] p-3 rounded-[2px] border border-[var(--color-rule)]">
+                    <span className="font-semibold text-[var(--color-ink)]">Catatan Asal: </span>
                     &ldquo;{lead.originalPost}&rdquo;
                   </div>
 
-                  <div className="text-xs text-slate-600 bg-emerald-50/40 p-3 rounded-xl border border-emerald-100">
-                    <span className="font-bold text-emerald-900">
-                      Matched Stock:{" "}
+                  <div className="text-xs text-[var(--color-ink-2)] bg-[var(--color-paper)] p-3 rounded-[2px] border-l-2 border-[var(--color-accent)]">
+                    <span className="font-semibold text-[var(--color-ink)]">
+                      Stok Dipadankan:{" "}
                     </span>
                     {lead.matchedUnit}
                   </div>
@@ -325,17 +325,17 @@ export default function DashboardPage() {
                   {/* Ready Draft Box */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-slate-700">
-                        Ready Draft ({approach === "A" ? "Targeted" : "Consultative"}):
+                      <span className="font-semibold text-[var(--color-ink)]">
+                        Draf Jawapan ({approach === "A" ? "Terus" : "Konsultatif"}):
                       </span>
                       <button
                         onClick={() => copyToClipboard(draftText, lead.id)}
-                        className="inline-flex items-center gap-1 text-emerald-700 font-bold hover:underline"
+                        className="inline-flex items-center gap-1 text-[var(--color-ink)] font-medium underline decoration-[var(--color-accent)]"
                       >
                         {copiedId === lead.id ? (
                           <>
                             <Check className="w-3.5 h-3.5" />
-                            <span>Tersalin!</span>
+                            <span>Tersalin</span>
                           </>
                         ) : (
                           <>
@@ -346,7 +346,7 @@ export default function DashboardPage() {
                       </button>
                     </div>
 
-                    <div className="p-3 bg-slate-100 rounded-xl text-xs text-slate-800 font-mono leading-relaxed select-all">
+                    <div className="p-3 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono leading-relaxed select-all">
                       {draftText}
                     </div>
                   </div>
@@ -355,17 +355,17 @@ export default function DashboardPage() {
                   <div className="flex flex-wrap items-center gap-2 pt-1">
                     <button
                       onClick={() => copyToClipboard(draftText, lead.id)}
-                      className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center gap-1.5"
+                      className="btn btn--quiet btn--sm"
                     >
                       <Copy className="w-3.5 h-3.5" />
-                      <span>{copiedId === lead.id ? "Disalin!" : "Salin Draf"}</span>
+                      <span>{copiedId === lead.id ? "Disalin" : "Salin Draf"}</span>
                     </button>
 
                     <a
                       href={lead.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold text-xs flex items-center gap-1.5"
+                      className="btn btn--quiet btn--sm"
                     >
                       <span>Buka Post Asal</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -375,10 +375,10 @@ export default function DashboardPage() {
                       href={waUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 ml-auto"
+                      className="btn btn--primary btn--sm ml-auto"
                     >
                       <MessageCircle className="w-3.5 h-3.5" />
-                      <span>Test Pre-filled WhatsApp</span>
+                      <span>Uji Mesej WhatsApp</span>
                     </a>
                   </div>
                 </div>
@@ -393,14 +393,14 @@ export default function DashboardPage() {
             {residentGroups.map((grp, idx) => (
               <div
                 key={idx}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-3"
+                className="sheet p-5 flex flex-col justify-between space-y-3"
               >
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">{grp.name}</h4>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <h4 className="font-display text-lg text-[var(--color-ink)]">{grp.name}</h4>
+                  <p className="text-xs text-[var(--color-muted)] mt-1">
                     Kawasan Tumpuan: {grp.focus}
                   </p>
-                  <p className="text-xs text-emerald-700 font-semibold mt-0.5">
+                  <p className="text-xs text-[var(--color-accent)] font-medium mt-0.5 tabular-nums">
                     {grp.members} Ahli Komuniti
                   </p>
                 </div>
@@ -408,7 +408,7 @@ export default function DashboardPage() {
                   href={grp.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs"
+                  className="btn btn--quiet btn--sm"
                 >
                   <span>Buka Kumpulan Facebook</span>
                   <ExternalLink className="w-3.5 h-3.5" />

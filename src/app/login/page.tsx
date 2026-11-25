@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "../../lib/supabase/client";
-import { Mail, Lock, ArrowLeft, Loader2, CheckCircle2 } from "lucide-react";
+import { BrandMark } from "../../components/BrandMark";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -23,133 +22,145 @@ export default function LoginPage() {
     try {
       const supabase = createClient();
       if (isMagicLink) {
-        const { error } = await supabase.auth.signInWithOtp({
+        const { error: otpError } = await supabase.auth.signInWithOtp({
           email,
           options: {
             emailRedirectTo: `${window.location.origin}/dashboard`,
           },
         });
-        if (error) throw error;
-        setMessage("Pautan log masuk (Magic Link) telah dihantar ke emel anda!");
+        if (otpError) throw otpError;
+        setMessage("Pautan log masuk (Magic Link) telah dihantar ke emel anda.");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error: pwdError } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
-        if (error) throw error;
+        if (pwdError) throw pwdError;
         window.location.href = "/dashboard";
       }
-    } catch (err: any) {
-      setError(err?.message || "Ralat semasa log masuk. Sila cuba lagi.");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : null;
+      setError(msg || "Ralat semasa log masuk. Sila cuba lagi.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 px-4 py-12">
-      <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-xl border border-slate-200">
+    <main className="studio-proof min-h-screen flex flex-col justify-between px-4 py-8">
+      <div className="container flex items-center justify-between gap-4 border-b border-[var(--color-rule)] pb-4">
+        <Link href="/" className="nav-brand">
+          <BrandMark />
+          <span className="nav-brand__wordmark">NextProp4U</span>
+        </Link>
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 mb-6"
+          className="text-sm font-medium whitespace-nowrap text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline decoration-[var(--color-rule)] underline-offset-4"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Laman Utama</span>
+          Laman Utama
         </Link>
+      </div>
 
-        <div className="flex flex-col items-center text-center mb-6">
-          <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-emerald-600 mb-3 shadow-sm">
-            <Image
-              src="/afif.jpg"
-              alt="Muhammad Norafif"
-              width={64}
-              height={64}
-              className="object-cover"
+      <div className="w-full max-w-[440px] mx-auto my-12 sheet crop p-8 sm:p-10">
+        <div className="flex items-center gap-4 pb-6 mb-6 border-b border-[var(--color-rule)]">
+          <div className="principal-portrait">
+            <img
+              src="/images/afif-editorial-portrait.jpg"
+              width={2048}
+              height={2048}
+              alt="Muhammad Norafif, Perunding Hartanah"
             />
           </div>
-          <h1 className="text-xl font-bold text-slate-900">Portal Ejen & CRM</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Log masuk untuk akses sistem pengurusan leads & inventori
-          </p>
+          <div>
+            <h1 className="font-display text-[var(--text-2xl)] leading-[1.1] text-[var(--color-ink)]">
+              Portal Ejen &amp; CRM
+            </h1>
+            <p className="text-sm text-[var(--color-muted)] mt-1">
+              Log masuk untuk akses inventori dan rekod leads
+            </p>
+          </div>
         </div>
 
         {message && (
-          <div className="mb-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-            <span>{message}</span>
+          <div
+            role="status"
+            className="mb-5 p-3.5 rounded-[2px] border border-[var(--color-ink)] bg-[var(--color-paper-2)] text-sm text-[var(--color-ink)]"
+          >
+            {message}
           </div>
         )}
 
         {error && (
-          <div className="mb-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800">
+          <div
+            role="alert"
+            className="mb-5 p-3.5 rounded-[2px] border border-[var(--color-accent)] bg-[var(--color-paper-2)] text-sm text-[var(--color-ink)]"
+          >
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <div className="field-group">
+            <label htmlFor="login-email" className="field-label">
               Alamat Emel
             </label>
-            <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="nama@email.com"
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
-              />
-            </div>
+            <input
+              id="login-email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="nama@email.com"
+              className="studio-input"
+            />
           </div>
 
           {!isMagicLink && (
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <div className="field-group">
+              <label htmlFor="login-password" className="field-label">
                 Kata Laluan
               </label>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
-                />
-              </div>
+              <input
+                id="login-password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Masukkan kata laluan"
+                className="studio-input"
+              />
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow transition flex items-center justify-center gap-2 disabled:opacity-50"
+            className="btn btn--primary crop w-full mt-2"
           >
-            {loading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : isMagicLink ? (
-              "Hantar Pautan Log Masuk (Magic Link)"
-            ) : (
-              "Log Masuk"
-            )}
+            {loading
+              ? "Sedang memproses..."
+              : isMagicLink
+                ? "Hantar Pautan Log Masuk"
+                : "Log Masuk"}
           </button>
         </form>
 
-        <div className="mt-5 text-center">
+        <div className="mt-6 pt-4 border-t border-[var(--color-rule)] text-center">
           <button
             type="button"
             onClick={() => setIsMagicLink(!isMagicLink)}
-            className="text-xs text-slate-500 hover:text-emerald-700 underline"
+            className="inline-flex items-center justify-center min-h-[38px] px-3 text-sm text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline decoration-[var(--color-rule)] underline-offset-4"
           >
             {isMagicLink
               ? "Gunakan kata laluan biasa"
-              : "Gunakan Magic Link emel (tanpa kata laluan)"}
+              : "Gunakan Magic Link emel"}
           </button>
         </div>
       </div>
-    </div>
+
+      <div className="container text-center text-xs text-[var(--color-muted)] pt-4 border-t border-[var(--color-rule)]">
+        Maxxan Realty Sdn Bhd, Portal Pengurusan Dalaman Perunding Hartanah
+      </div>
+    </main>
   );
 }
