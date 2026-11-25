@@ -1,7 +1,7 @@
 const FAQS = [
   {
     q: "Adakah pembeli rumah sub-sale perlu membayar fi ejen?",
-    a: "Percuma untuk pembeli sub-sale. Semakan kelayakan DSR, lawatan unit dan rundingan SPA tidak dikenakan caj kerana fi agensi dibayar penjual.",
+    a: "Percuma untuk pembeli sub-sale. Semakan kelayakan DSR, viewing unit dan rundingan Perjanjian Jual Beli (S&P / SPA) tidak dikenakan caj kerana fi agensi dibayar penjual.",
   },
   {
     q: "Berapakah fi bagi urusan menjual atau menyewakan unit?",
@@ -9,11 +9,11 @@ const FAQS = [
   },
   {
     q: "Apakah dokumen asas untuk permohonan pinjaman atau sewaan?",
-    a: "Sediakan salinan kad pengenalan, slip gaji 3 bulan, penyata bank 3 bulan dan KWSP untuk pinjaman. Sewaan turut melalui saringan dan mati setem rasmi LHDN.",
+    a: "Sediakan salinan kad pengenalan, slip gaji 3 bulan, penyata bank 3 bulan dan KWSP untuk pinjaman. Sewaan turut melalui saringan penyewa dan stamping rasmi LHDN.",
   },
   {
     q: "Bagaimana penilaian harga pasaran JPPH dan garis masa berjalan?",
-    a: "Harga disemak menerusi rekod transaksi JPPH dan penilai bank KL serta Selangor. Pinjaman lazimnya 2 hingga 4 minggu; pindah milik SPA selesai dalam 3 hingga 5 bulan.",
+    a: "Harga disemak menerusi rekod transaksi JPPH dan penilai bank KL serta Selangor. Kelulusan pinjaman bank lazimnya 2 hingga 4 minggu; urusan pindah milik S&P / SPA selesai dalam 3 hingga 5 bulan.",
   },
 ];
 

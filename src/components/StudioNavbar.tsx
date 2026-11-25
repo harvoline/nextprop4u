@@ -76,7 +76,7 @@ export function StudioNavbar({ whatsappUrl }: { whatsappUrl: string }) {
               Soalan Lazim
             </a>
             <Link href="/login" className="nav-link">
-              Portal Ejen
+              Agent Login
             </Link>
             <a href={whatsappUrl} className="btn btn--quiet btn--sm">
               WhatsApp Afif
@@ -113,7 +113,7 @@ export function StudioNavbar({ whatsappUrl }: { whatsappUrl: string }) {
               Soalan Lazim
             </a>
             <Link href="/login" className="nav-link" onClick={() => setMenuOpen(false)}>
-              Portal Ejen
+              Agent Login
             </Link>
             <a href={whatsappUrl} className="btn btn--primary">
               WhatsApp Afif

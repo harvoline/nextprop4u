@@ -37,7 +37,7 @@ export function HeroSpecimen({
             <span className="hero-mast-sep">/</span>
             <span className="hero-mast-agency">Maxxan Realty Sdn Bhd</span>
             <span className="hero-mast-sep">/</span>
-            <span className="hero-mast-loc">Berpangkalan di Setapak, KL (Liputan KL &amp; Selangor)</span>
+            <span className="hero-mast-loc">Lokasi Utama: Setapak, KL (Liputan KL &amp; Selangor)</span>
           </div>
 
           <div className="hero-name-banner">
@@ -57,7 +57,7 @@ export function HeroSpecimen({
               {/* 4 Trust Highlights */}
               <div className="hero-highlights">
                 <div className="hero-highlight-item">
-                  <span className="hero-highlight-label">Pangkalan Utama</span>
+                  <span className="hero-highlight-label">Lokasi Utama</span>
                   <strong className="hero-highlight-val">Setapak, Kuala Lumpur</strong>
                 </div>
                 <div className="hero-highlight-item">
@@ -80,7 +80,7 @@ export function HeroSpecimen({
                   WhatsApp Afif (+6011-5868 3907)
                 </a>
                 <a href="#kalkulator" className="btn btn--quiet">
-                  Semak Kelayakan DSR
+                  Semak Kelayakan Pinjaman (DSR)
                 </a>
               </div>
             </div>
@@ -166,7 +166,7 @@ export function HeroSpecimen({
               <div>
                 <strong className="text-base font-display text-[var(--color-paper)]">Muhammad Norafif</strong>
                 <span className="text-xs text-[var(--color-paper-2)] block">
-                  Perunding Berdaftar Maxxan Realty · Berpangkalan di Setapak, KL
+                  Perunding Berdaftar Maxxan Realty · Lokasi di Setapak, KL
                 </span>
               </div>
               <button

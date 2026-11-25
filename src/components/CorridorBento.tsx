@@ -5,7 +5,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
         <div className="section-head-split" data-reveal>
           <h2 id="heading-liputan">Setapak, Kuala Lumpur dan Seluruh Selangor</h2>
           <p className="lead">
-            Berpangkalan di Setapak dengan liputan harian merangkumi daerah utama ibu kota serta Selangor.
+            Fokus utama di Setapak dengan liputan harian merangkumi kawasan sekitar Kuala Lumpur serta Selangor.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                 Setapak, Wangsa Maju &amp; Kuala Lumpur
               </h3>
               <p className="mt-2 text-sm text-[var(--color-ink-2)] max-w-[54ch]">
-                Pangkalan utama di Setapak meliputi Danau Kota, Setiawangsa, Melawati, Titiwangsa, Mont Kiara, Bangsar, Cheras dan pusat bandar KL.
+                Fokus utama di Setapak meliputi Danau Kota, Setiawangsa, Melawati, Titiwangsa, Mont Kiara, Bangsar, Cheras dan pusat bandar KL.
               </p>
             </div>
 
@@ -121,11 +121,11 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                 Gombak, Selayang &amp; Rawang
               </h3>
               <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-                Liputan harian dari pangkalan Setapak merentasi Batu Caves, Gombak, Kepong, Selayang sehingga koridor utara Selangor.
+                Liputan harian dari Setapak merentasi Batu Caves, Gombak, Kepong, Selayang sehingga ke kawasan utara Selangor.
               </p>
             </div>
             <div className="pt-3 mt-2 border-t border-[var(--color-rule)] text-xs text-[var(--color-muted)]">
-              Pangkalan Setapak KL
+              Fokus Setapak KL
             </div>
           </article>
         </div>

@@ -118,10 +118,10 @@ export function LoanWorkbench() {
                 fontWeight: 400,
               }}
             >
-              Kalkulator DSR &amp; Semakan Nilai KL &amp; Selangor
+              DSR Calculator &amp; Semakan Kelayakan Pinjaman
             </h2>
             <p className="lead mt-4 text-[var(--color-ink-2)]">
-              Kira had pinjaman bank sebelum meninjau kediaman di Setapak, Kuala Lumpur dan Selangor.
+              Kira kelayakan pinjaman perumahan dan had DSR sebelum mencari rumah di Setapak, KL &amp; Selangor.
             </p>
 
             <ul className="dossier-list mt-8">
@@ -157,7 +157,7 @@ export function LoanWorkbench() {
                 onClick={() => setMode("kelayakan")}
                 onKeyDown={(e) => handleTabKeyDown(e, 0)}
               >
-                Kalkulator DSR
+                DSR Calculator
               </button>
               <button
                 ref={(el) => {
@@ -173,7 +173,7 @@ export function LoanWorkbench() {
                 onClick={() => setMode("mandat")}
                 onKeyDown={(e) => handleTabKeyDown(e, 1)}
               >
-                Semak Nilai
+                Semak Kelayakan & Nilai
               </button>
             </div>
 
@@ -281,7 +281,7 @@ export function LoanWorkbench() {
                         {formatRm(calc.maxDsrCapacity)}
                       </strong>
                       <p className="text-xs text-[var(--color-ink-2)] m-0">
-                        {calc.statusLabel} ({calc.dsrUsedPct.toFixed(0)}% nisbah hutang)
+                        {calc.statusLabel} ({calc.dsrUsedPct.toFixed(0)}% komitmen pendapatan)
                       </p>
                     </div>
                   </div>

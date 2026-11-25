@@ -25,11 +25,11 @@ const SERVICES: Record<
     label: "Jual Hartanah",
     title: "Pemasaran & jualan unit pemilik tanpa bayaran iklan pendahuluan",
     summary:
-      "Pengurusan penuh dari rujukan harga rasmi JPPH hingga pindah milik SPA tanpa caj pemasaran sebelum jualan dimeterai.",
+      "Pengurusan penuh dari semakan harga pasaran hingga selesai Perjanjian Jual Beli (S&P / SPA) tanpa sebarang caj pemasaran pendahuluan.",
     checklist: [
       "Semakan nilai pasaran JPPH dan penilai bank panel sebelum harga iklan ditetapkan",
       "Saringan kelayakan DSR pembeli sebelum setiap sesi lawatan tapak dijalankan",
-      "Penyelarasan draf Perjanjian Jual Beli (SPA) bersama barisan peguam panel",
+      "Penyelarasan Perjanjian Jual Beli (S&P / SPA) bersama barisan peguam panel",
       "Fi agensi standard 3.24% (termasuk SST) hanya layak selepas jualan berjaya",
     ],
     image: "/images/mandate-keys-floorplan.jpg",
@@ -44,7 +44,7 @@ const SERVICES: Record<
     label: "Beli Rumah",
     title: "Carian rumah KL & Selangor secara percuma untuk pembeli sub-sale",
     summary:
-      "Khidmat carian, semakan kelayakan bank dan rundingan SPA percuma bagi pembeli kerana komisen dibayar pemilik.",
+      "Khidmat carian rumah, semakan kelayakan pinjaman bank dan rundingan S&P / SPA percuma untuk pembeli sub-sale.",
     checklist: [
       "Kiraan had pinjaman bank (DSR 60%) berpandukan slip gaji 3 bulan sebelum viewing",
       "Tiada yuran ejen kepada pembeli unit sub-sale (komisen ditanggung penjual)",
@@ -66,7 +66,7 @@ const SERVICES: Record<
       "Padanan penyewa berkelayakan untuk pemilik sekitar Setapak, KL dan Selangor lengkap perjanjian bertempoh sah.",
     checklist: [
       "Saringan profil pekerjaan serta penyata 3 bulan slip gaji bakal penyewa",
-      "Penyediaan Perjanjian Penyewaan lengkap berserta urusan mati setem rasmi LHDN",
+      "Penyediaan Tenancy Agreement lengkap berserta urusan stamping rasmi LHDN",
       "Rekod inventori keadaan unit dan serahan kunci secara bertulis",
       "Caj standard 1 bulan sewa bagi tempoh penyewaan setahun",
     ],

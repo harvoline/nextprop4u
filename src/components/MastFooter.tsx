@@ -28,7 +28,7 @@ export function MastFooter({
               Perunding Berdaftar Maxxan Realty
             </p>
             <p className="text-sm text-[var(--color-muted)]">
-              Berpangkalan di Setapak, Kuala Lumpur. Liputan seluruh KL dan Selangor
+              Lokasi di Setapak, Kuala Lumpur. Liputan seluruh KL dan Selangor
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export function MastFooter({
             <a href="#soalan">Soalan Lazim</a>
             <a href="tel:+601158683907">+6011-5868 3907</a>
             <a href={whatsappUrl}>WhatsApp Afif</a>
-            <Link href="/login">Portal Ejen</Link>
+            <Link href="/login">Agent Login</Link>
           </nav>
         </div>
 
@@ -53,7 +53,7 @@ export function MastFooter({
           </p>
           {credits.length > 0 && (
             <p className="mast-credits" data-credits="true">
-              Kredit fotografi arkib:{" "}
+              Kredit Foto:{" "}
               {credits.map((c, i) => (
                 <span key={c.label}>
                   {i > 0 ? ", " : ""}

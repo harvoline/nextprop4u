@@ -12,12 +12,12 @@ const PILLARS = [
   {
     num: "03",
     title: "Rangkaian Pembeli & Ejen COA",
-    desc: "Listing dipadankan bersama pangkalan pembeli sedia ada dan kerjasama rentas agensi bertauliah bagi mempercepat penutupan transaksi.",
+    desc: "Listing dipadankan bersama rangkaian pembeli sedia ada dan kerjasama rakan ejen (COA) bagi mempercepatkan proses jualan.",
   },
   {
     num: "04",
     title: "Koordinasi Bank & Peguam",
-    desc: "Penyelarasan dokumen permohonan pinjaman perumahan serta penyediaan draf Perjanjian Jual Beli hingga penyerahan kunci selesai.",
+    desc: "Penyelarasan permohonan pinjaman bank serta urusan Perjanjian Jual Beli (S&P / SPA) hingga serahan kunci selesai.",
   },
 ];
 

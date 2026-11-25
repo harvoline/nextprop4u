@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ejen Hartanah Kuala Lumpur & Selangor | Muhammad Norafif, Maxxan Realty",
     description:
-      "Berpangkalan di Setapak, KL. Khidmat jual, beli dan sewa rumah seluruh Kuala Lumpur dan Selangor. Hubungi +6011-5868 3907.",
+      "Fokus utama di Setapak, KL. Khidmat jual, beli dan sewa rumah seluruh Kuala Lumpur dan Selangor. Hubungi +6011-5868 3907.",
     images: ["/images/bukit-raja-corner-villa.jpg"],
   },
 };
