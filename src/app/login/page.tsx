@@ -113,21 +113,22 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="studio-proof min-h-screen flex flex-col justify-between px-4 py-8">
-      <div className="container flex items-center justify-between gap-4 border-b border-[var(--color-rule)] pb-4">
-        <Link href="/" className="nav-brand">
+    <main className="studio-proof min-h-screen flex flex-col justify-between py-6 sm:py-8">
+      <div className="container flex items-center justify-between gap-3 border-b border-[var(--color-rule)] pb-4">
+        <Link href="/" className="nav-brand min-w-0">
           <BrandMark />
           <span className="nav-brand__wordmark">NextProp4U</span>
         </Link>
         <Link
           href="/"
-          className="text-sm font-medium whitespace-nowrap text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline decoration-[var(--color-rule)] underline-offset-4"
+          className="text-sm font-medium whitespace-nowrap shrink-0 text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline decoration-[var(--color-rule)] underline-offset-4"
         >
           Laman Utama
         </Link>
       </div>
 
-      <div className="w-full max-w-[440px] mx-auto my-12 sheet p-8 sm:p-10">
+      <div className="container my-8 sm:my-12">
+        <div className="w-full max-w-[440px] mx-auto sheet p-6 sm:p-10">
         <div className="flex flex-col items-center text-center pb-6 mb-6 border-b border-[var(--color-rule)] w-full">
           {/* Row 1: Image in its own row */}
           <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[var(--color-accent)] shadow-sm shrink-0">
@@ -231,6 +232,7 @@ export default function LoginPage() {
               ? "Gunakan kata laluan biasa"
               : "Gunakan Magic Link emel"}
           </button>
+        </div>
         </div>
       </div>
 

@@ -224,8 +224,8 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
       {/* Top Navbar */}
-      <nav className="bg-[var(--color-ink)] text-[var(--color-paper)] px-4 sm:px-6 py-3 border-b border-[color-mix(in_oklab,var(--color-paper)_18%,transparent)] flex items-center justify-between sticky top-0 z-30 shadow-sm">
-        <div className="flex items-center gap-3">
+      <nav className="bg-[var(--color-ink)] text-[var(--color-paper)] px-4 sm:px-6 py-3 border-b border-[color-mix(in_oklab,var(--color-paper)_18%,transparent)] flex items-center justify-between gap-3 sticky top-0 z-30 shadow-sm">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
           <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[var(--color-accent)] shrink-0">
             <Image
               src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
@@ -235,26 +235,26 @@ export default function DashboardPage() {
               className="object-cover object-top"
             />
           </div>
-          <div>
-            <div className="font-display text-sm sm:text-base leading-tight">
+          <div className="min-w-0">
+            <div className="font-display text-sm sm:text-base leading-tight truncate">
               Muhammad Norafif · Portal Ejen &amp; CRM
             </div>
-            <div className="text-[11px] text-[var(--color-accent)] font-medium flex items-center gap-1.5">
+            <div className="text-[11px] text-[var(--color-accent)] font-medium flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
               <span>Maxxan Realty Sdn Bhd</span>
-              <span>·</span>
+              <span className="hidden sm:inline">·</span>
               <span className="inline-flex items-center gap-1 text-green-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0"></span>
                 Auto-Sync Rakazo Aktif
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <Link
             href="/"
             target="_blank"
-            className="text-xs text-[var(--color-paper)] hover:text-[var(--color-accent)] hidden sm:flex items-center gap-1 border border-[color-mix(in_oklab,var(--color-paper)_25%,transparent)] px-3 py-1.5 rounded-[2px]"
+            className="text-xs text-[var(--color-paper)] hover:text-[var(--color-accent)] hidden sm:flex items-center gap-1 border border-[color-mix(in_oklab,var(--color-paper)_25%,transparent)] px-3 py-1.5 rounded-[2px] whitespace-nowrap"
           >
             <span>Laman Utama</span>
             <ExternalLink className="w-3 h-3" />
@@ -269,9 +269,9 @@ export default function DashboardPage() {
               }
               window.location.href = "/login";
             }}
-            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1 cursor-pointer bg-white/10 px-3 py-1.5 rounded-[2px]"
+            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1.5 cursor-pointer bg-white/10 px-2.5 sm:px-3 py-1.5 rounded-[2px] whitespace-nowrap"
           >
-            <LogOut className="w-3.5 h-3.5" />
+            <LogOut className="w-3.5 h-3.5 shrink-0" />
             <span>Log Keluar</span>
           </button>
         </div>
@@ -335,21 +335,21 @@ export default function DashboardPage() {
         </div>
 
         {/* Tab & Filter Bar */}
-        <div className="sheet p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+        <div className="sheet p-3 sm:p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-1.5 w-full lg:w-auto">
             <button
               onClick={() => {
                 setActiveTab("leads");
                 setLeadPage(1);
               }}
-              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2 sm:px-3 py-2 rounded-[2px] text-[11px] sm:text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
                 activeTab === "leads"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Users className="w-3.5 h-3.5" />
-              <span>Leads Sosial CRM ({filteredLeads.length})</span>
+              <Users className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Leads ({filteredLeads.length})</span>
             </button>
 
             <button
@@ -357,14 +357,14 @@ export default function DashboardPage() {
                 setActiveTab("inventory");
                 setInvPage(1);
               }}
-              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 sm:px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
                 activeTab === "inventory"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Inventori Telegram ({filteredInventory.length})</span>
+              <Layers className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Inventori ({filteredInventory.length})</span>
             </button>
 
             <button
@@ -372,35 +372,35 @@ export default function DashboardPage() {
                 setActiveTab("landlords");
                 setOwnerPage(1);
               }}
-              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 sm:px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
                 activeTab === "landlords"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Home className="w-3.5 h-3.5" />
-              <span>Pemilik Langsung ({filteredOwners.length})</span>
+              <Home className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Pemilik ({filteredOwners.length})</span>
             </button>
 
             <button
               onClick={() => setActiveTab("groups")}
-              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 sm:px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
                 activeTab === "groups"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Building className="w-3.5 h-3.5" />
-              <span>Saluran Komuniti ({residentGroups.length})</span>
+              <Building className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Komuniti ({residentGroups.length})</span>
             </button>
           </div>
 
           {activeTab === "leads" && (
-            <div className="flex items-center gap-2 w-full md:w-auto justify-end">
-              <span className="text-xs font-medium text-[var(--color-muted)]">Mod Draf:</span>
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full lg:w-auto lg:justify-end">
+              <span className="text-xs font-medium text-[var(--color-muted)] shrink-0">Mod Draf:</span>
               <button
                 onClick={() => setApproach("A")}
-                className={`px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition ${
+                className={`flex-1 sm:flex-initial px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition text-center ${
                   approach === "A"
                     ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)] border-[var(--color-ink)]"
                     : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)]"
@@ -410,7 +410,7 @@ export default function DashboardPage() {
               </button>
               <button
                 onClick={() => setApproach("B")}
-                className={`px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition ${
+                className={`flex-1 sm:flex-initial px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition text-center ${
                   approach === "B"
                     ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)] border-[var(--color-ink)]"
                     : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)]"
@@ -428,7 +428,7 @@ export default function DashboardPage() {
             {/* Search and Filter Row */}
             <div className="flex flex-col sm:flex-row items-center gap-2">
               <div className="relative flex-1 w-full">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Cari mengikut nama klien, lokasi (contoh: Setapak, Meru, Klang), atau jenis rumah..."
@@ -437,7 +437,7 @@ export default function DashboardPage() {
                     setLeadSearch(e.target.value);
                     setLeadPage(1);
                   }}
-                  className="studio-input w-full pl-9 text-xs"
+                  className="studio-input studio-input--search w-full text-xs"
                 />
               </div>
               <select
@@ -485,11 +485,11 @@ export default function DashboardPage() {
                   const waUrl = `https://wa.me/601158683907?text=${encodeURIComponent(waCustomText)}`;
 
                   return (
-                    <div key={lead.id} className="sheet p-5 space-y-4 border border-[var(--color-rule)]">
+                    <div key={lead.id} className="sheet p-4 sm:p-5 space-y-4 border border-[var(--color-rule)] min-w-0">
                       {/* Top Header of Card */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-3">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-display text-lg text-[var(--color-ink)]">
+                        <div className="flex items-center gap-2 flex-wrap min-w-0">
+                          <span className="font-display text-lg text-[var(--color-ink)] break-words">
                             {author}
                           </span>
                           <span className="text-xs px-2 py-0.5 rounded-[2px] border border-[var(--color-rule)] bg-[var(--color-paper-2)] text-[var(--color-ink-2)] font-medium">
@@ -569,14 +569,14 @@ export default function DashboardPage() {
                                     {m.asking_price || "Tanya Harga"}
                                   </span>
                                 </div>
-                                <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-3">
+                                <div className="text-[11px] text-[var(--color-muted)] flex flex-wrap items-center gap-x-2.5 gap-y-1">
                                   <span>📍 {m.location || loc}</span>
                                   <span>·</span>
                                   <span>🎯 {m.match_score || "Good Match"}</span>
                                   {m.source_group && (
                                     <>
                                       <span>·</span>
-                                      <span>📢 {m.source_group}</span>
+                                      <span className="break-words">📢 {m.source_group}</span>
                                     </>
                                   )}
                                 </div>
@@ -615,7 +615,7 @@ export default function DashboardPage() {
                           </button>
                         </div>
 
-                        <div className="p-3 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono leading-relaxed select-all">
+                        <div className="p-3 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono leading-relaxed select-all break-words [overflow-wrap:anywhere]">
                           {draftText}
                         </div>
                       </div>
@@ -624,9 +624,9 @@ export default function DashboardPage() {
                       <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[var(--color-rule)]">
                         <button
                           onClick={() => copyToClipboard(draftText, lead.id)}
-                          className="btn btn--quiet btn--sm"
+                          className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                         >
-                          <Copy className="w-3.5 h-3.5" />
+                          <Copy className="w-3.5 h-3.5 shrink-0" />
                           <span>{copiedId === lead.id ? "Disalin" : "Salin Draf"}</span>
                         </button>
 
@@ -635,10 +635,10 @@ export default function DashboardPage() {
                             href={lead.source_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn--quiet btn--sm"
+                            className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                           >
                             <span>Buka Post Asal</span>
-                            <ExternalLink className="w-3.5 h-3.5" />
+                            <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                           </a>
                         )}
 
@@ -646,9 +646,9 @@ export default function DashboardPage() {
                           href={waUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn btn--primary btn--sm ml-auto"
+                          className="btn btn--primary btn--sm w-full sm:w-auto sm:ml-auto"
                         >
-                          <MessageCircle className="w-3.5 h-3.5" />
+                          <MessageCircle className="w-3.5 h-3.5 shrink-0" />
                           <span>WhatsApp Klien Sekarang</span>
                         </a>
                       </div>
@@ -659,27 +659,27 @@ export default function DashboardPage() {
 
             {/* Pagination */}
             {filteredLeads.length > PAGE_SIZE && (
-              <div className="sheet p-3 flex items-center justify-between text-xs">
-                <div>
+              <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
+                <div className="text-center sm:text-left">
                   Menunjukkan {(leadPage - 1) * PAGE_SIZE + 1} –{" "}
                   {Math.min(leadPage * PAGE_SIZE, filteredLeads.length)} daripada{" "}
                   {filteredLeads.length} leads
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2 w-full sm:w-auto">
                   <button
                     disabled={leadPage <= 1}
                     onClick={() => setLeadPage((p) => p - 1)}
-                    className="btn btn--quiet btn--sm"
+                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                   >
                     Sebelumnya
                   </button>
-                  <span className="font-semibold px-2">
+                  <span className="font-semibold px-2 whitespace-nowrap tabular-nums">
                     {leadPage} / {Math.ceil(filteredLeads.length / PAGE_SIZE)}
                   </span>
                   <button
                     disabled={leadPage >= Math.ceil(filteredLeads.length / PAGE_SIZE)}
                     onClick={() => setLeadPage((p) => p + 1)}
-                    className="btn btn--quiet btn--sm"
+                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                   >
                     Seterusnya
                   </button>
@@ -695,7 +695,7 @@ export default function DashboardPage() {
             {/* Search and Filters */}
             <div className="flex flex-col sm:flex-row items-center gap-2">
               <div className="relative flex-1 w-full">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Cari unit Telegram (contoh: Shah Alam, Bukit Raja, Klang, Suri Puteri, Bangi, RM390k)..."
@@ -704,7 +704,7 @@ export default function DashboardPage() {
                     setInvSearch(e.target.value);
                     setInvPage(1);
                   }}
-                  className="studio-input w-full pl-9 text-xs"
+                  className="studio-input studio-input--search w-full text-xs"
                 />
               </div>
 
@@ -801,7 +801,7 @@ export default function DashboardPage() {
 
                       {/* Expandable Excerpt / Specs */}
                       {isExpanded && item.source_excerpt && (
-                        <div className="mt-3 p-3.5 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono whitespace-pre-wrap leading-relaxed">
+                        <div className="mt-3 p-3.5 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed">
                           {item.source_excerpt}
                         </div>
                       )}
@@ -810,22 +810,22 @@ export default function DashboardPage() {
                       <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[var(--color-rule)]">
                         <button
                           onClick={() => setExpandedInvId(isExpanded ? null : item.id)}
-                          className="inline-flex items-center gap-1 text-xs text-[var(--color-ink)] hover:text-[var(--color-accent)] font-medium cursor-pointer"
+                          className="inline-flex items-center gap-1 text-xs text-[var(--color-ink)] hover:text-[var(--color-accent)] font-medium cursor-pointer text-left"
                         >
                           {isExpanded ? (
                             <>
-                              <ChevronUp className="w-3.5 h-3.5" />
+                              <ChevronUp className="w-3.5 h-3.5 shrink-0" />
                               <span>Tutup Spesifikasi Penuh</span>
                             </>
                           ) : (
                             <>
-                              <ChevronDown className="w-3.5 h-3.5" />
+                              <ChevronDown className="w-3.5 h-3.5 shrink-0" />
                               <span>Lihat Spesifikasi &amp; Mesej Asal Telegram</span>
                             </>
                           )}
                         </button>
 
-                        <div className="flex items-center gap-2 ml-auto">
+                        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ml-auto">
                           <button
                             onClick={() =>
                               copyToClipboard(
@@ -833,18 +833,18 @@ export default function DashboardPage() {
                                 `inv_${item.id}`
                               )
                             }
-                            className="btn btn--quiet btn--sm"
+                            className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                           >
-                            <Copy className="w-3.5 h-3.5" />
+                            <Copy className="w-3.5 h-3.5 shrink-0" />
                             <span>{copiedId === `inv_${item.id}` ? "Disalin" : "Salin Info"}</span>
                           </button>
                           <a
                             href={waPropUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn--primary btn--sm"
+                            className="btn btn--primary btn--sm flex-1 sm:flex-initial"
                           >
-                            <MessageCircle className="w-3.5 h-3.5" />
+                            <MessageCircle className="w-3.5 h-3.5 shrink-0" />
                             <span>Kongsi ke WhatsApp</span>
                           </a>
                         </div>
@@ -856,27 +856,27 @@ export default function DashboardPage() {
 
             {/* Pagination */}
             {filteredInventory.length > PAGE_SIZE && (
-              <div className="sheet p-3 flex items-center justify-between text-xs">
-                <div>
+              <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
+                <div className="text-center sm:text-left">
                   Menunjukkan {(invPage - 1) * PAGE_SIZE + 1} –{" "}
                   {Math.min(invPage * PAGE_SIZE, filteredInventory.length)} daripada{" "}
                   {filteredInventory.length} unit
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2 w-full sm:w-auto">
                   <button
                     disabled={invPage <= 1}
                     onClick={() => setInvPage((p) => p - 1)}
-                    className="btn btn--quiet btn--sm"
+                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                   >
                     Sebelumnya
                   </button>
-                  <span className="font-semibold px-2">
+                  <span className="font-semibold px-2 whitespace-nowrap tabular-nums">
                     {invPage} / {Math.ceil(filteredInventory.length / PAGE_SIZE)}
                   </span>
                   <button
                     disabled={invPage >= Math.ceil(filteredInventory.length / PAGE_SIZE)}
                     onClick={() => setInvPage((p) => p + 1)}
-                    className="btn btn--quiet btn--sm"
+                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                   >
                     Seterusnya
                   </button>
@@ -890,7 +890,7 @@ export default function DashboardPage() {
         {activeTab === "landlords" && (
           <div className="space-y-4">
             <div className="relative w-full">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
               <input
                 type="text"
                 placeholder="Cari pemilik langsung, lokasi rumah, atau bajet sewa..."
@@ -899,7 +899,7 @@ export default function DashboardPage() {
                   setOwnerSearch(e.target.value);
                   setOwnerPage(1);
                 }}
-                className="studio-input w-full pl-9 text-xs"
+                className="studio-input studio-input--search w-full text-xs"
               />
             </div>
 
@@ -919,11 +919,11 @@ export default function DashboardPage() {
                       className="sheet p-5 flex flex-col justify-between space-y-3 border border-[var(--color-rule)]"
                     >
                       <div>
-                        <div className="flex items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
-                          <span className="font-display text-base text-[var(--color-ink)]">
+                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
+                          <span className="font-display text-base text-[var(--color-ink)] break-words min-w-0">
                             {owner.author || "Tuan Rumah"}
                           </span>
-                          <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200 tabular-nums">
+                          <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200 tabular-nums whitespace-nowrap shrink-0">
                             {owner.price || "Sila Hubungi"}
                           </span>
                         </div>
@@ -958,7 +958,7 @@ export default function DashboardPage() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2 pt-2 border-t border-[var(--color-rule)]">
+                      <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[var(--color-rule)]">
                         {owner.source_url && (
                           <a
                             href={owner.source_url}
@@ -967,7 +967,7 @@ export default function DashboardPage() {
                             className="btn btn--quiet btn--sm flex-1 text-center"
                           >
                             <span>Post Asal</span>
-                            <ExternalLink className="w-3 h-3" />
+                            <ExternalLink className="w-3 h-3 shrink-0" />
                           </a>
                         )}
                         <a
@@ -976,7 +976,7 @@ export default function DashboardPage() {
                           rel="noopener noreferrer"
                           className="btn btn--primary btn--sm flex-1 text-center"
                         >
-                          <Phone className="w-3.5 h-3.5" />
+                          <Phone className="w-3.5 h-3.5 shrink-0" />
                           <span>Hubungi Pemilik</span>
                         </a>
                       </div>
@@ -987,27 +987,27 @@ export default function DashboardPage() {
 
             {/* Pagination */}
             {filteredOwners.length > PAGE_SIZE && (
-              <div className="sheet p-3 flex items-center justify-between text-xs">
-                <div>
+              <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
+                <div className="text-center sm:text-left">
                   Menunjukkan {(ownerPage - 1) * PAGE_SIZE + 1} –{" "}
                   {Math.min(ownerPage * PAGE_SIZE, filteredOwners.length)} daripada{" "}
                   {filteredOwners.length} pemilik
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2 w-full sm:w-auto">
                   <button
                     disabled={ownerPage <= 1}
                     onClick={() => setOwnerPage((p) => p - 1)}
-                    className="btn btn--quiet btn--sm"
+                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                   >
                     Sebelumnya
                   </button>
-                  <span className="font-semibold px-2">
+                  <span className="font-semibold px-2 whitespace-nowrap tabular-nums">
                     {ownerPage} / {Math.ceil(filteredOwners.length / PAGE_SIZE)}
                   </span>
                   <button
                     disabled={ownerPage >= Math.ceil(filteredOwners.length / PAGE_SIZE)}
                     onClick={() => setOwnerPage((p) => p + 1)}
-                    className="btn btn--quiet btn--sm"
+                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
                   >
                     Seterusnya
                   </button>
@@ -1026,11 +1026,11 @@ export default function DashboardPage() {
                 className="sheet p-5 flex flex-col justify-between space-y-3 border border-[var(--color-rule)]"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
-                    <h4 className="font-display text-base text-[var(--color-ink)]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
+                    <h4 className="font-display text-base text-[var(--color-ink)] min-w-0 break-words">
                       {grp.name}
                     </h4>
-                    <span className="text-[11px] px-2 py-0.5 rounded-[2px] bg-[var(--color-paper-2)] border border-[var(--color-rule)] font-medium">
+                    <span className="text-[11px] px-2 py-0.5 rounded-[2px] bg-[var(--color-paper-2)] border border-[var(--color-rule)] font-medium whitespace-nowrap shrink-0">
                       {grp.platform}
                     </span>
                   </div>

@@ -59,7 +59,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                   Fokus kepada kediaman sub-sale matang, apartmen transit LRT dan perumahan keluarga berhampiran Damansara, Subang Jaya, Bandar Sunway dan Puchong.
                 </p>
               </div>
-              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex items-center justify-between text-xs text-[var(--color-muted)] tabular-nums">
+              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--color-muted)] tabular-nums">
                 <span>Sub-sale &amp; Kondominium</span>
                 <span>Sewa RM 700 ke atas</span>
               </div>
@@ -74,7 +74,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                   Pemilik di KL dan Selangor boleh menyemak nilai pasaran semasa JPPH bagi merancang harga jualan atau kadar sewaan dalam tempoh 24 jam.
                 </p>
               </div>
-              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex items-center justify-between text-xs text-[var(--color-muted)]">
+              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--color-muted)]">
                 <span>Maklum balas 24 jam</span>
                 <a
                   href="#kalkulator"
