@@ -510,6 +510,18 @@ export default function DashboardPage() {
                               <span>{matchedList.length} Unit Dipadankan</span>
                             </span>
                           )}
+                          {lead.source_url && (
+                            <a
+                              href={lead.source_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--color-ink)] bg-[var(--color-paper-2)] hover:bg-[var(--color-paper-hi)] px-2 py-0.5 rounded-[2px] border border-[var(--color-rule)] hover:border-[var(--color-accent)] transition shrink-0"
+                              title="Buka post/komen asal klien di media sosial"
+                            >
+                              <span>Buka Post Klien</span>
+                              <ExternalLink className="w-3 h-3 text-[var(--color-accent)]" />
+                            </a>
+                          )}
                         </div>
 
                         <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
@@ -551,42 +563,177 @@ export default function DashboardPage() {
                       {/* Matched Telegram / Owner Inventory Box */}
                       {matchedList.length > 0 && (
                         <div className="space-y-2">
-                          <div className="text-xs font-semibold text-[var(--color-ink)] flex items-center gap-1.5">
-                            <Layers className="w-3.5 h-3.5 text-[var(--color-accent)]" />
-                            <span>Padanan Unit dari Inventori Telegram &amp; Pemilik:</span>
+                          <div className="text-xs font-semibold text-[var(--color-ink)] flex items-center justify-between gap-1.5 flex-wrap">
+                            <div className="flex items-center gap-1.5">
+                              <Layers className="w-3.5 h-3.5 text-[var(--color-accent)]" />
+                              <span>Padanan Unit dari Inventori Telegram &amp; Pemilik:</span>
+                            </div>
+                            <span className="text-[11px] text-[var(--color-muted)]">
+                              {matchedList.length} cadangan unit tersedia
+                            </span>
                           </div>
-                          <div className="space-y-2">
-                            {matchedList.map((m: any, mIdx: number) => (
-                              <div
-                                key={m.id || mIdx}
-                                className="p-3 bg-amber-50/50 border border-amber-200 rounded-[2px] text-xs text-[var(--color-ink)] space-y-1"
-                              >
-                                <div className="flex items-center justify-between gap-2 flex-wrap">
-                                  <span className="font-bold text-amber-950">
-                                    {m.property_title || "Unit Hartanah"}
-                                  </span>
-                                  <span className="font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 tabular-nums">
-                                    {m.asking_price || "Tanya Harga"}
-                                  </span>
-                                </div>
-                                <div className="text-[11px] text-[var(--color-muted)] flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                                  <span>📍 {m.location || loc}</span>
-                                  <span>·</span>
-                                  <span>🎯 {m.match_score || "Good Match"}</span>
-                                  {m.source_group && (
-                                    <>
-                                      <span>·</span>
-                                      <span className="break-words">📢 {m.source_group}</span>
-                                    </>
+                          <div className="space-y-2.5">
+                            {matchedList.map((m: any, mIdx: number) => {
+                              const isTelegramSource =
+                                (m.match_source && m.match_source.toLowerCase().includes("telegram")) ||
+                                (m.source_group && m.source_group.toLowerCase().includes("telegram")) ||
+                                (m.source_url && m.source_url.includes("t.me"));
+
+                              const isThreadsSource =
+                                (m.match_source && m.match_source.toLowerCase().includes("threads")) ||
+                                (m.source_url && m.source_url.includes("threads.net"));
+
+                              const isOwnerDirect =
+                                (m.match_source &&
+                                  (m.match_source.toLowerCase().includes("owner") ||
+                                    m.match_source.toLowerCase().includes("landlord"))) ||
+                                (m.contact_person &&
+                                  (m.contact_person.toLowerCase().includes("owner") ||
+                                    m.contact_person.toLowerCase().includes("landlord")));
+
+                              // Format owner/lister phone for WhatsApp
+                              let rawPhone = m.contact_phone
+                                ? String(m.contact_phone).replace(/[^0-9]/g, "")
+                                : "";
+                              if (rawPhone.startsWith("0")) {
+                                rawPhone = "60" + rawPhone.slice(1);
+                              } else if (rawPhone.length > 0 && !rawPhone.startsWith("60")) {
+                                rawPhone = "60" + rawPhone;
+                              }
+
+                              const waListerText = `Salam ${m.contact_person || "Tuan/Puan"}, saya Afif dari Maxxan Realty (+601158683907). Saya mempunyai klien berpotensi yang mencari unit di ${m.location || loc} dan berminat dengan unit "${m.property_title}" (${m.asking_price || "sewa"}). Boleh saya tahu jika unit ini masih available untuk viewing?`;
+                              const waListerUrl = rawPhone
+                                ? `https://wa.me/${rawPhone}?text=${encodeURIComponent(waListerText)}`
+                                : null;
+
+                              return (
+                                <div
+                                  key={m.id || mIdx}
+                                  className="p-3.5 bg-amber-50/70 border border-amber-200/90 rounded-[2px] text-xs text-[var(--color-ink)] space-y-2.5 shadow-xs"
+                                >
+                                  {/* Title & Price */}
+                                  <div className="flex items-start sm:items-center justify-between gap-2 flex-wrap">
+                                    <div className="font-bold text-amber-950 text-sm leading-snug">
+                                      {m.property_title || "Unit Hartanah"}
+                                    </div>
+                                    <span className="font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 tabular-nums shrink-0">
+                                      {m.asking_price || "Tanya Harga"}
+                                    </span>
+                                  </div>
+
+                                  {/* Traceback Origin Badges & Match Details */}
+                                  <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                                    {/* Origin / Source Badge */}
+                                    <span
+                                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] font-semibold border ${
+                                        isThreadsSource
+                                          ? "bg-neutral-900 text-white border-neutral-800"
+                                          : isTelegramSource
+                                            ? "bg-sky-100 text-sky-900 border-sky-300"
+                                            : isOwnerDirect
+                                              ? "bg-amber-100 text-amber-900 border-amber-300"
+                                              : "bg-stone-100 text-stone-800 border-stone-300"
+                                      }`}
+                                    >
+                                      <span>{m.match_source || "Sumber Unit"}</span>
+                                    </span>
+
+                                    {m.match_score && (
+                                      <span className="px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-900 border border-emerald-300 font-medium">
+                                        Padanan {m.match_score}
+                                      </span>
+                                    )}
+
+                                    <span className="text-[var(--color-muted)] flex items-center gap-1">
+                                      <MapPin className="w-3 h-3 text-[var(--color-muted)]" />
+                                      <span>{m.location || loc}</span>
+                                    </span>
+
+                                    {m.source_group && (
+                                      <span
+                                        className="text-[var(--color-muted)] truncate max-w-[220px]"
+                                        title={m.source_group}
+                                      >
+                                        · 📢 {m.source_group}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  {/* Lister / Contact Person Info & Traceback Action Buttons */}
+                                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs bg-amber-100/60 p-2.5 rounded-[2px] border border-amber-200">
+                                    <div className="flex items-center gap-2 flex-wrap min-w-0">
+                                      <span className="text-[var(--color-muted)]">Kontak / Lister:</span>
+                                      <span className="font-semibold text-[var(--color-ink)] break-words">
+                                        {m.contact_person || "Tiada maklumat nama"}
+                                      </span>
+                                      {m.contact_phone && (
+                                        <span className="font-mono text-emerald-800 bg-emerald-100/90 px-1.5 py-0.5 rounded border border-emerald-300 font-medium">
+                                          {m.contact_phone}
+                                        </span>
+                                      )}
+                                    </div>
+
+                                    {/* Action Links */}
+                                    <div className="flex items-center gap-1.5 flex-wrap shrink-0">
+                                      {/* 1. Direct Link to Original Post/Source */}
+                                      {m.source_url && (
+                                        <a
+                                          href={m.source_url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold bg-[var(--color-paper)] hover:bg-[var(--color-paper-hi)] text-[var(--color-ink)] border border-[var(--color-rule)] hover:border-[var(--color-accent)] rounded-[2px] transition cursor-pointer"
+                                          title={`Buka post atau iklan asal di ${m.match_source || "media sosial"}`}
+                                        >
+                                          <span>Buka Sumber Asal</span>
+                                          <ExternalLink className="w-3 h-3 text-[var(--color-accent)]" />
+                                        </a>
+                                      )}
+
+                                      {/* 2. Direct WhatsApp to Owner/Lister */}
+                                      {waListerUrl && (
+                                        <a
+                                          href={waListerUrl}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold bg-emerald-700 hover:bg-emerald-800 text-white rounded-[2px] transition cursor-pointer"
+                                          title={`Hubungi ${m.contact_person || "Lister"} di WhatsApp`}
+                                        >
+                                          <MessageCircle className="w-3 h-3" />
+                                          <span>WhatsApp Lister</span>
+                                        </a>
+                                      )}
+
+                                      {/* 3. Telegram Inventory Tab Search */}
+                                      {isTelegramSource && (
+                                        <button
+                                          onClick={() => {
+                                            setActiveTab("inventory");
+                                            setInvSearch(m.property_title || m.location || "");
+                                            setInvPage(1);
+                                            window.scrollTo({ top: 300, behavior: "smooth" });
+                                          }}
+                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 rounded-[2px] transition cursor-pointer"
+                                          title="Cari unit ini dalam tab Inventori Telegram"
+                                        >
+                                          <Layers className="w-3 h-3 text-sky-600" />
+                                          <span>Lihat di Inventori TG</span>
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  {/* Unit Details Excerpt */}
+                                  {m.details && (
+                                    <p className="text-[11px] text-[var(--color-ink-2)] pt-1 border-t border-amber-200/70 leading-relaxed font-normal">
+                                      <span className="font-semibold text-amber-950">
+                                        Spesifikasi &amp; Nota Unit:{" "}
+                                      </span>
+                                      {m.details}
+                                    </p>
                                   )}
                                 </div>
-                                {m.details && (
-                                  <p className="text-[11px] text-[var(--color-ink-2)] pt-1 border-t border-amber-100">
-                                    {m.details}
-                                  </p>
-                                )}
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       )}
