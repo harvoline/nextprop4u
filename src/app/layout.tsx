@@ -4,9 +4,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nextprop4u.com"),
-  title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
+  title: "Ejen Hartanah Setapak & KL | Muhammad Norafif (NextProp4U)",
   description:
-    "Perunding Berdaftar Maxxan Realty di Setapak, Kuala Lumpur & Selangor. Khidmat jual, beli dan sewa rumah sub-sale, semakan nilai pasaran JPPH dan kelayakan pinjaman DSR percuma.",
+    "Perunding Maxxan Realty di Setapak, KL & Selangor. Khidmat jual, beli & sewa rumah subsale, semak nilai JPPH & kelayakan pinjaman DSR percuma.",
   keywords: [
     "ejen hartanah setapak",
     "perunding hartanah setapak",
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
+    title: "Ejen Hartanah Setapak & KL | Muhammad Norafif (NextProp4U)",
     description:
-      "Perunding Berdaftar Maxxan Realty. Konsultasi percuma semakan nilai pasaran JPPH dan had kelayakan pinjaman bank (DSR) di KL & Selangor. WhatsApp +6011-5868 3907.",
+      "Perunding Maxxan Realty di Setapak, KL & Selangor. Semak nilai JPPH & DSR percuma. WhatsApp +6011-5868 3907.",
     url: "https://nextprop4u.com",
     siteName: "NextProp4U - Muhammad Norafif (Maxxan Realty)",
     images: [
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
+    title: "Ejen Hartanah Setapak & KL | Muhammad Norafif (NextProp4U)",
     description:
-      "Perunding Berdaftar Maxxan Realty berpangkalan di Setapak, KL. Khidmat jual, beli dan sewa rumah seluruh KL & Selangor. Hubungi +6011-5868 3907.",
+      "Perunding Maxxan Realty di Setapak, KL & Selangor. Khidmat jual, beli & sewa rumah. WhatsApp +6011-5868 3907.",
     images: ["/images/og-image.jpg?v=2"],
   },
 };
