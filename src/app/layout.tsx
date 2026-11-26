@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     siteName: "NextProp4U - Muhammad Norafif (Maxxan Realty)",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/og-image.jpg?v=2",
         width: 1200,
         height: 630,
         alt: "Muhammad Norafif - Perunding Berdaftar Maxxan Realty | NextProp4U (+6011-5868 3907)",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
     description:
       "Perunding Berdaftar Maxxan Realty berpangkalan di Setapak, KL. Khidmat jual, beli dan sewa rumah seluruh KL & Selangor. Hubungi +6011-5868 3907.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/og-image.jpg?v=2"],
   },
 };
 
