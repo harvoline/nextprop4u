@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "../../lib/supabase/client";
@@ -36,36 +36,184 @@ export default function DashboardPage() {
   const [approach, setApproach] = useState<"A" | "B">("A");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // Filters for Leads
+  // Status overrides stored in localStorage
+  const [leadStatuses, setLeadStatuses] = useState<Record<string, string>>({});
+  const [ownerStatuses, setOwnerStatuses] = useState<Record<string, string>>({});
+  const [invStatuses, setInvStatuses] = useState<Record<string, string>>({});
+  const [matchStatuses, setMatchStatuses] = useState<Record<string, string>>({});
+
+  // Filters for Leads (Default: active_only)
   const [leadSearch, setLeadSearch] = useState("");
   const [leadPlatformFilter, setLeadPlatformFilter] = useState("all");
+  const [leadStatusFilter, setLeadStatusFilter] = useState("active_only");
   const [leadPage, setLeadPage] = useState(1);
 
-  // Filters for Telegram Inventory
+  // Filters for Telegram Inventory (Default: available)
   const [invSearch, setInvSearch] = useState("");
-  const [invStatusFilter, setInvStatusFilter] = useState("all");
+  const [invStatusFilter, setInvStatusFilter] = useState("available");
   const [invSortOrder, setInvSortOrder] = useState<"desc" | "asc">("desc");
   const [invPage, setInvPage] = useState(1);
   const [expandedInvId, setExpandedInvId] = useState<number | null>(null);
 
-  // Filters for Landlords
+  // Filters for Landlords (Default: active_only)
   const [ownerSearch, setOwnerSearch] = useState("");
+  const [ownerStatusFilter, setOwnerStatusFilter] = useState("active_only");
   const [ownerPage, setOwnerPage] = useState(1);
 
   const PAGE_SIZE = 10;
 
-  // Match lookup map
+  // Load status overrides from localStorage on client mount
+  useEffect(() => {
+    try {
+      const savedLeads = localStorage.getItem("nextprop_lead_statuses");
+      if (savedLeads) setLeadStatuses(JSON.parse(savedLeads));
+
+      const savedOwners = localStorage.getItem("nextprop_owner_statuses");
+      if (savedOwners) setOwnerStatuses(JSON.parse(savedOwners));
+
+      const savedInv = localStorage.getItem("nextprop_inv_statuses");
+      if (savedInv) setInvStatuses(JSON.parse(savedInv));
+
+      const savedMatches = localStorage.getItem("nextprop_match_statuses");
+      if (savedMatches) setMatchStatuses(JSON.parse(savedMatches));
+    } catch (e) {
+      console.error("Failed to load local storage status:", e);
+    }
+  }, []);
+
+  // Update handlers with persistent storage
+  const updateLeadStatus = (leadId: string, newStatus: string) => {
+    setLeadStatuses((prev) => {
+      const next = { ...prev, [leadId]: newStatus };
+      try {
+        localStorage.setItem("nextprop_lead_statuses", JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
+  const updateOwnerStatus = (ownerId: string, newStatus: string) => {
+    setOwnerStatuses((prev) => {
+      const next = { ...prev, [ownerId]: newStatus };
+      try {
+        localStorage.setItem("nextprop_owner_statuses", JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
+  const updateInvStatus = (invId: string | number, newStatus: string) => {
+    setInvStatuses((prev) => {
+      const next = { ...prev, [String(invId)]: newStatus };
+      try {
+        localStorage.setItem("nextprop_inv_statuses", JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
+  const updateMatchStatus = (matchId: string, newStatus: string) => {
+    setMatchStatuses((prev) => {
+      const next = { ...prev, [matchId]: newStatus };
+      try {
+        localStorage.setItem("nextprop_match_statuses", JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
+  // Helper status resolution and active checks
+  const getLeadStatus = (lead: any) => {
+    if (leadStatuses[lead.id]) return leadStatuses[lead.id];
+    const raw = (lead.status || "").toLowerCase();
+    if (raw.includes("close") || raw.includes("selesai") || raw.includes("closed")) return "selesai";
+    if (raw.includes("drop") || raw.includes("batal") || raw.includes("tak berminat")) return "tak_berminat";
+    if (raw.includes("follow")) return "follow_up";
+    if (raw.includes("view")) return "viewing";
+    return "baru";
+  };
+
+  const isLeadActive = (status: string) => {
+    return ["baru", "draf_disalin", "follow_up", "viewing"].includes(status);
+  };
+
+  const getOwnerStatus = (owner: any) => {
+    if (ownerStatuses[owner.id]) return ownerStatuses[owner.id];
+    const raw = (owner.status || "").toLowerCase();
+    const priceRaw = (owner.price || "").toLowerCase();
+    if (raw.includes("rented") || raw.includes("disewa") || priceRaw.includes("rented") || priceRaw.includes("disewa")) return "rented";
+    if (raw.includes("sold") || raw.includes("terjual") || priceRaw.includes("sold") || priceRaw.includes("terjual")) return "sold";
+    if (raw.includes("runding") || raw.includes("nego")) return "negotiating";
+    if (raw.includes("inactive") || raw.includes("batal")) return "inactive";
+    return "available";
+  };
+
+  const isOwnerActive = (status: string) => {
+    return ["available", "negotiating"].includes(status);
+  };
+
+  const getInvStatus = (item: any) => {
+    if (invStatuses[String(item.id)]) return invStatuses[String(item.id)];
+    const isBooked =
+      (item.title && item.title.toUpperCase().includes("BOOKED")) ||
+      (item.status && item.status.toUpperCase().includes("BOOKED"));
+    return isBooked ? "booked" : "available";
+  };
+
+  const isInvActive = (status: string) => {
+    return status === "available";
+  };
+
+  // Match lookup map - HANYA PADANKAN UNIT YANG MASIH AKTIF
   const matchesByInquiryId = useMemo(() => {
     const map = new Map<string, any[]>();
     for (const match of portalData.matches || []) {
       const inqId = match.inquiry_id;
+
+      // 1. Direct match status check
+      const mStatus = matchStatuses[match.id] || "available";
+      if (mStatus === "inactive" || mStatus === "rented" || mStatus === "booked") {
+        continue;
+      }
+
+      // 2. Filter out if matched owner listing is no longer active
+      if (match.contact_person || match.source_url) {
+        const matchingOwner = (portalData.owner_listings || []).find(
+          (o: any) =>
+            (match.source_url && o.source_url === match.source_url) ||
+            (o.author && match.contact_person && match.contact_person.toLowerCase().includes(o.author.toLowerCase()))
+        );
+        if (matchingOwner) {
+          const oStatus = getOwnerStatus(matchingOwner);
+          if (!isOwnerActive(oStatus)) {
+            continue; // Owner is already rented / sold / inactive!
+          }
+        }
+      }
+
+      // 3. Filter out if matched Telegram inventory item is booked
+      if (match.property_title) {
+        const matchingInv = (portalData.inventory || []).find(
+          (inv: any) =>
+            inv.title &&
+            (match.property_title.toLowerCase().includes(inv.title.toLowerCase()) ||
+              inv.title.toLowerCase().includes(match.property_title.toLowerCase()))
+        );
+        if (matchingInv) {
+          const iStatus = getInvStatus(matchingInv);
+          if (!isInvActive(iStatus)) {
+            continue; // Inventory item is booked or expired!
+          }
+        }
+      }
+
       if (!map.has(inqId)) {
         map.set(inqId, []);
       }
       map.get(inqId)!.push(match);
     }
     return map;
-  }, []);
+  }, [matchStatuses, ownerStatuses, invStatuses]);
 
   // Filtered Leads
   const filteredLeads = useMemo(() => {
@@ -83,9 +231,15 @@ export default function DashboardPage() {
         (item.platform &&
           item.platform.toLowerCase().includes(leadPlatformFilter.toLowerCase()));
 
-      return matchSearch && matchPlatform;
+      const currentStatus = getLeadStatus(item);
+      const matchStatus =
+        leadStatusFilter === "all" ||
+        (leadStatusFilter === "active_only" && isLeadActive(currentStatus)) ||
+        leadStatusFilter === currentStatus;
+
+      return matchSearch && matchPlatform && matchStatus;
     });
-  }, [leadSearch, leadPlatformFilter]);
+  }, [leadSearch, leadPlatformFilter, leadStatusFilter, leadStatuses]);
 
   // Filtered Telegram Inventory
   const filteredInventory = useMemo(() => {
@@ -98,14 +252,12 @@ export default function DashboardPage() {
         (item.source_excerpt && item.source_excerpt.toLowerCase().includes(q)) ||
         (item.asking_price && item.asking_price.toLowerCase().includes(q));
 
-      const isBooked =
-        (item.title && item.title.toUpperCase().includes("BOOKED")) ||
-        (item.status && item.status.toUpperCase().includes("BOOKED"));
-
+      const currentStatus = getInvStatus(item);
       const matchStatus =
         invStatusFilter === "all" ||
-        (invStatusFilter === "booked" && isBooked) ||
-        (invStatusFilter === "available" && !isBooked);
+        (invStatusFilter === "available" && currentStatus === "available") ||
+        (invStatusFilter === "booked" && currentStatus === "booked") ||
+        invStatusFilter === currentStatus;
 
       return matchSearch && matchStatus;
     });
@@ -117,21 +269,28 @@ export default function DashboardPage() {
     });
 
     return list;
-  }, [invSearch, invStatusFilter, invSortOrder]);
+  }, [invSearch, invStatusFilter, invSortOrder, invStatuses]);
 
   // Filtered Direct Landlords
   const filteredOwners = useMemo(() => {
     return (portalData.owner_listings || []).filter((item: any) => {
       const q = ownerSearch.toLowerCase().trim();
-      return (
+      const matchSearch =
         !q ||
         (item.author && item.author.toLowerCase().includes(q)) ||
         (item.location && item.location.toLowerCase().includes(q)) ||
         (item.property_type && item.property_type.toLowerCase().includes(q)) ||
-        (item.price && item.price.toLowerCase().includes(q))
-      );
+        (item.price && item.price.toLowerCase().includes(q));
+
+      const currentStatus = getOwnerStatus(item);
+      const matchStatus =
+        ownerStatusFilter === "all" ||
+        (ownerStatusFilter === "active_only" && isOwnerActive(currentStatus)) ||
+        ownerStatusFilter === currentStatus;
+
+      return matchSearch && matchStatus;
     });
-  }, [ownerSearch]);
+  }, [ownerSearch, ownerStatusFilter, ownerStatuses]);
 
   // Curated Resident Groups & Telegram Channels
   const residentGroups = [
@@ -219,7 +378,33 @@ export default function DashboardPage() {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
+
+    // Auto-advance lead to draf_disalin if currently baru
+    if (leadStatuses[id] === "baru" || !leadStatuses[id]) {
+      updateLeadStatus(id, "draf_disalin");
+    }
   };
+
+  // Active counts for KPIs
+  const totalActiveLeads = useMemo(() => {
+    return (portalData.inquiries || []).filter((l: any) => isLeadActive(getLeadStatus(l))).length;
+  }, [leadStatuses]);
+
+  const totalActiveInventory = useMemo(() => {
+    return (portalData.inventory || []).filter((i: any) => isInvActive(getInvStatus(i))).length;
+  }, [invStatuses]);
+
+  const totalActiveMatches = useMemo(() => {
+    let count = 0;
+    for (const list of matchesByInquiryId.values()) {
+      count += list.length;
+    }
+    return count;
+  }, [matchesByInquiryId]);
+
+  const totalActiveOwners = useMemo(() => {
+    return (portalData.owner_listings || []).filter((o: any) => isOwnerActive(getOwnerStatus(o))).length;
+  }, [ownerStatuses]);
 
   return (
     <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
@@ -287,10 +472,10 @@ export default function DashboardPage() {
               <Users className="w-3.5 h-3.5 text-[var(--color-muted)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-ink)] mt-1 tabular-nums">
-              {portalData.stats?.total_inquiries || 120}
+              {totalActiveLeads}
             </div>
             <div className="text-xs text-[var(--color-accent)] font-medium mt-0.5">
-              Facebook, Threads, IG
+              {totalActiveLeads} Aktif ({portalData.inquiries?.length || 120} Jumlah)
             </div>
           </div>
 
@@ -300,10 +485,10 @@ export default function DashboardPage() {
               <Layers className="w-3.5 h-3.5 text-[var(--color-muted)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-ink)] mt-1 tabular-nums">
-              {portalData.stats?.total_inventory || 75}
+              {totalActiveInventory}
             </div>
             <div className="text-xs text-[var(--color-accent)] font-medium mt-0.5">
-              Saluran Telegram Maxxan
+              {totalActiveInventory} Tersedia ({portalData.inventory?.length || 75} Jumlah)
             </div>
           </div>
 
@@ -313,10 +498,10 @@ export default function DashboardPage() {
               <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-accent)] mt-1 tabular-nums">
-              {portalData.stats?.total_matches || 242}
+              {totalActiveMatches}
             </div>
             <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
-              Padanan Telegram &amp; Leads
+              Hanya Padanan Unit Aktif
             </div>
           </div>
 
@@ -326,10 +511,10 @@ export default function DashboardPage() {
               <Home className="w-3.5 h-3.5 text-[var(--color-muted)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-ink)] mt-1 tabular-nums">
-              {portalData.stats?.total_owners || 41}
+              {totalActiveOwners}
             </div>
             <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
-              Direct Landlords (Off-Market)
+              {totalActiveOwners} Tersedia ({portalData.owner_listings?.length || 44} Jumlah)
             </div>
           </div>
         </div>
@@ -454,6 +639,24 @@ export default function DashboardPage() {
                 <option value="tiktok">TikTok</option>
                 <option value="instagram">Instagram</option>
               </select>
+              <select
+                value={leadStatusFilter}
+                onChange={(e) => {
+                  setLeadStatusFilter(e.target.value);
+                  setLeadPage(1);
+                }}
+                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
+              >
+                <option value="active_only">Status Aktif Sahaja (Default)</option>
+                <option value="baru">Baru Sahaja</option>
+                <option value="draf_disalin">Draf Disalin / Dihantar</option>
+                <option value="follow_up">Perlu Follow-up</option>
+                <option value="viewing">Viewing / Temujanji</option>
+                <option value="all">Semua Status (Termasuk Arkib)</option>
+                <option value="selesai">Arkib: Selesai / Dapat Unit</option>
+                <option value="sudah_jumpa">Arkib: Sudah Jumpa Sendiri</option>
+                <option value="tak_berminat">Arkib: Tidak Berminat / Batal</option>
+              </select>
             </div>
 
             {/* Leads Cards */}
@@ -465,6 +668,7 @@ export default function DashboardPage() {
                   const matchedList = matchesByInquiryId.get(lead.id) || [];
                   const author = lead.author || "Klien";
                   const loc = lead.location_target || "Kuala Lumpur / Selangor";
+                  const currentLeadStatus = getLeadStatus(lead);
                   const budgetText =
                     lead.budget_max > 100000
                       ? `RM${lead.budget_max.toLocaleString()}`
@@ -524,9 +728,45 @@ export default function DashboardPage() {
                           )}
                         </div>
 
-                        <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
-                          <Clock className="w-3.5 h-3.5" />
-                          <span>{lead.first_seen || lead.posted_date || "Baru Sahaja"}</span>
+                        {/* Right side: Status Selector & Clock */}
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
+                            <select
+                              value={currentLeadStatus}
+                              onChange={(e) => updateLeadStatus(lead.id, e.target.value)}
+                              className={`text-xs px-2 py-1 rounded-[2px] font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] ${
+                                currentLeadStatus === "baru"
+                                  ? "bg-amber-100 text-amber-900 border-amber-300"
+                                  : currentLeadStatus === "draf_disalin"
+                                    ? "bg-sky-100 text-sky-900 border-sky-300"
+                                    : currentLeadStatus === "follow_up"
+                                      ? "bg-purple-100 text-purple-900 border-purple-300"
+                                      : currentLeadStatus === "viewing"
+                                        ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+                                        : currentLeadStatus === "selesai"
+                                          ? "bg-stone-200 text-stone-800 border-stone-400"
+                                          : "bg-rose-100 text-rose-900 border-rose-300"
+                              }`}
+                            >
+                              <optgroup label="── Status Aktif ──">
+                                <option value="baru">Baru (Belum Dihubungi)</option>
+                                <option value="draf_disalin">Draf Disalin / Dihantar</option>
+                                <option value="follow_up">Perlu Follow-up</option>
+                                <option value="viewing">Viewing / Temujanji</option>
+                              </optgroup>
+                              <optgroup label="── Selesai / Tidak Aktif ──">
+                                <option value="selesai">Selesai (Dapat Unit)</option>
+                                <option value="sudah_jumpa">Sudah Jumpa Sendiri</option>
+                                <option value="tak_berminat">Tidak Berminat / Batal</option>
+                              </optgroup>
+                            </select>
+                          </div>
+
+                          <div className="flex items-center gap-1.5 text-xs text-[var(--color-muted)] shrink-0">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>{lead.first_seen || lead.posted_date || "Baru Sahaja"}</span>
+                          </div>
                         </div>
                       </div>
 
@@ -861,10 +1101,10 @@ export default function DashboardPage() {
                   setInvStatusFilter(e.target.value);
                   setInvPage(1);
                 }}
-                className="studio-input text-xs w-full sm:w-auto py-2"
+                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
               >
-                <option value="all">Semua Status</option>
-                <option value="available">Tersedia (Available)</option>
+                <option value="available">Tersedia Sahaja (Default)</option>
+                <option value="all">Semua Status (Termasuk Booked)</option>
                 <option value="booked">Booked / Terjual</option>
               </select>
 
@@ -887,9 +1127,8 @@ export default function DashboardPage() {
                 .slice((invPage - 1) * PAGE_SIZE, invPage * PAGE_SIZE)
                 .map((item: any) => {
                   const isExpanded = expandedInvId === item.id;
-                  const isBooked =
-                    (item.title && item.title.toUpperCase().includes("BOOKED")) ||
-                    (item.status && item.status.toUpperCase().includes("BOOKED"));
+                  const currentInvStatus = getInvStatus(item);
+                  const isAvailable = currentInvStatus === "available";
 
                   const waPropUrl = `https://wa.me/601158683907?text=${encodeURIComponent(
                     `Salam Afif, saya berminat nak tanya mengenai unit Telegram: "${item.title || item.location_line}" (Harga: ${item.asking_price}). Boleh semak sama ada masih available?`
@@ -899,23 +1138,30 @@ export default function DashboardPage() {
                     <div
                       key={item.id}
                       className={`sheet p-5 space-y-3 transition border ${
-                        isBooked ? "opacity-75 bg-[var(--color-paper-2)] border-dashed" : "border-[var(--color-rule)]"
+                        !isAvailable ? "opacity-75 bg-[var(--color-paper-2)] border-dashed" : "border-[var(--color-rule)]"
                       }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2.5">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-display text-base text-[var(--color-ink)]">
+                        <div className="flex items-center gap-2 flex-wrap min-w-0">
+                          <span className="font-display text-base text-[var(--color-ink)] break-words">
                             {item.title || item.location_line || "Unit Hartanah"}
                           </span>
-                          {isBooked ? (
-                            <span className="text-xs px-2 py-0.5 rounded-[2px] bg-red-100 text-red-800 border border-red-200 font-semibold">
-                              ❌ BOOKED
-                            </span>
-                          ) : (
-                            <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold">
-                              ✓ AVAILABLE
-                            </span>
-                          )}
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
+                            <select
+                              value={currentInvStatus}
+                              onChange={(e) => updateInvStatus(item.id, e.target.value)}
+                              className={`text-xs px-2 py-0.5 rounded-[2px] font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] ${
+                                isAvailable
+                                  ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+                                  : "bg-red-100 text-red-900 border-red-300"
+                              }`}
+                            >
+                              <option value="available">✓ Tersedia (Available)</option>
+                              <option value="booked">❌ Booked / Terjual</option>
+                              <option value="expired">Tamat Tempoh / Delisted</option>
+                            </select>
+                          </div>
                           <span className="text-xs px-2 py-0.5 rounded-[2px] bg-[var(--color-paper-2)] text-[var(--color-ink-2)] border border-[var(--color-rule)] font-mono">
                             TG #{item.message_id || item.id}
                           </span>
@@ -973,6 +1219,21 @@ export default function DashboardPage() {
                         </button>
 
                         <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ml-auto">
+                          <button
+                            onClick={() =>
+                              updateInvStatus(
+                                item.id,
+                                isAvailable ? "booked" : "available"
+                              )
+                            }
+                            className={`btn btn--sm text-xs font-medium ${
+                              isAvailable
+                                ? "btn--quiet text-red-700 hover:text-red-900"
+                                : "bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100"
+                            }`}
+                          >
+                            <span>{isAvailable ? "Tanda Booked" : "Tanda Tersedia"}</span>
+                          </button>
                           <button
                             onClick={() =>
                               copyToClipboard(
@@ -1036,24 +1297,46 @@ export default function DashboardPage() {
         {/* TAB 3: DIRECT LANDLORD LISTINGS */}
         {activeTab === "landlords" && (
           <div className="space-y-4">
-            <div className="relative w-full">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
-              <input
-                type="text"
-                placeholder="Cari pemilik langsung, lokasi rumah, atau bajet sewa..."
-                value={ownerSearch}
+            <div className="flex flex-col sm:flex-row items-center gap-2">
+              <div className="relative flex-1 w-full">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Cari pemilik langsung, lokasi rumah, atau bajet sewa..."
+                  value={ownerSearch}
+                  onChange={(e) => {
+                    setOwnerSearch(e.target.value);
+                    setOwnerPage(1);
+                  }}
+                  className="studio-input studio-input--search w-full text-xs"
+                />
+              </div>
+
+              <select
+                value={ownerStatusFilter}
                 onChange={(e) => {
-                  setOwnerSearch(e.target.value);
+                  setOwnerStatusFilter(e.target.value);
                   setOwnerPage(1);
                 }}
-                className="studio-input studio-input--search w-full text-xs"
-              />
+                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
+              >
+                <option value="active_only">Unit Aktif Sahaja (Default)</option>
+                <option value="available">Tersedia Sahaja</option>
+                <option value="negotiating">Dalam Rundingan</option>
+                <option value="all">Semua Status (Termasuk Disewa/Dijual)</option>
+                <option value="rented">Sudah Disewa</option>
+                <option value="sold">Sudah Dijual</option>
+                <option value="inactive">Batal / Delisted</option>
+              </select>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredOwners
                 .slice((ownerPage - 1) * PAGE_SIZE, ownerPage * PAGE_SIZE)
                 .map((owner: any, idx: number) => {
+                  const currentOwnerStatus = getOwnerStatus(owner);
+                  const isAvailable = currentOwnerStatus === "available";
+
                   const waOwnerUrl = owner.contact_info?.includes("+60")
                     ? `https://wa.me/${owner.contact_info.replace(/[^0-9]/g, "")}`
                     : `https://wa.me/601158683907?text=${encodeURIComponent(
@@ -1063,13 +1346,45 @@ export default function DashboardPage() {
                   return (
                     <div
                       key={owner.id || idx}
-                      className="sheet p-5 flex flex-col justify-between space-y-3 border border-[var(--color-rule)]"
+                      className={`sheet p-5 flex flex-col justify-between space-y-3 border transition ${
+                        !isAvailable ? "opacity-75 bg-[var(--color-paper-2)] border-dashed" : "border-[var(--color-rule)]"
+                      }`}
                     >
                       <div>
                         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
-                          <span className="font-display text-base text-[var(--color-ink)] break-words min-w-0">
-                            {owner.author || "Tuan Rumah"}
-                          </span>
+                          <div className="flex items-center gap-2 flex-wrap min-w-0">
+                            <span className="font-display text-base text-[var(--color-ink)] break-words min-w-0">
+                              {owner.author || "Tuan Rumah"}
+                            </span>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
+                              <select
+                                value={currentOwnerStatus}
+                                onChange={(e) => updateOwnerStatus(owner.id, e.target.value)}
+                                className={`text-xs px-2 py-0.5 rounded-[2px] font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] ${
+                                  currentOwnerStatus === "available"
+                                    ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+                                    : currentOwnerStatus === "negotiating"
+                                      ? "bg-sky-100 text-sky-900 border-sky-300"
+                                      : currentOwnerStatus === "rented"
+                                        ? "bg-stone-200 text-stone-800 border-stone-400"
+                                        : currentOwnerStatus === "sold"
+                                          ? "bg-stone-200 text-stone-800 border-stone-400"
+                                          : "bg-rose-100 text-rose-900 border-rose-300"
+                                }`}
+                              >
+                                <optgroup label="── Unit Aktif ──">
+                                  <option value="available">✓ Tersedia (Aktif)</option>
+                                  <option value="negotiating">Dalam Rundingan</option>
+                                </optgroup>
+                                <optgroup label="── Selesai / Tidak Aktif ──">
+                                  <option value="rented">Sudah Disewa</option>
+                                  <option value="sold">Sudah Dijual</option>
+                                  <option value="inactive">Batal / Delisted</option>
+                                </optgroup>
+                              </select>
+                            </div>
+                          </div>
                           <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200 tabular-nums whitespace-nowrap shrink-0">
                             {owner.price || "Sila Hubungi"}
                           </span>
@@ -1106,6 +1421,21 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[var(--color-rule)]">
+                        <button
+                          onClick={() =>
+                            updateOwnerStatus(
+                              owner.id,
+                              isAvailable ? "rented" : "available"
+                            )
+                          }
+                          className={`btn btn--sm flex-1 text-center font-medium ${
+                            isAvailable
+                              ? "btn--quiet text-amber-900"
+                              : "bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100"
+                          }`}
+                        >
+                          <span>{isAvailable ? "Tanda Sudah Disewa" : "Aktifkan Semula"}</span>
+                        </button>
                         {owner.source_url && (
                           <a
                             href={owner.source_url}
