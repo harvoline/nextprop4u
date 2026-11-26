@@ -3,7 +3,7 @@
   "updated_at": "2026-11-26T22:59:55.274717",
   "stats": {
     "total_inquiries": 120,
-    "total_inventory": 75,
+    "total_inventory": 133,
     "total_matches": 236,
     "total_owners": 44
   },
@@ -21,7 +21,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5619",
       "day": "2026-11-22",
-      "sort_date": "2026-11-22T19:57:17.000000"
+      "sort_date": "2026-11-22T19:57:17.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 74,
@@ -36,7 +38,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5596",
       "day": "2026-11-17",
-      "sort_date": "2026-11-17T14:07:38.000000"
+      "sort_date": "2026-11-17T14:07:38.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 73,
@@ -51,7 +55,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5583",
       "day": "2026-11-16",
-      "sort_date": "2026-11-16T17:27:30.000000"
+      "sort_date": "2026-11-16T17:27:30.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 72,
@@ -66,7 +72,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5569",
       "day": "2026-11-16",
-      "sort_date": "2026-11-16T15:43:16.000000"
+      "sort_date": "2026-11-16T15:43:16.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 71,
@@ -81,7 +89,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5550",
       "day": "2026-11-12",
-      "sort_date": "2026-11-12T14:10:21.000000"
+      "sort_date": "2026-11-12T14:10:21.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 70,
@@ -96,7 +106,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5529",
       "day": "2026-11-10",
-      "sort_date": "2026-11-10T17:29:58.000000"
+      "sort_date": "2026-11-10T17:29:58.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 69,
@@ -111,7 +123,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5514",
       "day": "2026-11-10",
-      "sort_date": "2026-11-10T12:09:55.000000"
+      "sort_date": "2026-11-10T12:09:55.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 68,
@@ -126,7 +140,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5497",
       "day": "2026-11-08",
-      "sort_date": "2026-11-08T14:11:44.000000"
+      "sort_date": "2026-11-08T14:11:44.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 67,
@@ -141,7 +157,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5469",
       "day": "2026-11-04",
-      "sort_date": "2026-11-04T13:52:27.000000"
+      "sort_date": "2026-11-04T13:52:27.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 66,
@@ -156,7 +174,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5413",
       "day": "2026-11-02",
-      "sort_date": "2026-11-02T15:05:13.000000"
+      "sort_date": "2026-11-02T15:05:13.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 65,
@@ -171,7 +191,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5396",
       "day": "2026-11-01",
-      "sort_date": "2026-11-01T12:34:13.000000"
+      "sort_date": "2026-11-01T12:34:13.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 64,
@@ -186,7 +208,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5372",
       "day": "2026-10-27",
-      "sort_date": "2026-10-27T13:20:13.000000"
+      "sort_date": "2026-10-27T13:20:13.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 63,
@@ -201,7 +225,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5354",
       "day": "2026-10-26",
-      "sort_date": "2026-10-26T11:28:56.000000"
+      "sort_date": "2026-10-26T11:28:56.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 62,
@@ -216,7 +242,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5322",
       "day": "2026-10-22",
-      "sort_date": "2026-10-22T15:45:59.000000"
+      "sort_date": "2026-10-22T15:45:59.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 61,
@@ -231,7 +259,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5282",
       "day": "2026-10-19",
-      "sort_date": "2026-10-19T10:42:15.000000"
+      "sort_date": "2026-10-19T10:42:15.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 60,
@@ -246,7 +276,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5254",
       "day": "2026-10-15",
-      "sort_date": "2026-10-15T13:31:18.000000"
+      "sort_date": "2026-10-15T13:31:18.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 59,
@@ -261,7 +293,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5224",
       "day": "2026-10-13",
-      "sort_date": "2026-10-13T00:08:22.000000"
+      "sort_date": "2026-10-13T00:08:22.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 58,
@@ -276,7 +310,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5211",
       "day": "2026-10-12",
-      "sort_date": "2026-10-12T10:03:52.000000"
+      "sort_date": "2026-10-12T10:03:52.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 57,
@@ -291,7 +327,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5178",
       "day": "2026-10-05",
-      "sort_date": "2026-10-05T19:36:14.000000"
+      "sort_date": "2026-10-05T19:36:14.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 56,
@@ -306,7 +344,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5159",
       "day": "2026-10-05",
-      "sort_date": "2026-10-05T17:24:55.000000"
+      "sort_date": "2026-10-05T17:24:55.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 55,
@@ -321,7 +361,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5144",
       "day": "2026-10-05",
-      "sort_date": "2026-10-05T17:08:54.000000"
+      "sort_date": "2026-10-05T17:08:54.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 54,
@@ -336,7 +378,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5116",
       "day": "2026-10-05",
-      "sort_date": "2026-10-05T14:31:52.000000"
+      "sort_date": "2026-10-05T14:31:52.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 53,
@@ -351,7 +395,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5064",
       "day": "2026-09-25",
-      "sort_date": "2026-09-25T11:09:49.000000"
+      "sort_date": "2026-09-25T11:09:49.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 52,
@@ -366,7 +412,9 @@
       "duplicate_count": "1",
       "source_message_ids": "5017",
       "day": "2026-09-23",
-      "sort_date": "2026-09-23T11:34:46.000000"
+      "sort_date": "2026-09-23T11:34:46.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 51,
@@ -381,7 +429,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4996",
       "day": "2026-09-23",
-      "sort_date": "2026-09-23T10:48:05.000000"
+      "sort_date": "2026-09-23T10:48:05.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 50,
@@ -396,7 +446,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4954",
       "day": "2026-09-22",
-      "sort_date": "2026-09-22T11:51:07.000000"
+      "sort_date": "2026-09-22T11:51:07.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 49,
@@ -411,7 +463,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4911",
       "day": "2026-09-21",
-      "sort_date": "2026-09-21T11:19:27.000000"
+      "sort_date": "2026-09-21T11:19:27.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 48,
@@ -426,7 +480,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4882",
       "day": "2026-09-17",
-      "sort_date": "2026-09-17T14:39:18.000000"
+      "sort_date": "2026-09-17T14:39:18.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 47,
@@ -441,7 +497,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4862",
       "day": "2026-09-14",
-      "sort_date": "2026-09-14T17:07:21.000000"
+      "sort_date": "2026-09-14T17:07:21.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 46,
@@ -456,7 +514,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4844",
       "day": "2026-09-14",
-      "sort_date": "2026-09-14T10:28:00.000000"
+      "sort_date": "2026-09-14T10:28:00.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 45,
@@ -471,7 +531,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4805",
       "day": "2026-09-02",
-      "sort_date": "2026-09-02T16:15:14.000000"
+      "sort_date": "2026-09-02T16:15:14.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 44,
@@ -486,7 +548,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4779",
       "day": "2026-08-27",
-      "sort_date": "2026-08-27T11:26:49.000000"
+      "sort_date": "2026-08-27T11:26:49.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 43,
@@ -501,7 +565,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4754",
       "day": "2026-08-27",
-      "sort_date": "2026-08-27T10:57:19.000000"
+      "sort_date": "2026-08-27T10:57:19.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 42,
@@ -516,7 +582,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4738",
       "day": "2026-08-26",
-      "sort_date": "2026-08-26T16:27:56.000000"
+      "sort_date": "2026-08-26T16:27:56.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 41,
@@ -531,7 +599,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4692",
       "day": "2026-08-26",
-      "sort_date": "2026-08-26T13:01:06.000000"
+      "sort_date": "2026-08-26T13:01:06.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 40,
@@ -546,7 +616,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4672",
       "day": "2026-08-24",
-      "sort_date": "2026-08-24T16:51:28.000000"
+      "sort_date": "2026-08-24T16:51:28.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 39,
@@ -561,7 +633,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4647",
       "day": "2026-08-21",
-      "sort_date": "2026-08-21T16:32:17.000000"
+      "sort_date": "2026-08-21T16:32:17.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 38,
@@ -576,7 +650,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4589",
       "day": "2026-08-18",
-      "sort_date": "2026-08-18T17:13:57.000000"
+      "sort_date": "2026-08-18T17:13:57.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 37,
@@ -591,7 +667,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4564",
       "day": "2026-08-14",
-      "sort_date": "2026-08-14T17:13:44.000000"
+      "sort_date": "2026-08-14T17:13:44.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 36,
@@ -606,7 +684,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4548",
       "day": "2026-08-14",
-      "sort_date": "2026-08-14T12:03:29.000000"
+      "sort_date": "2026-08-14T12:03:29.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 35,
@@ -621,7 +701,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4516",
       "day": "2026-08-13",
-      "sort_date": "2026-08-13T22:01:40.000000"
+      "sort_date": "2026-08-13T22:01:40.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 34,
@@ -636,7 +718,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4494",
       "day": "2026-08-12",
-      "sort_date": "2026-08-12T14:54:56.000000"
+      "sort_date": "2026-08-12T14:54:56.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 33,
@@ -651,7 +735,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4473",
       "day": "2026-08-12",
-      "sort_date": "2026-08-12T10:11:27.000000"
+      "sort_date": "2026-08-12T10:11:27.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 32,
@@ -666,7 +752,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4452",
       "day": "2026-08-11",
-      "sort_date": "2026-08-11T10:54:44.000000"
+      "sort_date": "2026-08-11T10:54:44.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 31,
@@ -681,7 +769,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4425",
       "day": "2026-08-04",
-      "sort_date": "2026-08-04T14:43:07.000000"
+      "sort_date": "2026-08-04T14:43:07.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 12,
@@ -696,7 +786,9 @@
       "duplicate_count": "2",
       "source_message_ids": "3935,4412",
       "day": "2026-08-03",
-      "sort_date": "2026-08-03T14:45:43.000000"
+      "sort_date": "2026-08-03T14:45:43.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 30,
@@ -711,7 +803,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4391",
       "day": "2026-08-03",
-      "sort_date": "2026-08-03T10:08:59.000000"
+      "sort_date": "2026-08-03T10:08:59.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 29,
@@ -726,7 +820,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4376",
       "day": "2026-07-29",
-      "sort_date": "2026-07-29T21:08:11.000000"
+      "sort_date": "2026-07-29T21:08:11.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 28,
@@ -741,7 +837,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4325",
       "day": "2026-07-24",
-      "sort_date": "2026-07-24T10:40:12.000000"
+      "sort_date": "2026-07-24T10:40:12.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 27,
@@ -756,7 +854,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4314",
       "day": "2026-07-23",
-      "sort_date": "2026-07-23T14:22:43.000000"
+      "sort_date": "2026-07-23T14:22:43.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 26,
@@ -771,7 +871,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4289",
       "day": "2026-07-17",
-      "sort_date": "2026-07-17T12:34:30.000000"
+      "sort_date": "2026-07-17T12:34:30.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 25,
@@ -786,7 +888,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4253",
       "day": "2026-07-16",
-      "sort_date": "2026-07-16T17:49:19.000000"
+      "sort_date": "2026-07-16T17:49:19.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 24,
@@ -801,7 +905,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4235",
       "day": "2026-07-13",
-      "sort_date": "2026-07-13T11:30:33.000000"
+      "sort_date": "2026-07-13T11:30:33.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 23,
@@ -816,7 +922,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4205",
       "day": "2026-07-09",
-      "sort_date": "2026-07-09T10:24:08.000000"
+      "sort_date": "2026-07-09T10:24:08.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 22,
@@ -831,7 +939,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4186",
       "day": "2026-07-06",
-      "sort_date": "2026-07-06T15:07:56.000000"
+      "sort_date": "2026-07-06T15:07:56.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 21,
@@ -846,7 +956,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4161",
       "day": "2026-07-06",
-      "sort_date": "2026-07-06T11:42:36.000000"
+      "sort_date": "2026-07-06T11:42:36.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 20,
@@ -861,7 +973,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4140",
       "day": "2026-07-02",
-      "sort_date": "2026-07-02T16:17:34.000000"
+      "sort_date": "2026-07-02T16:17:34.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 19,
@@ -876,7 +990,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4100",
       "day": "2026-06-30",
-      "sort_date": "2026-06-30T16:58:02.000000"
+      "sort_date": "2026-06-30T16:58:02.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 18,
@@ -891,7 +1007,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4058",
       "day": "2026-06-26",
-      "sort_date": "2026-06-26T17:39:36.000000"
+      "sort_date": "2026-06-26T17:39:36.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 17,
@@ -906,7 +1024,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4048",
       "day": "2026-06-26",
-      "sort_date": "2026-06-26T16:37:37.000000"
+      "sort_date": "2026-06-26T16:37:37.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 16,
@@ -921,7 +1041,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4020",
       "day": "2026-06-22",
-      "sort_date": "2026-06-22T13:37:19.000000"
+      "sort_date": "2026-06-22T13:37:19.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 15,
@@ -936,7 +1058,9 @@
       "duplicate_count": "1",
       "source_message_ids": "4003",
       "day": "2026-06-19",
-      "sort_date": "2026-06-19T16:15:21.000000"
+      "sort_date": "2026-06-19T16:15:21.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 14,
@@ -951,7 +1075,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3983",
       "day": "2026-06-16",
-      "sort_date": "2026-06-16T15:43:39.000000"
+      "sort_date": "2026-06-16T15:43:39.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 13,
@@ -966,7 +1092,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3957",
       "day": "2026-06-15",
-      "sort_date": "2026-06-15T11:43:17.000000"
+      "sort_date": "2026-06-15T11:43:17.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 11,
@@ -981,7 +1109,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3911",
       "day": "2026-06-10",
-      "sort_date": "2026-06-10T12:36:58.000000"
+      "sort_date": "2026-06-10T12:36:58.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 10,
@@ -996,7 +1126,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3892",
       "day": "2026-06-09",
-      "sort_date": "2026-06-09T17:35:32.000000"
+      "sort_date": "2026-06-09T17:35:32.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 9,
@@ -1011,7 +1143,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3867",
       "day": "2026-06-08",
-      "sort_date": "2026-06-08T12:22:21.000000"
+      "sort_date": "2026-06-08T12:22:21.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 8,
@@ -1026,7 +1160,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3844",
       "day": "2026-06-05",
-      "sort_date": "2026-06-05T16:30:32.000000"
+      "sort_date": "2026-06-05T16:30:32.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 7,
@@ -1041,7 +1177,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3794",
       "day": "2026-06-05",
-      "sort_date": "2026-06-05T09:49:22.000000"
+      "sort_date": "2026-06-05T09:49:22.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 6,
@@ -1056,7 +1194,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3782",
       "day": "2026-06-04",
-      "sort_date": "2026-06-04T18:45:32.000000"
+      "sort_date": "2026-06-04T18:45:32.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 5,
@@ -1071,7 +1211,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3759",
       "day": "2026-06-04",
-      "sort_date": "2026-06-04T17:39:19.000000"
+      "sort_date": "2026-06-04T17:39:19.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 4,
@@ -1086,7 +1228,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3732",
       "day": "2026-06-03",
-      "sort_date": "2026-06-03T16:59:45.000000"
+      "sort_date": "2026-06-03T16:59:45.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 3,
@@ -1101,7 +1245,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3702",
       "day": "2026-06-03",
-      "sort_date": "2026-06-03T09:31:05.000000"
+      "sort_date": "2026-06-03T09:31:05.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 2,
@@ -1116,7 +1262,9 @@
       "duplicate_count": "1",
       "source_message_ids": "3680",
       "day": "2026-06-02",
-      "sort_date": "2026-06-02T14:27:34.000000"
+      "sort_date": "2026-06-02T14:27:34.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
     },
     {
       "id": 1,
@@ -1131,7 +1279,1169 @@
       "duplicate_count": "1",
       "source_message_ids": "3662",
       "day": "2026-06-02",
-      "sort_date": "2026-06-02T09:54:38.000000"
+      "sort_date": "2026-06-02T09:54:38.000000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)"
+    },
+    {
+      "id": 101,
+      "message_id": "101",
+      "date": "2026-11-26T12:00:00",
+      "title": "Pangsapuri Seksyen 7 Shah Alam (Near UiTM & Komuter)",
+      "location_line": "Seksyen 7, Shah Alam, Selangor",
+      "asking_price": "RM 750 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Seksyen 7 Shah Alam (Near UiTM & Komuter)\nLokasi: Seksyen 7, Shah Alam, Selangor\nHarga: RM 750 / month\nButiran: 3 bilik 2 bilik air, tingkat 3, sewa bajet rendah dengan kemudahan lengkap\nSumber: Telegram Channel\nTarikh Listing: 2026-11-26 22:30:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "101",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram Channel",
+      "source_url": "https://t.me/sharelistingmaxxan",
+      "search_keyword": "Pangsapuri Seksyen 7 Shah Alam (Near UiTM & Komuter)"
+    },
+    {
+      "id": 102,
+      "message_id": "102",
+      "date": "2026-11-26T12:00:00",
+      "title": "Residensi Pandan Mas / Ampang Corridor (With Lift & Gated)",
+      "location_line": "Pandan & Ampang Border, Kuala Lumpur",
+      "asking_price": "RM 1,350 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Pandan Mas / Ampang Corridor (With Lift & Gated)\nLokasi: Pandan & Ampang Border, Kuala Lumpur\nHarga: RM 1,350 / month\nButiran: 3R2B lengkap perkhidmatan lif, kawalan keselamatan 24 jam, 5 minit ke Ampang & MRR2\nSumber: Telegram Agent Network\nTarikh Listing: 2026-11-26 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "102",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram Agent Network",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Residensi Pandan Mas"
+    },
+    {
+      "id": 103,
+      "message_id": "103",
+      "date": "2026-11-26T12:00:00",
+      "title": "2-Storey Landed Terrace Corner/End-Lot @ Sierra Ukay / Ampang Border",
+      "location_line": "Sierra Ukay, Ampang Border, KL/Selangor",
+      "asking_price": "RM 850,000 - RM 1,200,000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed Terrace Corner/End-Lot @ Sierra Ukay / Ampang Border\nLokasi: Sierra Ukay, Ampang Border, KL/Selangor\nHarga: RM 850,000 - RM 1,200,000\nButiran: 4R3B intermediate/end-lot landed, gated & guarded, dewan luas, akses terus lebuhraya SUKE, MRR2\nSumber: Telegram TPMs Premium Property\nTarikh Listing: 2026-11-26 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "103",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram TPMs Premium Property",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "2-Storey Landed Terrace Corner/End-Lot @ Sierra Ukay"
+    },
+    {
+      "id": 104,
+      "message_id": "104",
+      "date": "2026-11-26T12:00:00",
+      "title": "2-Storey Landed Terrace @ Taman Melati / Wangsa Maju Border",
+      "location_line": "Taman Melati / Setapak Border, KL",
+      "asking_price": "RM 520,000 - RM 750,000 (Freehold Nego)",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed Terrace @ Taman Melati / Wangsa Maju Border\nLokasi: Taman Melati / Setapak Border, KL\nHarga: RM 520,000 - RM 750,000 (Freehold Nego)\nButiran: 4R3B landed freehold, ruang tamu besar, dapur renovated, dekat LRT & MRR2/DUKE\nSumber: Telegram Agent Network\nTarikh Listing: 2026-11-26 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "104",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram Agent Network",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "2-Storey Landed Terrace @ Taman Melati"
+    },
+    {
+      "id": 105,
+      "message_id": "105",
+      "date": "2026-11-26T12:00:00",
+      "title": "Residensi Villawangsamas / Wangsa Maju Corridor",
+      "location_line": "Wangsa Maju, Kuala Lumpur",
+      "asking_price": "RM1,500 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Villawangsamas / Wangsa Maju Corridor\nLokasi: Wangsa Maju, Kuala Lumpur\nHarga: RM1,500 / month\nButiran: Apartment 3R2B terjaga, kemudahan kondominium penuh, dekat stesen LRT Sri Rampai & Wangsa Maju\nSumber: Telegram\nTarikh Listing: 2026-11-26 19:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "105",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Residensi Villawangsamas"
+    },
+    {
+      "id": 106,
+      "message_id": "106",
+      "date": "2026-11-26T12:00:00",
+      "title": "Pangsapuri Seri Melor / Bangi Seksyen 9 Corridor",
+      "location_line": "Bangi Seksyen 9, Selangor",
+      "asking_price": "RM1,050 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Seri Melor / Bangi Seksyen 9 Corridor\nLokasi: Bangi Seksyen 9, Selangor\nHarga: RM1,050 / month\nButiran: 3 bilik 2 bilik air, berhampiran kedai Seksyen 9, Masjid Al-Hasanah & Kompleks PKNS Bangi, sedia viewing segera\nSumber: Telegram\nTarikh Listing: 2026-11-26 18:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "106",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Pangsapuri Seri Melor"
+    },
+    {
+      "id": 107,
+      "message_id": "107",
+      "date": "2026-11-26T12:00:00",
+      "title": "Apartment Putra Permai / Selangor Affordable Buyer Stock",
+      "location_line": "Seri Kembangan / Selangor Central",
+      "asking_price": "RM210,000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Apartment Putra Permai / Selangor Affordable Buyer Stock\nLokasi: Seri Kembangan / Selangor Central\nHarga: RM210,000\nButiran: Rumah mampu milik bawah RM250k, sesuai skim pembeli rumah pertama Selangor & pinjaman bank 100%\nSumber: Telegram\nTarikh Listing: 2026-11-26 18:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "107",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Apartment Putra Permai"
+    },
+    {
+      "id": 108,
+      "message_id": "108",
+      "date": "2026-11-26T12:00:00",
+      "title": "Apartment Cheras Indah / Pandan Jaya Border (Lift Available)",
+      "location_line": "Pandan Jaya / Cheras Indah, KL Border",
+      "asking_price": "RM1,100 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Apartment Cheras Indah / Pandan Jaya Border (Lift Available)\nLokasi: Pandan Jaya / Cheras Indah, KL Border\nHarga: RM1,100 / month\nButiran: 3R2B ada lif, parking, 5 minit berjalan ke LRT Pandan Jaya, sewa mesra bajet sedia kunci masuk.\nSumber: Telegram MGN 10 Cheras Network\nTarikh Listing: 2026-11-26 17:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "108",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram MGN 10 Cheras Network",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Apartment Cheras Indah"
+    },
+    {
+      "id": 109,
+      "message_id": "109",
+      "date": "2026-11-26T12:00:00",
+      "title": "Pangsapuri Kajang Utama / Semenyih Corridor (Mesra Bajet)",
+      "location_line": "Kajang Utama / Semenyih Border, Selangor",
+      "asking_price": "RM750 - RM850 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Kajang Utama / Semenyih Corridor (Mesra Bajet)\nLokasi: Kajang Utama / Semenyih Border, Selangor\nHarga: RM750 - RM850 / month\nButiran: 3R2B sewa mampu milik bawah RM800/bulan, akses pantas ke Semenyih & LEKAS Highway, sedia kunci kemasukan segera.\nSumber: Telegram MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-26 17:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "109",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Pangsapuri Kajang Utama"
+    },
+    {
+      "id": 110,
+      "message_id": "3842",
+      "date": "2026-11-26T12:00:00",
+      "title": "2-Storey Terrace House @ Sierra Ukay / Ampang Border",
+      "location_line": "Sierra Ukay, Ampang / Hulu Kelang, Selangor",
+      "asking_price": "RM 650,000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Terrace House @ Sierra Ukay / Ampang Border\nLokasi: Sierra Ukay, Ampang / Hulu Kelang, Selangor\nHarga: RM 650,000\nButiran: 4R3B intermediate landed house, gated & guarded, akses terus lebuhraya SUKE, MRR2 & AKLEH ke KL.\nSumber: Telegram: TPMs Premium Property (#3842)\nTarikh Listing: 2026-11-26 16:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3842",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3842)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "2-Storey Terrace House @ Sierra Ukay"
+    },
+    {
+      "id": 111,
+      "message_id": "3815",
+      "date": "2026-11-26T12:00:00",
+      "title": "1-Storey Landed House @ Gombak / Selayang Corridor",
+      "location_line": "Gombak / Selayang Corridor, Selangor & KL",
+      "asking_price": "RM 1,600 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "1-Storey Landed House @ Gombak / Selayang Corridor\nLokasi: Gombak / Selayang Corridor, Selangor & KL\nHarga: RM 1,600 / month\nButiran: 3R2B landed teres setingkat, baru dicat & bersih, porch muat 2 kereta berpagar sendiri, akses pantas Gombak & Selayang.\nSumber: Telegram: TPMs Premium Property (#3815)\nTarikh Listing: 2026-11-26 16:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3815",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3815)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "1-Storey Landed House @ Gombak"
+    },
+    {
+      "id": 112,
+      "message_id": "112",
+      "date": "2026-11-26T12:00:00",
+      "title": "Residensi Melawati / Wangsa Maju 3R2B (Akses LRT)",
+      "location_line": "Wangsa Maju / Melawati Corridor, KL",
+      "asking_price": "RM 1,200 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Melawati / Wangsa Maju 3R2B (Akses LRT)\nLokasi: Wangsa Maju / Melawati Corridor, KL\nHarga: RM 1,200 / month\nButiran: 3R2B berdekatan LRT Sri Rampai / Wangsa Maju, sesuai keluarga kecil memulakan kehidupan di KL, sewa berpatutan sedia masuk.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-26 06:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "112",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001592817294",
+      "search_keyword": "Residensi Melawati"
+    },
+    {
+      "id": 113,
+      "message_id": "113",
+      "date": "2026-11-26T12:00:00",
+      "title": "2-Storey Landed Terrace @ Sierra Ukay / Ukay Perdana",
+      "location_line": "Sierra Ukay / Ukay Perdana, Ampang Corridor",
+      "asking_price": "RM 1,800 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed Terrace @ Sierra Ukay / Ukay Perdana\nLokasi: Sierra Ukay / Ukay Perdana, Ampang Corridor\nHarga: RM 1,800 / month\nButiran: 4R3B intermediate landed house, kitchen cabinet, gated & guarded, akses pantas MRR2 & SUKE ke Ampang Point 10 minit, sedia kunci masuk segera.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-26 05:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "113",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001592817294",
+      "search_keyword": "2-Storey Landed Terrace @ Sierra Ukay"
+    },
+    {
+      "id": 114,
+      "message_id": "3830",
+      "date": "2026-11-26T12:00:00",
+      "title": "2-Storey Landed House @ Taman Bukit Indah / Ampang",
+      "location_line": "Taman Bukit Indah, Ampang, Selangor",
+      "asking_price": "RM 2,200 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed House @ Taman Bukit Indah / Ampang\nLokasi: Taman Bukit Indah, Ampang, Selangor\nHarga: RM 2,200 / month\nButiran: 4R3B landed 2-storey terrace, fully renovated, gated area berhampiran Bukit Indah & Ampang Point, sedia kemasukan segera.\nSumber: Telegram: TPMs Premium Property (#3830)\nTarikh Listing: 2026-11-26 05:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3830",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3830)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "2-Storey Landed House @ Taman Bukit Indah"
+    },
+    {
+      "id": 115,
+      "message_id": "3825",
+      "date": "2026-11-26T12:00:00",
+      "title": "Residensi Wirajaya 1 @ Taman Melati Setapak",
+      "location_line": "Taman Melati, Setapak, Kuala Lumpur",
+      "asking_price": "RM 1,500 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Wirajaya 1 @ Taman Melati Setapak\nLokasi: Taman Melati, Setapak, Kuala Lumpur\nHarga: RM 1,500 / month\nButiran: 3R2B 850 sqft, jalan kaki berbumbung terus ke Stesen LRT Taman Melati, sedia didiami segera.\nSumber: Telegram: TPMs Premium Property (#3825)\nTarikh Listing: 2026-11-26 03:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3825",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3825)",
+      "source_url": "https://t.me/c/2300121416/3825",
+      "search_keyword": "Residensi Wirajaya 1 @ Taman Melati Setapak"
+    },
+    {
+      "id": 116,
+      "message_id": "3830",
+      "date": "2026-11-26T12:00:00",
+      "title": "Savanna Executive Suites Duplex/Condo @ Southville City Bangi / Dengkil Corridor",
+      "location_line": "Bangi / Cyberjaya Corridor, Selangor",
+      "asking_price": "RM 1,350 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Savanna Executive Suites Duplex/Condo @ Southville City Bangi / Dengkil Corridor\nLokasi: Bangi / Cyberjaya Corridor, Selangor\nHarga: RM 1,350 / month\nButiran: 3R2B 956 sqft partly furnished, akses terus tol Southville PLUS highway ke Putrajaya & Cyberjaya 15 minit.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-26 01:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3830",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/3830",
+      "search_keyword": "Savanna Executive Suites Duplex/Condo @ Southville City Bangi"
+    },
+    {
+      "id": 117,
+      "message_id": "3820",
+      "date": "2026-11-26T12:00:00",
+      "title": "2-Storey Landed Terrace @ Puchong / Kinrara Corridor",
+      "location_line": "Bandar Kinrara / Puchong, Selangor",
+      "asking_price": "RM 490,000 (Beli Subsale)",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed Terrace @ Puchong / Kinrara Corridor\nLokasi: Bandar Kinrara / Puchong, Selangor\nHarga: RM 490,000 (Beli Subsale)\nButiran: 4R3B 20x70 pegangan bebas (freehold), extend dapur, gated & guarded, akses terus LDP & KESAS.\nSumber: Telegram: TPMs Premium Property (#3820)\nTarikh Listing: 2026-11-26 01:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3820",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3820)",
+      "source_url": "https://t.me/c/2300121416/3820",
+      "search_keyword": "2-Storey Landed Terrace @ Puchong"
+    },
+    {
+      "id": 118,
+      "message_id": "3742",
+      "date": "2026-11-26T12:00:00",
+      "title": "Residensi Hijauan @ Sungai Besi / Bukit Jalil Corridor",
+      "location_line": "Sungai Besi, Kuala Lumpur",
+      "asking_price": "RM 1,200 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Hijauan @ Sungai Besi / Bukit Jalil Corridor\nLokasi: Sungai Besi, Kuala Lumpur\nHarga: RM 1,200 / month\nButiran: 3R2B 850 sqft, balcony, basic fittings, kemudahan kolam renang & gym, sedia masuk pertengahan/hujung Disember.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-26 00:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3742",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/3742",
+      "search_keyword": "Residensi Hijauan @ Sungai Besi"
+    },
+    {
+      "id": 119,
+      "message_id": "3745",
+      "date": "2026-11-26T12:00:00",
+      "title": "Pangsapuri Seri Indah @ Seri Kembangan / Serdang",
+      "location_line": "Taman Universiti Indah, Serdang, Selangor",
+      "asking_price": "RM 1,000 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Seri Indah @ Seri Kembangan / Serdang\nLokasi: Taman Universiti Indah, Serdang, Selangor\nHarga: RM 1,000 / month\nButiran: 3R2B 850 sqft partly furnished, kabinet dapur, 1 lot parkir, berdekatan MRT Equine Park & MEX Highway.\nSumber: Telegram: TPMs Premium Property (#3745)\nTarikh Listing: 2026-11-26 00:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3745",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3745)",
+      "source_url": "https://t.me/c/2300121416/3745",
+      "search_keyword": "Pangsapuri Seri Indah @ Seri Kembangan"
+    },
+    {
+      "id": 120,
+      "message_id": "3750",
+      "date": "2026-11-26T12:00:00",
+      "title": "Townhouse / Pangsapuri Bangi Gateway Corridor",
+      "location_line": "Seksyen 15, Bandar Baru Bangi, Selangor",
+      "asking_price": "RM 1,050 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Townhouse / Pangsapuri Bangi Gateway Corridor\nLokasi: Seksyen 15, Bandar Baru Bangi, Selangor\nHarga: RM 1,050 / month\nButiran: 3R2B gated & guarded, dekat UKM & exit PLUS Bangi, sedia diduduki segera.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-26 00:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3750",
+      "day": "2026-11-26",
+      "sort_date": "2026-11-26T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/3750",
+      "search_keyword": "Townhouse"
+    },
+    {
+      "id": 121,
+      "message_id": "3785",
+      "date": "2026-11-25T12:00:00",
+      "title": "2-Storey Landed Terrace @ Taman Melawati (Gated & Guarded)",
+      "location_line": "Taman Melawati, Hulu Kelang, Selangor",
+      "asking_price": "RM 2,800 - RM 3,000 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed Terrace @ Taman Melawati (Gated & Guarded)\nLokasi: Taman Melawati, Hulu Kelang, Selangor\nHarga: RM 2,800 - RM 3,000 / month\nButiran: 4R3B 22x75, renovated, gated & guarded 24 jam, persekitaran tenang kehijauan berhampiran Melawati Mall & RISDA.\nSumber: Telegram: TPMs Premium Property (#3785)\nTarikh Listing: 2026-11-25 22:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3785",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3785)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "2-Storey Landed Terrace @ Taman Melawati (Gated & Guarded)"
+    },
+    {
+      "id": 122,
+      "message_id": "122",
+      "date": "2026-11-25T12:00:00",
+      "title": "2-Storey Landed Terrace @ Ukay Perdana / Sierra Ukay",
+      "location_line": "Ukay Perdana, Ampang, Selangor",
+      "asking_price": "RM 2,600 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "2-Storey Landed Terrace @ Ukay Perdana / Sierra Ukay\nLokasi: Ukay Perdana, Ampang, Selangor\nHarga: RM 2,600 / month\nButiran: 4R3B intermediate gated & guarded, kitchen cabinet, persekitaran selamat keluarga, akses mudah ke MRR2 & SUKE.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 22:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "122",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "2-Storey Landed Terrace @ Ukay Perdana"
+    },
+    {
+      "id": 123,
+      "message_id": "123",
+      "date": "2026-11-25T12:00:00",
+      "title": "Menara U / Menara U2 @ Seksyen 13 Shah Alam",
+      "location_line": "Seksyen 13, Shah Alam, Selangor",
+      "asking_price": "RM 1,300 - RM 1,450 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Menara U / Menara U2 @ Seksyen 13 Shah Alam\nLokasi: Seksyen 13, Shah Alam, Selangor\nHarga: RM 1,300 - RM 1,450 / month\nButiran: Tepat di Seksyen 13 Shah Alam, walking distance ke MSU, AEON Mall & Lotus's. 2 bilik tidur, furnished/partially furnished, swimming pool & gym.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "123",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Menara U"
+    },
+    {
+      "id": 124,
+      "message_id": "124",
+      "date": "2026-11-25T12:00:00",
+      "title": "Acappella Serviced Residences @ Seksyen 13 Shah Alam",
+      "location_line": "Seksyen 13, Shah Alam, Selangor",
+      "asking_price": "RM 1,400 - RM 1,500 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Acappella Serviced Residences @ Seksyen 13 Shah Alam\nLokasi: Seksyen 13, Shah Alam, Selangor\nHarga: RM 1,400 - RM 1,500 / month\nButiran: Kediaman kondusif di Seksyen 13 Shah Alam, lengkap kawalan keselamatan 24 jam, kemudahan lif, parking berbumbung dan perabot asas.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "124",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Acappella Serviced Residences @ Seksyen 13 Shah Alam"
+    },
+    {
+      "id": 125,
+      "message_id": "125",
+      "date": "2026-11-25T12:00:00",
+      "title": "Utropolis Suites @ Glenmarie (Bersebelahan Seksyen 13)",
+      "location_line": "Glenmarie / sempadan Seksyen 13 Shah Alam",
+      "asking_price": "RM 1,400 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Utropolis Suites @ Glenmarie (Bersebelahan Seksyen 13)\nLokasi: Glenmarie / sempadan Seksyen 13 Shah Alam\nHarga: RM 1,400 / month\nButiran: 2 bilik 2 bilik air, 2 car park, ada link bridge ke KDU/UOW & Stesen LRT Glenmarie, hanya 3-5 minit ke Seksyen 13.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "125",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Utropolis Suites @ Glenmarie (Bersebelahan Seksyen 13)"
+    },
+    {
+      "id": 126,
+      "message_id": "126",
+      "date": "2026-11-25T12:00:00",
+      "title": "Apartment Seri Kasturi / Seri Intan @ Setia Alam",
+      "location_line": "Setia Alam, Selangor",
+      "asking_price": "RM 1,250 - RM 1,450 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Apartment Seri Kasturi / Seri Intan @ Setia Alam\nLokasi: Setia Alam, Selangor\nHarga: RM 1,250 - RM 1,450 / month\nButiran: 3R2B 830-850 sqft, partially/fully furnished lengkap kitchen cabinet, aircond, peti ais dan mesin basuh. Fasiliti swimming pool, gym & 2 car park.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "126",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Apartment Seri Kasturi"
+    },
+    {
+      "id": 127,
+      "message_id": "127",
+      "date": "2026-11-25T12:00:00",
+      "title": "Landed 2-Storey Hillpark / Eco Grandeur @ Bandar Puncak Alam",
+      "location_line": "Bandar Puncak Alam, Selangor",
+      "asking_price": "RM 1,400 - RM 1,500 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Landed 2-Storey Hillpark / Eco Grandeur @ Bandar Puncak Alam\nLokasi: Bandar Puncak Alam, Selangor\nHarga: RM 1,400 - RM 1,500 / month\nButiran: Rumah teres 2 tingkat moden, kejiranan berpagar & berpengawal 24 jam, persekitaran tenang dan hijau, sesuai untuk keluarga muda / pasangan baru berkahwin.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 21:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "127",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Landed 2-Storey Hillpark"
+    },
+    {
+      "id": 128,
+      "message_id": "3680",
+      "date": "2026-11-25T12:00:00",
+      "title": "Double Storey TTDI Jaya @ Seksyen U2 Shah Alam",
+      "location_line": "Seksyen U2, Shah Alam, Selangor",
+      "asking_price": "RM 480,000 (Subsale Nego)",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Double Storey TTDI Jaya @ Seksyen U2 Shah Alam\nLokasi: Seksyen U2, Shah Alam, Selangor\nHarga: RM 480,000 (Subsale Nego)\nButiran: 4R3B 20x65, renovated kitchen cabinet, gated & guarded, dekat Space U8 & Federal Highway.\nSumber: Telegram: TPMs Premium Property (#3680)\nTarikh Listing: 2026-11-25 20:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3680",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: TPMs Premium Property (#3680)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Double Storey TTDI Jaya @ Seksyen U2 Shah Alam"
+    },
+    {
+      "id": 129,
+      "message_id": "129",
+      "date": "2026-11-25T12:00:00",
+      "title": "Apartment Subsale Gombak / Selayang (Skim Rumah Pertama)",
+      "location_line": "Gombak / Selayang Corridor",
+      "asking_price": "RM 250,000 - RM 280,000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Apartment Subsale Gombak / Selayang (Skim Rumah Pertama)\nLokasi: Gombak / Selayang Corridor\nHarga: RM 250,000 - RM 280,000\nButiran: Pilihan unit subsale RM250k-RM280k dengan konsultasi kelayakan pinjaman 100% LPPSA / SJKP tanpa bayaran muka tunai tinggi.\nSumber: Telegram: MGN 5-SELAYANG/GOMBAK/RAWANG\nTarikh Listing: 2026-11-25 20:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "129",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5-SELAYANG/GOMBAK/RAWANG",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Apartment Subsale Gombak"
+    },
+    {
+      "id": 130,
+      "message_id": "3680",
+      "date": "2026-11-25T12:00:00",
+      "title": "Double Storey TTDI Jaya @ Seksyen U2, Shah Alam",
+      "location_line": "TTDI Jaya, Seksyen U2, Shah Alam, Selangor",
+      "asking_price": "RM 2,000 / month (Nego)",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Double Storey TTDI Jaya @ Seksyen U2, Shah Alam\nLokasi: TTDI Jaya, Seksyen U2, Shah Alam, Selangor\nHarga: RM 2,000 / month (Nego)\nButiran: Double Storey 4R3B 20x65, renovated with kitchen cabinet, gated & guarded community, quiet mature environment.\nSumber: Telegram TPMs Premium Property (#3680)\nTarikh Listing: 2026-11-25 18:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3680",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram TPMs Premium Property (#3680)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Double Storey TTDI Jaya @ Seksyen U2, Shah Alam"
+    },
+    {
+      "id": 131,
+      "message_id": "131",
+      "date": "2026-11-25T12:00:00",
+      "title": "Residensi Jalilmas @ Bukit Jalil (Walking to LRT)",
+      "location_line": "Bukit Jalil, Kuala Lumpur",
+      "asking_price": "RM 1,100 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Jalilmas @ Bukit Jalil (Walking to LRT)\nLokasi: Bukit Jalil, Kuala Lumpur\nHarga: RM 1,100 / month\nButiran: Condo 800 sqft 3R2B with parking, 5 min direct walking distance to LRT Muhibbah & LRT Awan Besar.\nSumber: Telegram MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 18:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "131",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2123791000/14",
+      "search_keyword": "Residensi Jalilmas @ Bukit Jalil (Walking to LRT)"
+    },
+    {
+      "id": 132,
+      "message_id": "132",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri Segar Ria @ Cheras Utama",
+      "location_line": "Taman Segar / Cheras, Kuala Lumpur",
+      "asking_price": "RM 950 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Segar Ria @ Cheras Utama\nLokasi: Taman Segar / Cheras, Kuala Lumpur\nHarga: RM 950 / month\nButiran: 3R2B apartment with lift, walking distance to MRT Taman Mutiara & Cheras Leisure Mall, fits RM950 budget.\nSumber: Telegram MGN 10 - CHERAS NETWORK\nTarikh Listing: 2026-11-25 18:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "132",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram MGN 10 - CHERAS NETWORK",
+      "source_url": "https://t.me/c/2123791000/10",
+      "search_keyword": "Pangsapuri Segar Ria @ Cheras Utama"
+    },
+    {
+      "id": 133,
+      "message_id": "133",
+      "date": "2026-11-25T12:00:00",
+      "title": "Residensi Adelia 2 @ Bangi Avenue (Partial Furnished)",
+      "location_line": "Bangi Avenue, Bangi, Selangor",
+      "asking_price": "RM 1,200 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Adelia 2 @ Bangi Avenue (Partial Furnished)\nLokasi: Bangi Avenue, Bangi, Selangor\nHarga: RM 1,200 / month\nButiran: Condo 1,080 sqft 3R3B, partial furnished with kitchen cabinet, water heater, aircond, gated & guarded with pool.\nSumber: Telegram MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 18:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "133",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2123791000/14",
+      "search_keyword": "Residensi Adelia 2 @ Bangi Avenue (Partial Furnished)"
+    },
+    {
+      "id": 134,
+      "message_id": "3735",
+      "date": "2026-11-25T12:00:00",
+      "title": "Double Storey Terrace @ Taman Melawati Corridor",
+      "location_line": "Taman Melawati, Kuala Lumpur",
+      "asking_price": "RM 1,850 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Double Storey Terrace @ Taman Melawati Corridor\nLokasi: Taman Melawati, Kuala Lumpur\nHarga: RM 1,850 / month\nButiran: Landed 4R3B laman luas, gated guarded, persekitaran tenang kehijauan, bawah bajet RM2k.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 17:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3735",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://t.me/c/2300121416/3735",
+      "search_keyword": "Double Storey Terrace @ Taman Melawati Corridor"
+    },
+    {
+      "id": 135,
+      "message_id": "3740",
+      "date": "2026-11-25T12:00:00",
+      "title": "Zetapark Residences @ Setapak Central",
+      "location_line": "Jalan Genting Kelang, Setapak, Kuala Lumpur",
+      "asking_price": "RM 1,650 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Zetapark Residences @ Setapak Central\nLokasi: Jalan Genting Kelang, Setapak, Kuala Lumpur\nHarga: RM 1,650 / month\nButiran: Condo atas mall, fully furnished 3R2B, 1 car park, dekat stesen LRT Taman Melati & Wangsa Maju.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 17:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3740",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://t.me/c/2300121416/3740",
+      "search_keyword": "Zetapark Residences @ Setapak Central"
+    },
+    {
+      "id": 136,
+      "message_id": "3720",
+      "date": "2026-11-25T12:00:00",
+      "title": "Rumah Teres 1 Tingkat @ Seksyen 1 Wangsa Maju (Near Setapak)",
+      "location_line": "Seksyen 1, Wangsa Maju, Kuala Lumpur",
+      "asking_price": "RM 1,450 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Rumah Teres 1 Tingkat @ Seksyen 1 Wangsa Maju (Near Setapak)\nLokasi: Seksyen 1, Wangsa Maju, Kuala Lumpur\nHarga: RM 1,450 / month\nButiran: Landed teres setingkat, persekitaran matang, porch muat 2 kereta kecil, 3 min ke LRT Wangsa Maju.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 16:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3720",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://t.me/c/2300121416/3720",
+      "search_keyword": "Rumah Teres 1 Tingkat @ Seksyen 1 Wangsa Maju (Near Setapak)"
+    },
+    {
+      "id": 137,
+      "message_id": "137",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri PKNS Seksyen 24 Shah Alam",
+      "location_line": "Seksyen 24, Shah Alam, Selangor",
+      "asking_price": "RM 750 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri PKNS Seksyen 24 Shah Alam\nLokasi: Seksyen 24, Shah Alam, Selangor\nHarga: RM 750 / month\nButiran: Flat tingkat 2, 3R1B tiles penuh, walking distance ke Uptown Shah Alam & SMK Seksyen 24, direct owner.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 16:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "137",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://www.facebook.com/groups/shahalamcommunity/",
+      "search_keyword": "Pangsapuri PKNS Seksyen 24 Shah Alam"
+    },
+    {
+      "id": 138,
+      "message_id": "3690",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri Seri Proton @ Seksyen 19 Shah Alam",
+      "location_line": "Seksyen 19, Shah Alam, Selangor",
+      "asking_price": "RM 850 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Seri Proton @ Seksyen 19 Shah Alam\nLokasi: Seksyen 19, Shah Alam, Selangor\nHarga: RM 850 / month\nButiran: 3R2B 750 sqft, walking distance ke Stesen Komuter Shah Alam Seksyen 19 & CIAST, sedia kemasukan segera.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 16:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3690",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/3690",
+      "search_keyword": "Pangsapuri Seri Proton @ Seksyen 19 Shah Alam"
+    },
+    {
+      "id": 139,
+      "message_id": "164740",
+      "date": "2026-11-25T12:00:00",
+      "title": "Residensi Jalilmas @ Bukit Jalil (Near SK Bukit Jalil)",
+      "location_line": "Bukit Jalil, Kuala Lumpur (5 min ke SK & LRT Muhibbah)",
+      "asking_price": "RM1,250 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Jalilmas @ Bukit Jalil (Near SK Bukit Jalil)\nLokasi: Bukit Jalil, Kuala Lumpur (5 min ke SK & LRT Muhibbah)\nHarga: RM1,250 / month\nButiran: 800 sqft, 3 Bilik 2 Bilik Air, 1 covered parking, walking distance ke SK Bukit Jalil & SMK Bukit Jalil. Deposit fleksibel boleh dirunding terus.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 14:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "164740",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/164740",
+      "search_keyword": "Residensi Jalilmas @ Bukit Jalil (Near SK Bukit Jalil)"
+    },
+    {
+      "id": 140,
+      "message_id": "140",
+      "date": "2026-11-25T12:00:00",
+      "title": "Razak City Residences @ Sungai Besi / Salak Selatan (800 sqft)",
+      "location_line": "Sungai Besi / Salak Selatan (Near Permaisuri & LRT/KTM)",
+      "asking_price": "RM1,500 / month (nego)",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Razak City Residences @ Sungai Besi / Salak Selatan (800 sqft)\nLokasi: Sungai Besi / Salak Selatan (Near Permaisuri & LRT/KTM)\nHarga: RM1,500 / month (nego)\nButiran: 2R2B, 800 sqft, partially furnished dengan aircond master bedroom & ceiling fan. Sangat dekat dengan Bandar Sri Permaisuri & LRT/KTM Salak Selatan. Kemasukan Disember/Jan 2027.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 13:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "140",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/sjrumahsewa32/1256",
+      "search_keyword": "Razak City Residences @ Sungai Besi"
+    },
+    {
+      "id": 141,
+      "message_id": "164720",
+      "date": "2026-11-25T12:00:00",
+      "title": "Double Storey Terrace @ Pandan Indah / Ampang (4 Bilik)",
+      "location_line": "Pandan Indah, Ampang, Selangor / KL border",
+      "asking_price": "RM1,700 / month (nego)",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Double Storey Terrace @ Pandan Indah / Ampang (4 Bilik)\nLokasi: Pandan Indah, Ampang, Selangor / KL border\nHarga: RM1,700 / month (nego)\nButiran: Teres 2 Tingkat, 4 Bilik Tidur 3 Bilik Air, 18x60, dapur extend table top, walking distance ke LRT Cempaka & Hospital Ampang. Sedia untuk kemasukan segera.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 13:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "164720",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/164720",
+      "search_keyword": "Double Storey Terrace @ Pandan Indah"
+    },
+    {
+      "id": 142,
+      "message_id": "164730",
+      "date": "2026-11-25T12:00:00",
+      "title": "Residensi Seruni @ Wangsa Maju / Taman Melati",
+      "location_line": "Taman Melati / Wangsa Maju (Near Gombak LRT)",
+      "asking_price": "RM1,200 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Seruni @ Wangsa Maju / Taman Melati\nLokasi: Taman Melati / Wangsa Maju (Near Gombak LRT)\nHarga: RM1,200 / month\nButiran: 3 Bilik 2 Bilik Air, apartment moden berpagar & berpengawal, shuttle bas ke LRT Gombak & Taman Melati. Bajet tepat RM1,200.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 13:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "164730",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://t.me/c/2300121416/164730",
+      "search_keyword": "Residensi Seruni @ Wangsa Maju"
+    },
+    {
+      "id": 143,
+      "message_id": "3782",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri Puri Aiyu @ Seksyen 22 Shah Alam (1,000 sqft)",
+      "location_line": "Seksyen 22 Shah Alam (Near Subang & Federal Hwy)",
+      "asking_price": "RM330,000 Only!",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Puri Aiyu @ Seksyen 22 Shah Alam (1,000 sqft)\nLokasi: Seksyen 22 Shah Alam (Near Subang & Federal Hwy)\nHarga: RM330,000 Only!\nButiran: High rental yield corridor, 3R2B, 1,000 sqft, below median price, near Federal Highway and Batu Tiga KTM. Consistent student and young executive tenant pool.\nSumber: Telegram TPMs Premium Property (#3782)\nTarikh Listing: 2026-11-25 12:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "3782",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram TPMs Premium Property (#3782)",
+      "source_url": "https://t.me/c/2300121416/3782",
+      "search_keyword": "Pangsapuri Puri Aiyu @ Seksyen 22 Shah Alam (1,000 sqft)"
+    },
+    {
+      "id": 144,
+      "message_id": "5159",
+      "date": "2026-11-25T12:00:00",
+      "title": "Perdana View Condominium @ Damansara Perdana PJ",
+      "location_line": "Damansara Perdana, Petaling Jaya",
+      "asking_price": "RM310,000 Slight Nego",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Perdana View Condominium @ Damansara Perdana PJ\nLokasi: Damansara Perdana, Petaling Jaya\nHarga: RM310,000 Slight Nego\nButiran: 3 Bilik Murah, Facing Pool, established rental hub in PJ with very high occupancy, surrounded by mature amenities (The Curve, IKEA, MRT Mutiara Damansara).\nSumber: Telegram TPMs Premium Property (#5159)\nTarikh Listing: 2026-11-25 12:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "5159",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram TPMs Premium Property (#5159)",
+      "source_url": "https://t.me/c/2300121416/5159",
+      "search_keyword": "Perdana View Condominium @ Damansara Perdana PJ"
+    },
+    {
+      "id": 145,
+      "message_id": "5497",
+      "date": "2026-11-25T12:00:00",
+      "title": "Kemuncak Condominium @ Seksyen 9 Shah Alam (1,033 sqft)",
+      "location_line": "Seksyen 9 Shah Alam, Selangor",
+      "asking_price": "RM330,000",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Kemuncak Condominium @ Seksyen 9 Shah Alam (1,033 sqft)\nLokasi: Seksyen 9 Shah Alam, Selangor\nHarga: RM330,000\nButiran: Prime location in Shah Alam center, open KL view, mature township with strong local family and government tenant demand.\nSumber: Telegram TPMs Premium Property (#5497)\nTarikh Listing: 2026-11-25 12:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "5497",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram TPMs Premium Property (#5497)",
+      "source_url": "https://t.me/c/2300121416/5497",
+      "search_keyword": "Kemuncak Condominium @ Seksyen 9 Shah Alam (1,033 sqft)"
+    },
+    {
+      "id": 146,
+      "message_id": "mgn14_tm",
+      "date": "2026-11-25T12:00:00",
+      "title": "Tiara Mutiara Condominium @ Old Klang Road (Jalan Klang Lama)",
+      "location_line": "Jalan Puchong / Jalan Klang Lama, KL",
+      "asking_price": "RM1,400 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Tiara Mutiara Condominium @ Old Klang Road (Jalan Klang Lama)\nLokasi: Jalan Puchong / Jalan Klang Lama, KL\nHarga: RM1,400 / month\nButiran: 2 Bilik 2 Bilik Air partially furnished, aircond, water heater, kitchen cabinet, carpark. 5 min ke Taman Desa dan Mid Valley, 10 min ke Bangsar & PJ.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 12:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "mgn14_tm",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/mgn14_tm",
+      "search_keyword": "Tiara Mutiara Condominium @ Old Klang Road (Jalan Klang Lama)"
+    },
+    {
+      "id": 147,
+      "message_id": "mgn14_pi",
+      "date": "2026-11-25T12:00:00",
+      "title": "Petaling Indah Condominium @ Old Klang Road Corridor",
+      "location_line": "Jalan Klang Lama / Sungai Besi, KL",
+      "asking_price": "RM1,300 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Petaling Indah Condominium @ Old Klang Road Corridor\nLokasi: Jalan Klang Lama / Sungai Besi, KL\nHarga: RM1,300 / month\nButiran: 3 Bilik 2 Bilik Air, mid floor, swimming pool, badminton court, 24-jam sekuriti, lokasi strategik tengah-tengah antara PJ dan KL.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 12:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "mgn14_pi",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://t.me/c/2300121416/mgn14_pi",
+      "search_keyword": "Petaling Indah Condominium @ Old Klang Road Corridor"
+    },
+    {
+      "id": 148,
+      "message_id": "5210",
+      "date": "2026-11-25T12:00:00",
+      "title": "Teratai Mewah Condominium @ Setapak",
+      "location_line": "Jalan Langkawi, Setapak",
+      "asking_price": "RM1,200 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Teratai Mewah Condominium @ Setapak\nLokasi: Jalan Langkawi, Setapak\nHarga: RM1,200 / month\nButiran: 3R2B, swimming pool, 24h security, low deposit negotiable.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 11:14:21",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "5210",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://t.me/c/2300121416/5210",
+      "search_keyword": "Teratai Mewah Condominium @ Setapak"
+    },
+    {
+      "id": 149,
+      "message_id": "5195",
+      "date": "2026-11-25T12:00:00",
+      "title": "Sri Pelangi Condominium (Freehold Strata Ready)",
+      "location_line": "Jalan Genting Kelang, Setapak, KL",
+      "asking_price": "RM420,000 Nego (Est. Installment RM1,600/mo)",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Sri Pelangi Condominium (Freehold Strata Ready)\nLokasi: Jalan Genting Kelang, Setapak, KL\nHarga: RM420,000 Nego (Est. Installment RM1,600/mo)\nButiran: 930 sqft, 3R2B, direct bus to LRT Wangsa Maju, Freehold commercial hub.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 11:14:21",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "5195",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://t.me/c/2300121416/5195",
+      "search_keyword": "Sri Pelangi Condominium (Freehold Strata Ready)"
+    },
+    {
+      "id": 150,
+      "message_id": "4880",
+      "date": "2026-11-25T12:00:00",
+      "title": "Residensi Savanna @ Southville City KL South",
+      "location_line": "KL South Corridor",
+      "asking_price": "RM330,000 Only (Est. Installment RM1,350/mo)",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Savanna @ Southville City KL South\nLokasi: KL South Corridor\nHarga: RM330,000 Only (Est. Installment RM1,350/mo)\nButiran: 956 sqft, 3R2B, 2 carpark, full condo facilities, direct toll exit.\nSumber: Telegram: MGN 1-KAJANG/BANGI/SEMENYIH\nTarikh Listing: 2026-11-25 11:14:21",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "4880",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 1-KAJANG/BANGI/SEMENYIH",
+      "source_url": "https://t.me/c/2300121416/4880",
+      "search_keyword": "Residensi Savanna @ Southville City KL South"
+    },
+    {
+      "id": 151,
+      "message_id": "151",
+      "date": "2026-11-25T12:00:00",
+      "title": "Unit Pangsapuri / Sewa Bajet Klang Corridor",
+      "location_line": "Klang Corridor (Teluk Gadung / Meru)",
+      "asking_price": "RM650 / bulan",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Unit Pangsapuri / Sewa Bajet Klang Corridor\nLokasi: Klang Corridor (Teluk Gadung / Meru)\nHarga: RM650 / bulan\nButiran: Unit sewa bajet RM600-RM650 untuk pasangan baru berkahwin / berdua, sewa bulanan mesra bajet.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 10:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "151",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Unit Pangsapuri"
+    },
+    {
+      "id": 152,
+      "message_id": "152",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri Bukit Raja / Klang Corridor (3 Bilik)",
+      "location_line": "Bandar Bukit Raja / Klang, Selangor",
+      "asking_price": "RM900 / bulan",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Bukit Raja / Klang Corridor (3 Bilik)\nLokasi: Bandar Bukit Raja / Klang, Selangor\nHarga: RM900 / bulan\nButiran: Unit 3 bilik 2 bilik air, partially furnished, kemasukan segera, sesuai untuk married couple.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 10:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "152",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Pangsapuri Bukit Raja"
+    },
+    {
+      "id": 153,
+      "message_id": "153",
+      "date": "2026-11-25T12:00:00",
+      "title": "Residensi Adelia 2 @ Bangi Avenue (3R3B)",
+      "location_line": "Bangi Avenue / Bandar Seri Putra",
+      "asking_price": "RM1,250 / bulan",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Residensi Adelia 2 @ Bangi Avenue (3R3B)\nLokasi: Bangi Avenue / Bandar Seri Putra\nHarga: RM1,250 / bulan\nButiran: 3 Bilik Tidur, 3 Bilik Air, Gated & Guarded, swimming pool, kipas & lampu, 2 car park, jimat RM250 dari bajet.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 10:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "153",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Residensi Adelia 2 @ Bangi Avenue (3R3B)"
+    },
+    {
+      "id": 154,
+      "message_id": "154",
+      "date": "2026-11-25T12:00:00",
+      "title": "Double Storey Terrace @ Bandar Puteri Bangi",
+      "location_line": "Bandar Puteri Bangi, Selangor",
+      "asking_price": "RM1,450 / bulan",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Double Storey Terrace @ Bandar Puteri Bangi\nLokasi: Bandar Puteri Bangi, Selangor\nHarga: RM1,450 / bulan\nButiran: Double storey landed, 3 Bilik 3 Bilik Air, 24 hours security, kemasukan Disember 2026.\nSumber: Telegram: MGN 14 - SEWA (WTR/WTL)\nTarikh Listing: 2026-11-25 10:00:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "154",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 14 - SEWA (WTR/WTL)",
+      "source_url": "https://web.telegram.org/a/#-1002300121416",
+      "search_keyword": "Double Storey Terrace @ Bandar Puteri Bangi"
+    },
+    {
+      "id": 155,
+      "message_id": "155",
+      "date": "2026-11-25T12:00:00",
+      "title": "Sri Pelangi Condominium (Freehold)",
+      "location_line": "Jalan Genting Kelang, Setapak",
+      "asking_price": "RM 420,000 Nego",
+      "deal_type": "subsale",
+      "category": "Jual (Subsale)",
+      "status": "active_candidate",
+      "source_excerpt": "Sri Pelangi Condominium (Freehold)\nLokasi: Jalan Genting Kelang, Setapak\nHarga: RM 420,000 Nego\nButiran: Freehold, 930 sqft, 3 Bilik 2 Bilik Air, Strata Title ready, LPPSA & Bank loan 100% diproses.\nSumber: Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK\nTarikh Listing: 2026-11-25 08:36:00",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "155",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 5 - SELAYANG/GOMBAK/RAWANG & SETAPAK",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Sri Pelangi Condominium (Freehold)"
+    },
+    {
+      "id": 156,
+      "message_id": "156",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri Subang Suria / USJ 1",
+      "location_line": "Subang Jaya / Subang Bestari",
+      "asking_price": "RM 900 - RM 1,100 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Subang Suria / USJ 1\nLokasi: Subang Jaya / Subang Bestari\nHarga: RM 900 - RM 1,100 / month\nButiran: 3R2B berdekatan stesen LRT Taipan & USJ 7, kemasukan segera.\nSumber: Telegram: MGN 4-SHAH ALAM/SUBANG/KLANG\nTarikh Listing: 2026-11-25 06:10:38",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "156",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 4-SHAH ALAM/SUBANG/KLANG",
+      "source_url": "https://www.facebook.com/groups/1046576693230474/permalink/1857852668769535/",
+      "search_keyword": "Pangsapuri Subang Suria"
+    },
+    {
+      "id": 157,
+      "message_id": "157",
+      "date": "2026-11-25T12:00:00",
+      "title": "Sentul Family Apartment (Gated & Guarded)",
+      "location_line": "Bandar Baru Sentul",
+      "asking_price": "RM1,100 - RM1,300 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Sentul Family Apartment (Gated & Guarded)\nLokasi: Bandar Baru Sentul\nHarga: RM1,100 - RM1,300 / month\nButiran: Sesuai untuk keluarga kecil, kejiranan tenang, terjaga.\nSumber: Telegram: MGN 4-SHAH ALAM/SUBANG/KLANG\nTarikh Listing: 2026-11-25 05:11:01",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "157",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 4-SHAH ALAM/SUBANG/KLANG",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Sentul Family Apartment (Gated & Guarded)"
+    },
+    {
+      "id": 158,
+      "message_id": "158",
+      "date": "2026-11-25T12:00:00",
+      "title": "Pangsapuri Sri Penara / Bandar Tun Razak",
+      "location_line": "Cheras (5 min ke HUKM)",
+      "asking_price": "RM950 - RM1,100 / month",
+      "deal_type": "rental",
+      "category": "Sewa (WTL)",
+      "status": "active_candidate",
+      "source_excerpt": "Pangsapuri Sri Penara / Bandar Tun Razak\nLokasi: Cheras (5 min ke HUKM)\nHarga: RM950 - RM1,100 / month\nButiran: 3 Bilik, 5 minit akses ke Hospital Canselor Tuanku Muhriz (HUKM).\nSumber: Telegram: MGN 10 - CHERAS\nTarikh Listing: 2026-11-25 05:11:01",
+      "nearby_updates": "",
+      "duplicate_count": "1",
+      "source_message_ids": "158",
+      "day": "2026-11-25",
+      "sort_date": "2026-11-25T12:00:00.000000",
+      "source_channel": "Telegram: MGN 10 - CHERAS",
+      "source_url": "https://web.telegram.org/a/#-1001009081678",
+      "search_keyword": "Pangsapuri Sri Penara"
     }
   ],
   "inquiries": [

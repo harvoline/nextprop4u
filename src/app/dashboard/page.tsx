@@ -50,10 +50,13 @@ export default function DashboardPage() {
 
   // Filters for Telegram Inventory (Default: available)
   const [invSearch, setInvSearch] = useState("");
+  const [invCategoryFilter, setInvCategoryFilter] = useState("all");
   const [invStatusFilter, setInvStatusFilter] = useState("available");
   const [invSortOrder, setInvSortOrder] = useState<"desc" | "asc">("desc");
   const [invPage, setInvPage] = useState(1);
   const [expandedInvId, setExpandedInvId] = useState<number | null>(null);
+  const [copiedKeywordId, setCopiedKeywordId] = useState<string | null>(null);
+  const [expandedMatchId, setExpandedMatchId] = useState<string | null>(null);
 
   // Filters for Landlords (Default: active_only)
   const [ownerSearch, setOwnerSearch] = useState("");
@@ -120,6 +123,33 @@ export default function DashboardPage() {
       } catch (e) {}
       return next;
     });
+  };
+
+  // Helpers for search keywords, clipboard & date formatting
+  const getSearchKeyword = (title?: string, explicitKeyword?: string) => {
+    if (explicitKeyword && explicitKeyword.trim()) return explicitKeyword.trim();
+    if (!title) return "";
+    let clean = title.split(" / ")[0].split(" @ ")[0].split(" - ")[0];
+    clean = clean.replace(/\([^)]*\)/g, "").trim();
+    return clean || title.split(" / ")[0].trim();
+  };
+
+  const copyKeyword = (keyword: string, id: string) => {
+    if (!keyword) return;
+    navigator.clipboard.writeText(keyword);
+    setCopiedKeywordId(id);
+    setTimeout(() => setCopiedKeywordId(null), 2000);
+  };
+
+  const formatListingDate = (dateStr?: string) => {
+    if (!dateStr) return "Terkini";
+    try {
+      const d = new Date(dateStr.replace(" ", "T"));
+      if (isNaN(d.getTime())) return dateStr.split("T")[0] || dateStr;
+      return d.toLocaleDateString("ms-MY", { day: "numeric", month: "short", year: "numeric" });
+    } catch {
+      return dateStr.split("T")[0] || dateStr;
+    }
   };
 
   // Helper status resolution and active checks
@@ -248,6 +278,7 @@ export default function DashboardPage() {
       const matchSearch =
         !q ||
         (item.title && item.title.toLowerCase().includes(q)) ||
+        (item.search_keyword && item.search_keyword.toLowerCase().includes(q)) ||
         (item.location_line && item.location_line.toLowerCase().includes(q)) ||
         (item.source_excerpt && item.source_excerpt.toLowerCase().includes(q)) ||
         (item.asking_price && item.asking_price.toLowerCase().includes(q));
@@ -259,7 +290,18 @@ export default function DashboardPage() {
         (invStatusFilter === "booked" && currentStatus === "booked") ||
         invStatusFilter === currentStatus;
 
-      return matchSearch && matchStatus;
+      const isRental =
+        item.deal_type === "rental" ||
+        (item.category && item.category.toLowerCase().includes("sewa")) ||
+        (item.asking_price &&
+          (item.asking_price.toLowerCase().includes("/mo") ||
+            item.asking_price.toLowerCase().includes("/ month")));
+
+      const matchCategory =
+        invCategoryFilter === "all" ||
+        (invCategoryFilter === "rental" ? isRental : !isRental);
+
+      return matchSearch && matchStatus && matchCategory;
     });
 
     list.sort((a: any, b: any) => {
@@ -269,7 +311,7 @@ export default function DashboardPage() {
     });
 
     return list;
-  }, [invSearch, invStatusFilter, invSortOrder, invStatuses]);
+  }, [invSearch, invStatusFilter, invCategoryFilter, invSortOrder, invStatuses]);
 
   // Filtered Direct Landlords
   const filteredOwners = useMemo(() => {
@@ -814,6 +856,18 @@ export default function DashboardPage() {
                           </div>
                           <div className="space-y-2.5">
                             {matchedList.map((m: any, mIdx: number) => {
+                              const matchingInv = (portalData.inventory || []).find(
+                                (inv: any) =>
+                                  inv.title &&
+                                  (m.property_title.toLowerCase().includes(inv.title.toLowerCase()) ||
+                                    inv.title.toLowerCase().includes(m.property_title.toLowerCase()))
+                              );
+                              const cleanKeyword = getSearchKeyword(m.property_title, matchingInv?.search_keyword);
+                              const listingDate = m.created_at || matchingInv?.day || matchingInv?.date || m.date;
+                              const matchCardId = `m_${m.id || mIdx}`;
+                              const isMatchExpanded = expandedMatchId === matchCardId;
+                              const fullExcerpt = matchingInv?.source_excerpt || m.details || "";
+
                               const isTelegramSource =
                                 (m.match_source && m.match_source.toLowerCase().includes("telegram")) ||
                                 (m.source_group && m.source_group.toLowerCase().includes("telegram")) ||
@@ -863,6 +917,12 @@ export default function DashboardPage() {
 
                                   {/* Traceback Origin Badges & Match Details */}
                                   <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                                    {/* Date Badge */}
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] bg-stone-100 text-stone-700 border border-stone-300 font-medium">
+                                      <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
+                                      <span>Tarikh Iklan: {formatListingDate(listingDate)}</span>
+                                    </span>
+
                                     {/* Origin / Source Badge */}
                                     <span
                                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] font-semibold border ${
@@ -898,6 +958,33 @@ export default function DashboardPage() {
                                       </span>
                                     )}
                                   </div>
+
+                                  {/* Quick Search Keyword & Copy Button */}
+                                  {cleanKeyword && (
+                                    <div className="flex items-center gap-2 flex-wrap bg-white/90 p-2 rounded-[2px] border border-amber-300/80 text-[11px]">
+                                      <span className="text-[var(--color-muted)] font-medium">🔍 Keyword Carian:</span>
+                                      <span className="font-semibold text-amber-950 font-mono select-all bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                                        {cleanKeyword}
+                                      </span>
+                                      <button
+                                        onClick={() => copyKeyword(cleanKeyword, `kw_${matchCardId}`)}
+                                        className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold bg-amber-200/80 hover:bg-amber-300 text-amber-900 rounded-[2px] transition cursor-pointer"
+                                        title="Salin keyword ringkas untuk carian segera di Telegram atau Portal"
+                                      >
+                                        {copiedKeywordId === `kw_${matchCardId}` ? (
+                                          <>
+                                            <Check className="w-3 h-3 text-emerald-700" />
+                                            <span className="text-emerald-800 font-bold">Disalin!</span>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Copy className="w-3 h-3 text-amber-800" />
+                                            <span>Salin Keyword</span>
+                                          </>
+                                        )}
+                                      </button>
+                                    </div>
+                                  )}
 
                                   {/* Lister / Contact Person Info & Traceback Action Buttons */}
                                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs bg-amber-100/60 p-2.5 rounded-[2px] border border-amber-200">
@@ -948,7 +1035,8 @@ export default function DashboardPage() {
                                         <button
                                           onClick={() => {
                                             setActiveTab("inventory");
-                                            setInvSearch(m.property_title || m.location || "");
+                                            setInvSearch(cleanKeyword || m.property_title || "");
+                                            setInvCategoryFilter("all");
                                             setInvPage(1);
                                             window.scrollTo({ top: 300, behavior: "smooth" });
                                           }}
@@ -962,15 +1050,43 @@ export default function DashboardPage() {
                                     </div>
                                   </div>
 
-                                  {/* Unit Details Excerpt */}
-                                  {m.details && (
-                                    <p className="text-[11px] text-[var(--color-ink-2)] pt-1 border-t border-amber-200/70 leading-relaxed font-normal">
-                                      <span className="font-semibold text-amber-950">
-                                        Spesifikasi &amp; Nota Unit:{" "}
-                                      </span>
-                                      {m.details}
-                                    </p>
-                                  )}
+                                  {/* Unit Details & Expandable Lister Excerpt */}
+                                  <div className="space-y-1.5 pt-1 border-t border-amber-200/70">
+                                    {m.details && (
+                                      <p className="text-[11px] text-[var(--color-ink-2)] leading-relaxed font-normal">
+                                        <span className="font-semibold text-amber-950">
+                                          Spesifikasi &amp; Nota Unit:{" "}
+                                        </span>
+                                        {m.details}
+                                      </p>
+                                    )}
+
+                                    {fullExcerpt && (
+                                      <div>
+                                        <button
+                                          onClick={() => setExpandedMatchId(isMatchExpanded ? null : matchCardId)}
+                                          className="inline-flex items-center gap-1 text-[11px] text-amber-900 hover:text-amber-950 font-semibold cursor-pointer underline decoration-amber-300"
+                                        >
+                                          {isMatchExpanded ? (
+                                            <>
+                                              <ChevronUp className="w-3.5 h-3.5" />
+                                              <span>Tutup Mesej Asal Lister</span>
+                                            </>
+                                          ) : (
+                                            <>
+                                              <ChevronDown className="w-3.5 h-3.5" />
+                                              <span>Lihat Mesej Asal Lister ▾</span>
+                                            </>
+                                          )}
+                                        </button>
+                                        {isMatchExpanded && (
+                                          <div className="mt-2 p-3 bg-white/95 border border-amber-300 rounded-[2px] text-[11px] text-[var(--color-ink)] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed">
+                                            {fullExcerpt}
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                               );
                             })}
@@ -1085,7 +1201,7 @@ export default function DashboardPage() {
                 <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="Cari unit Telegram (contoh: Shah Alam, Bukit Raja, Klang, Suri Puteri, Bangi, RM390k)..."
+                  placeholder="Cari unit Telegram (contoh: Pandan Mas, Shah Alam, Bukit Raja, Klang, Suri Puteri, RM1,350)..."
                   value={invSearch}
                   onChange={(e) => {
                     setInvSearch(e.target.value);
@@ -1094,6 +1210,19 @@ export default function DashboardPage() {
                   className="studio-input studio-input--search w-full text-xs"
                 />
               </div>
+
+              <select
+                value={invCategoryFilter}
+                onChange={(e) => {
+                  setInvCategoryFilter(e.target.value);
+                  setInvPage(1);
+                }}
+                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
+              >
+                <option value="all">Semua Kategori (Sewa &amp; Jual)</option>
+                <option value="rental">Unit Sewa (WTL) Sahaja</option>
+                <option value="subsale">Unit Jual (Subsale) Sahaja</option>
+              </select>
 
               <select
                 value={invStatusFilter}
@@ -1146,6 +1275,16 @@ export default function DashboardPage() {
                           <span className="font-display text-base text-[var(--color-ink)] break-words">
                             {item.title || item.location_line || "Unit Hartanah"}
                           </span>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-[2px] font-semibold border ${
+                              item.deal_type === "rental" ||
+                              (item.category && item.category.toLowerCase().includes("sewa"))
+                                ? "bg-blue-50 text-blue-800 border-blue-200"
+                                : "bg-emerald-50 text-emerald-800 border-emerald-200"
+                            }`}
+                          >
+                            {item.category || (item.deal_type === "rental" ? "Sewa (WTL)" : "Jual (Subsale)")}
+                          </span>
                           <div className="flex items-center gap-1.5 shrink-0">
                             <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
                             <select
@@ -1182,15 +1321,46 @@ export default function DashboardPage() {
                         </div>
                       )}
 
-                      {/* Date */}
-                      <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-3">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          <span>{item.day || item.date?.split("T")[0] || "Terkini"}</span>
+                      {/* Date & Channel */}
+                      <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-2 flex-wrap">
+                        <span className="inline-flex items-center gap-1 text-[var(--color-ink)] font-semibold bg-stone-100 px-2 py-0.5 rounded-[2px] border border-stone-300">
+                          <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
+                          <span>Tarikh Iklan Dipos: {formatListingDate(item.day || item.date || item.sort_date)}</span>
                         </span>
                         <span>·</span>
-                        <span>Saluran Telegram Co-Broke</span>
+                        <span>{item.source_channel || "Saluran Telegram Co-Broke"}</span>
                       </div>
+
+                      {/* Quick Search Keyword & Copy */}
+                      {(() => {
+                        const invKw = getSearchKeyword(item.title, item.search_keyword);
+                        const invKwId = `inv_kw_${item.id}`;
+                        return invKw ? (
+                          <div className="flex items-center gap-2 flex-wrap bg-[var(--color-paper-2)] p-2 rounded-[2px] border border-[var(--color-rule)] text-[11px]">
+                            <span className="text-[var(--color-muted)] font-medium">🔍 Keyword Carian:</span>
+                            <span className="font-semibold text-[var(--color-ink)] font-mono select-all bg-[var(--color-paper)] px-1.5 py-0.5 rounded border border-[var(--color-rule)]">
+                              {invKw}
+                            </span>
+                            <button
+                              onClick={() => copyKeyword(invKw, invKwId)}
+                              className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold bg-[var(--color-paper-hi)] hover:bg-[var(--color-paper)] text-[var(--color-ink)] border border-[var(--color-rule)] rounded-[2px] transition cursor-pointer"
+                              title="Salin keyword ringkas carian"
+                            >
+                              {copiedKeywordId === invKwId ? (
+                                <>
+                                  <Check className="w-3 h-3 text-emerald-600" />
+                                  <span className="text-emerald-700 font-bold">Disalin!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3 h-3 text-[var(--color-muted)]" />
+                                  <span>Salin Keyword</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        ) : null;
+                      })()}
 
                       {/* Expandable Excerpt / Specs */}
                       {isExpanded && item.source_excerpt && (
@@ -1391,6 +1561,13 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="mt-2 space-y-1 text-xs text-[var(--color-ink-2)]">
+                          <div>
+                            <span className="text-[var(--color-muted)]">Tarikh Iklan:</span>{" "}
+                            <span className="font-medium text-[var(--color-ink)] inline-flex items-center gap-1">
+                              <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
+                              <span>{formatListingDate(owner.post_date || owner.first_seen)}</span>
+                            </span>
+                          </div>
                           <div>
                             <span className="text-[var(--color-muted)]">Jenis:</span>{" "}
                             <span className="font-medium text-[var(--color-ink)]">
