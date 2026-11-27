@@ -1003,18 +1003,41 @@ export default function DashboardPage() {
                                     {/* Action Links */}
                                     <div className="flex items-center gap-1.5 flex-wrap shrink-0">
                                       {/* 1. Direct Link to Original Post/Source */}
-                                      {m.source_url && (
-                                        <a
-                                          href={m.source_url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold bg-[var(--color-paper)] hover:bg-[var(--color-paper-hi)] text-[var(--color-ink)] border border-[var(--color-rule)] hover:border-[var(--color-accent)] rounded-[2px] transition cursor-pointer"
-                                          title={`Buka post atau iklan asal di ${m.match_source || "media sosial"}`}
-                                        >
-                                          <span>Buka Sumber Asal</span>
-                                          <ExternalLink className="w-3 h-3 text-[var(--color-accent)]" />
-                                        </a>
-                                      )}
+                                      {m.source_url && (() => {
+                                        const isGroupOnlyUrl =
+                                          m.source_url.includes("facebook.com/groups/") &&
+                                          !m.source_url.includes("/posts/") &&
+                                          !m.source_url.includes("/permalink/");
+
+                                        const linkLabel = isGroupOnlyUrl
+                                          ? "Buka Kumpulan FB"
+                                          : isTelegramSource
+                                            ? "Buka Mesej TG"
+                                            : isThreadsSource
+                                              ? "Buka Post Threads"
+                                              : "Buka Sumber Asal";
+
+                                        const linkTitle = isGroupOnlyUrl
+                                          ? "Pautan ke kumpulan Facebook rasmi. Gunakan butang Salin Keyword untuk cari post dalam grup."
+                                          : `Buka post atau iklan asal di ${m.match_source || "media sosial"}`;
+
+                                        return (
+                                          <a
+                                            href={m.source_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold border rounded-[2px] transition cursor-pointer ${
+                                              isGroupOnlyUrl
+                                                ? "bg-blue-50/80 hover:bg-blue-100 text-blue-900 border-blue-300"
+                                                : "bg-[var(--color-paper)] hover:bg-[var(--color-paper-hi)] text-[var(--color-ink)] border-[var(--color-rule)] hover:border-[var(--color-accent)]"
+                                            }`}
+                                            title={linkTitle}
+                                          >
+                                            <span>{linkLabel}</span>
+                                            <ExternalLink className="w-3 h-3 text-[var(--color-accent)]" />
+                                          </a>
+                                        );
+                                      })()}
 
                                       {/* 2. Direct WhatsApp to Owner/Lister */}
                                       {waListerUrl && (
