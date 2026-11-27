@@ -1344,14 +1344,28 @@ export default function DashboardPage() {
                         </div>
                       )}
 
-                      {/* Date & Channel */}
+                      {/* Date & Group Information */}
                       <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-2 flex-wrap">
                         <span className="inline-flex items-center gap-1 text-[var(--color-ink)] font-semibold bg-stone-100 px-2 py-0.5 rounded-[2px] border border-stone-300">
                           <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                          <span>Tarikh Iklan Dipos: {formatListingDate(item.day || item.date || item.sort_date)}</span>
+                          <span>Tarikh Iklan: {formatListingDate(item.day || item.date || item.sort_date)}</span>
                         </span>
-                        <span>·</span>
-                        <span>{item.source_channel || "Saluran Telegram Co-Broke"}</span>
+                        <span className="inline-flex items-center gap-1 text-sky-900 font-semibold bg-sky-50 px-2 py-0.5 rounded-[2px] border border-sky-300">
+                          <Layers className="w-3 h-3 text-sky-600" />
+                          <span>Kumpulan: {item.source_channel || "Telegram: Share Listing Maxxan (@sharelistingmaxxan)"}</span>
+                        </span>
+                        {item.source_url && (
+                          <a
+                            href={item.source_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-sky-700 hover:text-sky-900 font-semibold underline decoration-sky-300 cursor-pointer ml-auto sm:ml-0"
+                            title="Buka pautan asal Telegram"
+                          >
+                            <span>Buka Saluran Telegram</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
                       </div>
 
                       {/* Quick Search Keyword & Copy */}
@@ -1439,6 +1453,18 @@ export default function DashboardPage() {
                             <Copy className="w-3.5 h-3.5 shrink-0" />
                             <span>{copiedId === `inv_${item.id}` ? "Disalin" : "Salin Info"}</span>
                           </button>
+                          {item.source_url && (
+                            <a
+                              href={item.source_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn--quiet btn--sm flex-1 sm:flex-initial text-sky-800 border-sky-300 hover:bg-sky-50"
+                              title="Buka pautan mesej atau saluran Telegram"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5 text-sky-600" />
+                              <span>Buka Telegram</span>
+                            </a>
+                          )}
                           <a
                             href={waPropUrl}
                             target="_blank"
