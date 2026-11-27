@@ -27,6 +27,7 @@ import {
   MapPin,
   Calendar,
   Layers,
+  X,
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -152,6 +153,53 @@ export default function DashboardPage() {
     }
   };
 
+  const formatPostDate = (dateStr?: string) => {
+    if (!dateStr) return "Terkini";
+    try {
+      const clean = dateStr.replace(" ", "T");
+      const d = new Date(clean);
+      if (isNaN(d.getTime())) return dateStr.split("T")[0] || dateStr;
+      const dateFormatted = d.toLocaleDateString("ms-MY", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+      const hasTime = dateStr.includes(":") && (d.getHours() !== 0 || d.getMinutes() !== 0);
+      if (hasTime) {
+        const timeFormatted = d.toLocaleTimeString("ms-MY", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
+        return `${dateFormatted}, ${timeFormatted}`;
+      }
+      return dateFormatted;
+    } catch {
+      return dateStr.split("T")[0] || dateStr;
+    }
+  };
+
+  const getAgeLabel = (dateStr?: string) => {
+    if (!dateStr) return null;
+    try {
+      const d = new Date(dateStr.replace(" ", "T"));
+      if (isNaN(d.getTime())) return null;
+      const now = new Date("2026-11-27T09:30:00");
+      const diffMs = now.getTime() - d.getTime();
+      if (diffMs < 0) return "Terkini";
+      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      if (diffDays === 0) return "Hari Ini";
+      if (diffDays === 1) return "Semalam";
+      if (diffDays < 7) return `${diffDays} hari lalu`;
+      const diffWeeks = Math.floor(diffDays / 7);
+      if (diffWeeks < 4) return `${diffWeeks} minggu lalu`;
+      const diffMonths = Math.floor(diffDays / 30);
+      return `${diffMonths} bulan lalu`;
+    } catch {
+      return null;
+    }
+  };
+
   // Helper status resolution and active checks
   const getLeadStatus = (lead: any) => {
     if (leadStatuses[lead.id]) return leadStatuses[lead.id];
@@ -245,16 +293,31 @@ export default function DashboardPage() {
     return map;
   }, [matchStatuses, ownerStatuses, invStatuses]);
 
-  // Filtered Leads
+  // Filtered Leads (with punctuation-flexible token matching)
   const filteredLeads = useMemo(() => {
     return (portalData.inquiries || []).filter((item: any) => {
       const q = leadSearch.toLowerCase().trim();
-      const matchSearch =
-        !q ||
-        (item.author && item.author.toLowerCase().includes(q)) ||
-        (item.location_target && item.location_target.toLowerCase().includes(q)) ||
-        (item.raw_text && item.raw_text.toLowerCase().includes(q)) ||
-        (item.property_type && item.property_type.toLowerCase().includes(q));
+      let matchSearch = true;
+      if (q) {
+        const qTokens = q.replace(/[.@_\-\/]/g, " ").split(/\s+/).filter(Boolean);
+        const blob = [
+          item.author,
+          item.location_target,
+          item.raw_text,
+          item.property_type,
+          item.special_requirements,
+          item.id,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        const blobNorm = blob.replace(/[.@_\-\/]/g, " ");
+
+        matchSearch =
+          blob.includes(q) ||
+          blobNorm.includes(q.replace(/[.@_\-\/]/g, " ")) ||
+          (qTokens.length > 0 && qTokens.every((tok) => blobNorm.includes(tok) || blob.includes(tok)));
+      }
 
       const matchPlatform =
         leadPlatformFilter === "all" ||
@@ -271,17 +334,48 @@ export default function DashboardPage() {
     });
   }, [leadSearch, leadPlatformFilter, leadStatusFilter, leadStatuses]);
 
+  // Cross-tab discovery: check if inventory search matches any social lead
+  const leadMatchForInvSearch = useMemo(() => {
+    const q = invSearch.toLowerCase().trim();
+    if (!q || q.length < 3) return null;
+    const qNorm = q.replace(/[.@_\-\/]/g, " ");
+    return (portalData.inquiries || []).find((item: any) => {
+      const author = (item.author || "").toLowerCase();
+      const authorNorm = author.replace(/[.@_\-\/]/g, " ");
+      return (
+        author.includes(q) ||
+        authorNorm.includes(qNorm) ||
+        (qNorm.length > 3 && authorNorm.includes(qNorm.split(" ")[0]))
+      );
+    });
+  }, [invSearch]);
+
   // Filtered Telegram Inventory
   const filteredInventory = useMemo(() => {
     const list = (portalData.inventory || []).filter((item: any) => {
       const q = invSearch.toLowerCase().trim();
-      const matchSearch =
-        !q ||
-        (item.title && item.title.toLowerCase().includes(q)) ||
-        (item.search_keyword && item.search_keyword.toLowerCase().includes(q)) ||
-        (item.location_line && item.location_line.toLowerCase().includes(q)) ||
-        (item.source_excerpt && item.source_excerpt.toLowerCase().includes(q)) ||
-        (item.asking_price && item.asking_price.toLowerCase().includes(q));
+      let matchSearch = true;
+      if (q) {
+        const qTokens = q.replace(/[.@_\-\/]/g, " ").split(/\s+/).filter(Boolean);
+        const blob = [
+          item.title,
+          item.search_keyword,
+          item.location_line,
+          item.source_excerpt,
+          item.asking_price,
+          item.source_channel,
+          String(item.id),
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        const blobNorm = blob.replace(/[.@_\-\/]/g, " ");
+
+        matchSearch =
+          blob.includes(q) ||
+          blobNorm.includes(q.replace(/[.@_\-\/]/g, " ")) ||
+          (qTokens.length > 0 && qTokens.every((tok) => blobNorm.includes(tok) || blob.includes(tok)));
+      }
 
       const currentStatus = getInvStatus(item);
       const matchStatus =
@@ -317,12 +411,28 @@ export default function DashboardPage() {
   const filteredOwners = useMemo(() => {
     return (portalData.owner_listings || []).filter((item: any) => {
       const q = ownerSearch.toLowerCase().trim();
-      const matchSearch =
-        !q ||
-        (item.author && item.author.toLowerCase().includes(q)) ||
-        (item.location && item.location.toLowerCase().includes(q)) ||
-        (item.property_type && item.property_type.toLowerCase().includes(q)) ||
-        (item.price && item.price.toLowerCase().includes(q));
+      let matchSearch = true;
+      if (q) {
+        const qTokens = q.replace(/[.@_\-\/]/g, " ").split(/\s+/).filter(Boolean);
+        const blob = [
+          item.property_title,
+          item.location,
+          item.raw_text,
+          item.author,
+          item.contact_phone,
+          item.price,
+          item.id,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        const blobNorm = blob.replace(/[.@_\-\/]/g, " ");
+
+        matchSearch =
+          blob.includes(q) ||
+          blobNorm.includes(q.replace(/[.@_\-\/]/g, " ")) ||
+          (qTokens.length > 0 && qTokens.every((tok) => blobNorm.includes(tok) || blob.includes(tok)));
+      }
 
       const currentStatus = getOwnerStatus(item);
       const matchStatus =
@@ -664,8 +774,20 @@ export default function DashboardPage() {
                     setLeadSearch(e.target.value);
                     setLeadPage(1);
                   }}
-                  className="studio-input studio-input--search w-full text-xs"
+                  className="studio-input studio-input--search w-full text-xs pr-8"
                 />
+                {leadSearch && (
+                  <button
+                    onClick={() => {
+                      setLeadSearch("");
+                      setLeadPage(1);
+                    }}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5"
+                    title="Kosongkan carian"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
               <select
                 value={leadPlatformFilter}
@@ -805,9 +927,26 @@ export default function DashboardPage() {
                             </select>
                           </div>
 
-                          <div className="flex items-center gap-1.5 text-xs text-[var(--color-muted)] shrink-0">
-                            <Clock className="w-3.5 h-3.5" />
-                            <span>{lead.first_seen || lead.posted_date || "Baru Sahaja"}</span>
+                          <div className="flex flex-col sm:items-end gap-0.5 text-xs shrink-0">
+                            <div className="flex items-center gap-1 font-medium text-[var(--color-ink)]">
+                              <Calendar className="w-3.5 h-3.5 text-[var(--color-muted)] shrink-0" />
+                              <span>
+                                Tarikh Post:{" "}
+                                <strong>
+                                  {formatPostDate(lead.posted_date || lead.first_seen)}
+                                </strong>
+                              </span>
+                              {getAgeLabel(lead.posted_date || lead.first_seen) && (
+                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-semibold shrink-0">
+                                  {getAgeLabel(lead.posted_date || lead.first_seen)}
+                                </span>
+                              )}
+                            </div>
+                            {lead.posted_date && lead.first_seen && lead.posted_date !== lead.first_seen && (
+                              <span className="text-[10px] text-[var(--color-muted)]">
+                                Dikutip bot: {formatListingDate(lead.first_seen)}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -862,8 +1001,21 @@ export default function DashboardPage() {
                                   (m.property_title.toLowerCase().includes(inv.title.toLowerCase()) ||
                                     inv.title.toLowerCase().includes(m.property_title.toLowerCase()))
                               );
+                              const matchingOwner = (portalData.owner_listings || []).find(
+                                (o: any) =>
+                                  (m.source_url && o.source_url === m.source_url) ||
+                                  (o.author && m.contact_person && m.contact_person.toLowerCase().includes(o.author.toLowerCase()))
+                              );
                               const cleanKeyword = getSearchKeyword(m.property_title, matchingInv?.search_keyword);
-                              const listingDate = m.created_at || matchingInv?.day || matchingInv?.date || m.date;
+                              // Prioritize actual original post date from inventory/owner over match creation date
+                              const actualPostDate =
+                                matchingInv?.date ||
+                                matchingInv?.day ||
+                                matchingOwner?.post_date ||
+                                m.posted_date ||
+                                m.post_date ||
+                                m.date ||
+                                m.created_at;
                               const matchCardId = `m_${m.id || mIdx}`;
                               const isMatchExpanded = expandedMatchId === matchCardId;
                               const fullExcerpt = matchingInv?.source_excerpt || m.details || "";
@@ -920,7 +1072,10 @@ export default function DashboardPage() {
                                     {/* Date Badge */}
                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] bg-stone-100 text-stone-700 border border-stone-300 font-medium">
                                       <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                                      <span>Tarikh Iklan: {formatListingDate(listingDate)}</span>
+                                      <span>Tarikh Post: <strong>{formatPostDate(actualPostDate)}</strong></span>
+                                      {getAgeLabel(actualPostDate) && (
+                                        <span className="text-[10px] text-stone-500 font-normal">({getAgeLabel(actualPostDate)})</span>
+                                      )}
                                     </span>
 
                                     {/* Origin / Source Badge */}
@@ -1183,6 +1338,31 @@ export default function DashboardPage() {
                 })}
             </div>
 
+            {/* Empty State for Leads */}
+            {filteredLeads.length === 0 && (
+              <div className="sheet p-8 text-center space-y-3">
+                <p className="text-sm font-semibold text-stone-800">
+                  Tiada lead ditemui untuk carian atau penapis semasa.
+                </p>
+                <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
+                  Semak sama ada lead telah diarkibkan (status &quot;Selesai&quot; atau &quot;Tidak Berminat&quot; disembunyikan secara lalai) atau klik butang di bawah untuk menunjukkan semua rekod.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+                  <button
+                    onClick={() => {
+                      setLeadSearch("");
+                      setLeadPlatformFilter("all");
+                      setLeadStatusFilter("all");
+                      setLeadPage(1);
+                    }}
+                    className="btn btn--primary btn--sm"
+                  >
+                    Set Semula Penapis (Tunjuk Semua {portalData.inquiries?.length || 0} Leads)
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Pagination */}
             {filteredLeads.length > PAGE_SIZE && (
               <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
@@ -1230,8 +1410,20 @@ export default function DashboardPage() {
                     setInvSearch(e.target.value);
                     setInvPage(1);
                   }}
-                  className="studio-input studio-input--search w-full text-xs"
+                  className="studio-input studio-input--search w-full text-xs pr-8"
                 />
+                {invSearch && (
+                  <button
+                    onClick={() => {
+                      setInvSearch("");
+                      setInvPage(1);
+                    }}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5"
+                    title="Kosongkan carian"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
 
               <select
@@ -1348,7 +1540,10 @@ export default function DashboardPage() {
                       <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-2 flex-wrap">
                         <span className="inline-flex items-center gap-1 text-[var(--color-ink)] font-semibold bg-stone-100 px-2 py-0.5 rounded-[2px] border border-stone-300">
                           <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                          <span>Tarikh Iklan: {formatListingDate(item.day || item.date || item.sort_date)}</span>
+                          <span>Tarikh Post Telegram: <strong>{formatPostDate(item.date || item.day || item.sort_date)}</strong></span>
+                          {getAgeLabel(item.date || item.day || item.sort_date) && (
+                            <span className="text-[10px] text-stone-500 font-normal">({getAgeLabel(item.date || item.day || item.sort_date)})</span>
+                          )}
                         </span>
                         <span className="inline-flex items-center gap-1 text-sky-900 font-semibold bg-sky-50 px-2 py-0.5 rounded-[2px] border border-sky-300">
                           <Layers className="w-3 h-3 text-sky-600" />
@@ -1481,6 +1676,52 @@ export default function DashboardPage() {
                 })}
             </div>
 
+            {/* Empty State for Inventory */}
+            {filteredInventory.length === 0 && (
+              <div className="sheet p-8 text-center space-y-3">
+                {leadMatchForInvSearch ? (
+                  <div className="space-y-3">
+                    <p className="text-sm font-semibold text-stone-800">
+                      Tiada unit inventori untuk carian &quot;{invSearch}&quot;.
+                    </p>
+                    <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
+                      Namun terdapat klien bernama <span className="font-bold text-stone-900">{leadMatchForInvSearch.author}</span> di tab <span className="font-semibold text-amber-800">Leads</span> ({leadMatchForInvSearch.location_target}).
+                    </p>
+                    <button
+                      onClick={() => {
+                        setActiveTab("leads");
+                        setLeadSearch(leadMatchForInvSearch.author.replace("@", ""));
+                        setLeadPage(1);
+                      }}
+                      className="btn btn--primary btn--sm mt-2"
+                    >
+                      Buka Tab Leads untuk {leadMatchForInvSearch.author}
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm font-semibold text-stone-800">
+                      Tiada unit inventori ditemui untuk carian atau penapis semasa.
+                    </p>
+                    <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
+                      Cuba cari mengikut nama kawasan (contoh: Pandan, Wangsa Maju, Setapak, Cheras) atau kosongkan carian.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setInvSearch("");
+                        setInvCategoryFilter("all");
+                        setInvStatusFilter("all");
+                        setInvPage(1);
+                      }}
+                      className="btn btn--primary btn--sm mt-2"
+                    >
+                      Set Semula Penapis Inventori
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
+
             {/* Pagination */}
             {filteredInventory.length > PAGE_SIZE && (
               <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
@@ -1527,8 +1768,20 @@ export default function DashboardPage() {
                     setOwnerSearch(e.target.value);
                     setOwnerPage(1);
                   }}
-                  className="studio-input studio-input--search w-full text-xs"
+                  className="studio-input studio-input--search w-full text-xs pr-8"
                 />
+                {ownerSearch && (
+                  <button
+                    onClick={() => {
+                      setOwnerSearch("");
+                      setOwnerPage(1);
+                    }}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5"
+                    title="Kosongkan carian"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
 
               <select
@@ -1610,12 +1863,21 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="mt-2 space-y-1 text-xs text-[var(--color-ink-2)]">
-                          <div>
-                            <span className="text-[var(--color-muted)]">Tarikh Iklan:</span>{" "}
-                            <span className="font-medium text-[var(--color-ink)] inline-flex items-center gap-1">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-[var(--color-muted)]">Tarikh Post Asal:</span>{" "}
+                            <span className="font-semibold text-[var(--color-ink)] inline-flex items-center gap-1">
                               <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                              <span>{formatListingDate(owner.post_date || owner.first_seen)}</span>
+                              <span>{formatPostDate(owner.post_date || owner.first_seen)}</span>
                             </span>
+                            {getAgeLabel(owner.post_date || owner.first_seen) && (
+                              <span className={`text-[10px] px-1.5 py-0.2 rounded font-medium border ${
+                                (getAgeLabel(owner.post_date || owner.first_seen) || "").includes("bulan")
+                                  ? "bg-amber-100 text-amber-900 border-amber-300"
+                                  : "bg-emerald-100 text-emerald-900 border-emerald-300"
+                              }`}>
+                                {getAgeLabel(owner.post_date || owner.first_seen)}
+                              </span>
+                            )}
                           </div>
                           <div>
                             <span className="text-[var(--color-muted)]">Jenis:</span>{" "}
@@ -1687,6 +1949,28 @@ export default function DashboardPage() {
                   );
                 })}
             </div>
+
+            {/* Empty State for Owners */}
+            {filteredOwners.length === 0 && (
+              <div className="sheet p-8 text-center space-y-3">
+                <p className="text-sm font-semibold text-stone-800">
+                  Tiada unit pemilik langsung ditemui untuk carian atau penapis semasa.
+                </p>
+                <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
+                  Semak status penapis anda (unit yang ditandakan sebagai Disewa atau Batal disembunyikan secara lalai).
+                </p>
+                <button
+                  onClick={() => {
+                    setOwnerSearch("");
+                    setOwnerStatusFilter("all");
+                    setOwnerPage(1);
+                  }}
+                  className="btn btn--primary btn--sm mt-2"
+                >
+                  Set Semula Penapis Pemilik
+                </button>
+              </div>
+            )}
 
             {/* Pagination */}
             {filteredOwners.length > PAGE_SIZE && (
