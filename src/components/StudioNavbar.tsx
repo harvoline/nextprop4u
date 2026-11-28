@@ -63,20 +63,17 @@ export function StudioNavbar({ whatsappUrl }: { whatsappUrl: string }) {
           </Link>
 
           <nav className="nav-links nav-links--desktop" aria-label="Navigasi utama">
-            <a href="#koridor" className="nav-link">
+            <Link href="/#koridor" className="nav-link">
               Kawasan Liputan
-            </a>
-            <a href="#servis" className="nav-link">
+            </Link>
+            <Link href="/#servis" className="nav-link">
               Khidmat Hartanah
-            </a>
-            <a href="#kalkulator" className="nav-link">
-              Semak Kelayakan
-            </a>
-            <a href="#soalan" className="nav-link">
+            </Link>
+            <Link href="/kalkulator" className="nav-link font-medium">
+              Kalkulator Hartanah
+            </Link>
+            <Link href="/#soalan" className="nav-link">
               Soalan Lazim
-            </a>
-            <Link href="/login" className="nav-link">
-              Agent Login
             </Link>
             <a href={whatsappUrl} className="btn btn--quiet btn--sm">
               WhatsApp Afif
@@ -100,20 +97,17 @@ export function StudioNavbar({ whatsappUrl }: { whatsappUrl: string }) {
             className="nav-mobile-drawer"
             aria-label="Navigasi mudah alih"
           >
-            <a href="#koridor" className="nav-link" onClick={() => setMenuOpen(false)}>
+            <Link href="/#koridor" className="nav-link" onClick={() => setMenuOpen(false)}>
               Kawasan Liputan
-            </a>
-            <a href="#servis" className="nav-link" onClick={() => setMenuOpen(false)}>
+            </Link>
+            <Link href="/#servis" className="nav-link" onClick={() => setMenuOpen(false)}>
               Khidmat Hartanah
-            </a>
-            <a href="#kalkulator" className="nav-link" onClick={() => setMenuOpen(false)}>
-              Semak Kelayakan
-            </a>
-            <a href="#soalan" className="nav-link" onClick={() => setMenuOpen(false)}>
+            </Link>
+            <Link href="/kalkulator" className="nav-link font-medium" onClick={() => setMenuOpen(false)}>
+              Kalkulator Hartanah
+            </Link>
+            <Link href="/#soalan" className="nav-link" onClick={() => setMenuOpen(false)}>
               Soalan Lazim
-            </a>
-            <Link href="/login" className="nav-link" onClick={() => setMenuOpen(false)}>
-              Agent Login
             </Link>
             <a href={whatsappUrl} className="btn btn--primary">
               WhatsApp Afif

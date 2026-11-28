@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { Calculator, ArrowRight, FileText, TrendingUp, Receipt } from "lucide-react";
 
 type DeskMode = "kelayakan" | "mandat";
 
@@ -23,7 +25,7 @@ export function LoanWorkbench() {
   const [mode, setMode] = useState<DeskMode>("kelayakan");
   const modeRefs = useRef<Partial<Record<DeskMode, HTMLButtonElement | null>>>({});
 
-  // Mode 1: DSR & Mortgage Estimator state (controlled strings avoid zero-snap while typing)
+  // Mode 1: DSR & Mortgage Estimator state
   const [priceText, setPriceText] = useState<string>("480000");
   const [depositPct, setDepositPct] = useState<number>(10);
   const [tenureYears, setTenureYears] = useState<number>(35);
@@ -107,6 +109,10 @@ export function LoanWorkbench() {
         <div className="workbench-grid">
           {/* Left column: clear advisory parameters */}
           <div data-reveal>
+            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-[var(--color-muted)] mb-2">
+              <Calculator className="w-3.5 h-3.5 text-emerald-600" />
+              Alat Semakan Kewangan Hartanah
+            </div>
             <h2
               id="heading-kalkulator"
               style={{
@@ -138,6 +144,72 @@ export function LoanWorkbench() {
                 <span className="tabular-nums font-medium">Percuma</span>
               </li>
             </ul>
+
+            {/* Near-calculator quick buttons to other calculators */}
+            <div className="mt-8 pt-6 border-t border-[var(--color-rule)]">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="text-xs uppercase tracking-wider font-semibold text-[var(--color-muted)]">
+                  Kalkulator Khusus Lain
+                </span>
+                <Link
+                  href="/kalkulator"
+                  className="text-xs font-medium text-[var(--color-ink)] hover:text-emerald-700 inline-flex items-center gap-1"
+                >
+                  Semua Alat
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <Link
+                  href="/kalkulator/duti-setem-legal-fee"
+                  className="p-2.5 rounded bg-[var(--color-paper-hi)] hover:bg-[var(--color-paper-3)] transition-colors border border-[var(--color-rule)]/60 text-xs text-[var(--color-ink)] block group"
+                >
+                  <div className="flex items-center gap-1.5 font-semibold text-[var(--color-ink)] group-hover:text-blue-700">
+                    <FileText className="w-3.5 h-3.5 text-blue-600" />
+                    Duti Setem &amp; SPA
+                  </div>
+                  <span className="text-[11px] text-[var(--color-muted)] block mt-0.5">
+                    MOT &amp; Kos Guaman Beli Rumah
+                  </span>
+                </Link>
+                <Link
+                  href="/kalkulator/rental-yield"
+                  className="p-2.5 rounded bg-[var(--color-paper-hi)] hover:bg-[var(--color-paper-3)] transition-colors border border-[var(--color-rule)]/60 text-xs text-[var(--color-ink)] block group"
+                >
+                  <div className="flex items-center gap-1.5 font-semibold text-[var(--color-ink)] group-hover:text-amber-700">
+                    <TrendingUp className="w-3.5 h-3.5 text-amber-600" />
+                    Rental Yield &amp; Tunai
+                  </div>
+                  <span className="text-[11px] text-[var(--color-muted)] block mt-0.5">
+                    Kira Pulangan Pelaburan
+                  </span>
+                </Link>
+                <Link
+                  href="/kalkulator/tenancy-agreement"
+                  className="p-2.5 rounded bg-[var(--color-paper-hi)] hover:bg-[var(--color-paper-3)] transition-colors border border-[var(--color-rule)]/60 text-xs text-[var(--color-ink)] block group"
+                >
+                  <div className="flex items-center gap-1.5 font-semibold text-[var(--color-ink)] group-hover:text-purple-700">
+                    <Receipt className="w-3.5 h-3.5 text-purple-600" />
+                    Tenancy Agreement
+                  </div>
+                  <span className="text-[11px] text-[var(--color-muted)] block mt-0.5">
+                    Duti Setem Rasmi LHDN
+                  </span>
+                </Link>
+                <Link
+                  href="/kalkulator/pinjaman-perumahan"
+                  className="p-2.5 rounded bg-[var(--color-paper-hi)] hover:bg-[var(--color-paper-3)] transition-colors border border-[var(--color-rule)]/60 text-xs text-[var(--color-ink)] block group"
+                >
+                  <div className="flex items-center gap-1.5 font-semibold text-[var(--color-ink)] group-hover:text-emerald-700">
+                    <Calculator className="w-3.5 h-3.5 text-emerald-600" />
+                    Pinjaman &amp; DSR Lanjut
+                  </div>
+                  <span className="text-[11px] text-[var(--color-muted)] block mt-0.5">
+                    Halaman Penuh &amp; Jadual Bank
+                  </span>
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* Right column: tactile single-sheet studio workbench */}
@@ -329,7 +401,7 @@ export function LoanWorkbench() {
                         <option value="Petaling Jaya, Subang & Damansara">Petaling Jaya, Subang &amp; Damansara</option>
                         <option value="Ampang, Cheras, Kajang & Bangi">Ampang, Cheras, Kajang &amp; Bangi</option>
                         <option value="Gombak, Selayang & Rawang">Gombak, Selayang &amp; Rawang</option>
-                        <option value="Shah Alam, Puchong & Klang">Shah Alam, Puchong &amp; Klang</option>
+                        <option value="Puchong, Cyberjaya & Putrajaya">Puchong, Cyberjaya &amp; Putrajaya</option>
                       </select>
                     </div>
 
@@ -397,6 +469,28 @@ export function LoanWorkbench() {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Bottom prominent banner linking to the full calculators collection */}
+        <div className="mt-12 p-5 sm:p-6 rounded-lg bg-[var(--color-paper)] border border-[var(--color-rule)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4" data-reveal>
+          <div>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded inline-block mb-1">
+              Pusat Alat Kewangan Hartanah
+            </span>
+            <h3 className="text-lg font-display text-[var(--color-ink)] m-0 font-medium">
+              Perlukan kiraan Duti Setem MOT, Kos Guaman SPA, atau Pulangan Sewa (Rental Yield)?
+            </h3>
+            <p className="text-xs text-[var(--color-ink-2)] mt-1 mb-0 max-w-2xl">
+              Gunakan 4 kalkulator hartanah percuma khusus untuk pembeli, penjual &amp; pemilik sewa di Kuala Lumpur dan Selangor tanpa sebarang pendaftaran.
+            </p>
+          </div>
+          <Link
+            href="/kalkulator"
+            className="btn btn--primary whitespace-nowrap self-stretch md:self-auto text-center inline-flex items-center justify-center gap-2"
+          >
+            Lihat Semua Kalkulator Hartanah
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

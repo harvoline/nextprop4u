@@ -33,14 +33,17 @@ export function MastFooter({
           </div>
 
           <nav className="mast-links" aria-label="Pautan pantas penutup">
-            <a href="#koridor">Kawasan Liputan</a>
-            <a href="#servis">Khidmat Hartanah</a>
-            <a href="#pendekatan">Pendekatan</a>
-            <a href="#kalkulator">Kalkulator</a>
-            <a href="#soalan">Soalan Lazim</a>
+            <Link href="/#koridor">Kawasan Liputan</Link>
+            <Link href="/#servis">Khidmat Hartanah</Link>
+            <Link href="/#pendekatan">Pendekatan</Link>
+            <Link href="/kalkulator">Koleksi Kalkulator</Link>
+            <Link href="/kalkulator/pinjaman-perumahan">Kalkulator Pinjaman</Link>
+            <Link href="/kalkulator/duti-setem-legal-fee">Duti Setem &amp; SPA</Link>
+            <Link href="/kalkulator/rental-yield">Rental Yield</Link>
+            <Link href="/kalkulator/tenancy-agreement">Tenancy Agreement</Link>
+            <Link href="/#soalan">Soalan Lazim</Link>
             <a href="tel:+601158683907">+6011-5868 3907</a>
             <a href={whatsappUrl}>WhatsApp Afif</a>
-            <Link href="/login">Agent Login</Link>
           </nav>
         </div>
 
@@ -49,7 +52,7 @@ export function MastFooter({
             Perkhidmatan perundingan hartanah profesional di bawah naungan agensi Maxxan Realty Sdn Bhd.
           </p>
           <p className="text-xs text-[var(--color-muted)]">
-            Hak Cipta © 2026 Muhammad Norafif, NextProp4U.
+            Hak Cipta Â© 2026 Muhammad Norafif, NextProp4U.
           </p>
           {credits.length > 0 && (
             <p className="mast-credits" data-credits="true">
