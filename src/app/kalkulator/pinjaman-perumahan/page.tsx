@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Kalkulator Pinjaman Perumahan & DSR Malaysia 2026 | NextProp4U",
   description:
     "Kira ansuran bulanan pinjaman rumah, had Debt Service Ratio (DSR 60%-70%), anggaran faedah bank terkini, dan gaji minimum beli rumah di KL & Selangor.",
+  alternates: {
+    canonical: "https://nextprop4u.com/kalkulator/pinjaman-perumahan",
+  },
   keywords: [
     "kalkulator pinjaman perumahan",
     "dsr calculator malaysia",
@@ -94,7 +97,7 @@ export default function MortgageDsrPage() {
                 <strong>Debt Service Ratio (DSR)</strong> ialah formula utama yang digunakan oleh semua bank di Malaysia (seperti Maybank, CIMB, RHB, Public Bank, dan Bank Islam) untuk menilai kemampuan peminjam membayar balik pinjaman setiap bulan.
               </p>
               <div className="p-4 rounded bg-[var(--color-paper-2)] border border-[var(--color-rule)]/80 text-xs font-mono text-[var(--color-ink)] mb-4">
-                DSR (%) = [(Jumlah Komitmen Hutang Bulanan + Ansuran Rumah Baru) Ã· Pendapatan Bersih Bulanan] Ã 100
+                DSR (%) = [(Jumlah Komitmen Hutang Bulanan + Ansuran Rumah Baru) / Pendapatan Bersih Bulanan] × 100
               </div>
               <p className="text-xs text-[var(--color-muted)] leading-relaxed m-0">
                 * Komitmen hutang merangkumi ansuran kereta, kad kredit (5% baki terkumpul), pinjaman peribadi, dan PTPTN yang direkodkan dalam laporan CCRIS Bank Negara Malaysia.
@@ -115,13 +118,13 @@ export default function MortgageDsrPage() {
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[var(--color-ink)]">Gaji Bersih RM3,000 â RM5,000:</strong> Had DSR diterima lazimnya antara <strong>60% hingga 70%</strong>.
+                    <strong className="text-[var(--color-ink)]">Gaji Bersih RM3,000 – RM5,000:</strong> Had DSR diterima lazimnya antara <strong>60% hingga 70%</strong>.
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[var(--color-ink)]">Gaji Bersih RM5,000 ke Atas:</strong> Bank tertentu boleh mempertimbangkan had DSR sehingga <strong>75% â 80%</strong> bergantung pada profil kerjaya dan simpanan kecairan.
+                    <strong className="text-[var(--color-ink)]">Gaji Bersih RM5,000 ke Atas:</strong> Bank tertentu boleh mempertimbangkan had DSR sehingga <strong>75% – 80%</strong> bergantung pada profil kerjaya dan simpanan kecairan.
                   </div>
                 </li>
               </ul>
