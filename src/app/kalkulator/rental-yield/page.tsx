@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Kalkulator Rental Yield & Aliran Tunai Sewa Malaysia | NextProp4U",
   description:
     "Kira pulangan sewa kasar (Gross Rental Yield), pulangan sewa bersih (Net Rental Yield), dan baki aliran tunai bulanan selepas tolak instalment bank & kos penyelenggaraan.",
+  alternates: {
+    canonical: "https://nextprop4u.com/kalkulator/rental-yield",
+  },
   keywords: [
     "kalkulator rental yield",
     "pulangan sewa rumah",
@@ -95,13 +98,13 @@ export default function RentalYieldPage() {
                   <strong className="text-[var(--color-ink)] block mb-1">
                     1. Gross Rental Yield (Pulangan Kasar):
                   </strong>
-                  Formula: <code>(Sewa Bulanan Ã 12 Ã· Harga Beli Rumah) Ã 100</code>. Ini adalah ukuran pantas sebelum mengambil kira sebarang kos sampingan.
+                  Formula: <code>(Sewa Bulanan × 12 ÷ Harga Beli Rumah) × 100</code>. Ini adalah ukuran pantas sebelum mengambil kira sebarang kos sampingan.
                 </div>
                 <div>
                   <strong className="text-[var(--color-ink)] block mb-1">
                     2. Net Rental Yield (Pulangan Bersih):
                   </strong>
-                  Formula: <code>[(Sewa Kasar - Kos Penyelenggaraan - Cukai - Insurans - Cuti Sewa) Ã· Harga Beli] Ã 100</code>. Ini mencerminkan pulangan sebenar duit tunai yang masuk ke akaun pemilik.
+                  Formula: <code>[(Sewa Kasar - Kos Penyelenggaraan - Cukai - Insurans - Cuti Sewa) ÷ Harga Beli] × 100</code>. Ini mencerminkan pulangan sebenar duit tunai yang masuk ke akaun pemilik.
                 </div>
               </div>
             </div>
@@ -114,13 +117,13 @@ export default function RentalYieldPage() {
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[var(--color-ink)]">&gt; 5.5% â 7.0%:</strong> Sangat cemerlang. Kategori ini lazimnya dicapai oleh kondominium berhampiran kampus universiti (contohnya TAR UMT di Setapak), stesen LRT, atau kawasan berketumpatan penyewa tinggi.
+                    <strong className="text-[var(--color-ink)]">&gt; 5.5% – 7.0%:</strong> Sangat cemerlang. Kategori ini lazimnya dicapai oleh kondominium berhampiran kampus universiti (contohnya TAR UMT di Setapak), stesen LRT, atau kawasan berketumpatan penyewa tinggi.
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[var(--color-ink)]">4.0% â 5.0%:</strong> Purata pasaran kediaman standard di Kuala Lumpur dan Selangor. Menampung sebahagian besar atau keseluruhan ansuran pinjaman bank.
+                    <strong className="text-[var(--color-ink)]">4.0% – 5.0%:</strong> Purata pasaran kediaman standard di Kuala Lumpur dan Selangor. Menampung sebahagian besar atau keseluruhan ansuran pinjaman bank.
                   </div>
                 </li>
                 <li className="flex items-start gap-2.5">
