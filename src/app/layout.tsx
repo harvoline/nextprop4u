@@ -4,9 +4,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nextprop4u.com"),
-  title: "Ejen Hartanah Setapak & KL | Muhammad Norafif (NextProp4U)",
+  title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
   description:
-    "Perunding Maxxan Realty di Setapak, KL & Selangor. Khidmat jual, beli & sewa rumah subsale, semak nilai JPPH & kelayakan pinjaman DSR percuma.",
+    "Perunding Berdaftar Maxxan Realty di Setapak, Kuala Lumpur & Selangor. Khidmat jual, beli dan sewa rumah sub-sale, semakan nilai pasaran JPPH dan kelayakan pinjaman DSR percuma.",
   keywords: [
     "ejen hartanah setapak",
     "perunding hartanah setapak",
@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     "jual rumah setapak wangsa maju",
     "rumah sewa setapak",
     "ejen hartanah petaling jaya",
-    "ejen hartanah shah alam",
+    "ejen hartanah rawang",
+    "ejen hartanah gombak",
     "semak kelayakan pinjaman perumahan",
     "dsr calculator malaysia",
     "ejen hartanah maxxan realty",
@@ -39,14 +40,14 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Ejen Hartanah Setapak & KL | Muhammad Norafif (NextProp4U)",
+    title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
     description:
-      "Perunding Maxxan Realty di Setapak, KL & Selangor. Semak nilai JPPH & DSR percuma. WhatsApp +6011-5868 3907.",
+      "Perunding Berdaftar Maxxan Realty. Konsultasi percuma semakan nilai pasaran JPPH dan had kelayakan pinjaman bank (DSR) di KL & Selangor. WhatsApp +6011-5868 3907.",
     url: "https://nextprop4u.com",
     siteName: "NextProp4U - Muhammad Norafif (Maxxan Realty)",
     images: [
       {
-        url: "/images/og-image.jpg?v=2",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Muhammad Norafif - Perunding Berdaftar Maxxan Realty | NextProp4U (+6011-5868 3907)",
@@ -57,10 +58,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ejen Hartanah Setapak & KL | Muhammad Norafif (NextProp4U)",
+    title: "Ejen Hartanah Setapak, Kuala Lumpur & Selangor | Muhammad Norafif (Maxxan Realty)",
     description:
-      "Perunding Maxxan Realty di Setapak, KL & Selangor. Khidmat jual, beli & sewa rumah. WhatsApp +6011-5868 3907.",
-    images: ["/images/og-image.jpg?v=2"],
+      "Perunding Berdaftar Maxxan Realty berpangkalan di Setapak, KL. Khidmat jual, beli dan sewa rumah seluruh KL & Selangor. Hubungi +6011-5868 3907.",
+    images: ["/images/og-image.jpg"],
   },
 };
 
@@ -99,7 +100,7 @@ export default function RootLayout({
                   "url": "https://nextprop4u.com",
                   "name": "NextProp4U",
                   "description": "Perunding Berdaftar Maxxan Realty di Setapak, Kuala Lumpur & Selangor",
-                  "inLanguage": "ms-MY"
+                  "inLanguage": "ms-MY",
                 },
                 {
                   "@type": ["RealEstateAgent", "LocalBusiness"],
@@ -117,20 +118,20 @@ export default function RootLayout({
                     "addressLocality": "Setapak",
                     "addressRegion": "Kuala Lumpur",
                     "postalCode": "53300",
-                    "addressCountry": "MY"
+                    "addressCountry": "MY",
                   },
                   "geo": {
                     "@type": "GeoCoordinates",
                     "latitude": 3.1931,
-                    "longitude": 101.7068
+                    "longitude": 101.7068,
                   },
                   "openingHoursSpecification": [
                     {
                       "@type": "OpeningHoursSpecification",
                       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
                       "opens": "08:00",
-                      "closes": "22:00"
-                    }
+                      "closes": "22:00",
+                    },
                   ],
                   "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Setapak, Kuala Lumpur" },
@@ -139,8 +140,9 @@ export default function RootLayout({
                     { "@type": "AdministrativeArea", "name": "Selangor" },
                     { "@type": "AdministrativeArea", "name": "Petaling Jaya" },
                     { "@type": "AdministrativeArea", "name": "Subang Jaya" },
-                    { "@type": "AdministrativeArea", "name": "Shah Alam" },
-                    { "@type": "AdministrativeArea", "name": "Klang" }
+                    { "@type": "AdministrativeArea", "name": "Gombak" },
+                    { "@type": "AdministrativeArea", "name": "Rawang" },
+                    { "@type": "AdministrativeArea", "name": "Ampang" },
                   ],
                   "makesOffer": [
                     {
@@ -148,34 +150,34 @@ export default function RootLayout({
                       "itemOffered": {
                         "@type": "Service",
                         "name": "Jual Hartanah & Rumah Subsale",
-                        "description": "Pengurusan jualan hartanah di Kuala Lumpur dan Selangor tanpa sebarang caj pemasaran pendahuluan sehingga selesai Perjanjian Jual Beli (S&P / SPA)."
-                      }
+                        "description": "Pengurusan jualan hartanah di Kuala Lumpur dan Selangor tanpa sebarang caj pemasaran pendahuluan sehingga selesai Perjanjian Jual Beli (S&P / SPA).",
+                      },
                     },
                     {
                       "@type": "Offer",
                       "itemOffered": {
                         "@type": "Service",
                         "name": "Carian & Beli Rumah Subsale",
-                        "description": "Khidmat carian rumah, semakan kelayakan pinjaman bank dan rundingan S&P / SPA percuma untuk pembeli rumah sub-sale."
-                      }
+                        "description": "Khidmat carian rumah, semakan kelayakan pinjaman bank dan rundingan S&P / SPA percuma untuk pembeli rumah sub-sale.",
+                      },
                     },
                     {
                       "@type": "Offer",
                       "itemOffered": {
                         "@type": "Service",
                         "name": "Khidmat Sewa Rumah & Pengurusan Penyewa",
-                        "description": "Saringan profil penyewa, penyediaan Tenancy Agreement dan urusan stamping LHDN lengkap."
-                      }
+                        "description": "Saringan profil penyewa, penyediaan Tenancy Agreement dan urusan stamping LHDN lengkap.",
+                      },
                     },
                     {
                       "@type": "Offer",
                       "itemOffered": {
                         "@type": "Service",
                         "name": "Semakan Kelayakan Pinjaman (DSR) & Nilai Pasaran JPPH",
-                        "description": "Kiraan had kelayakan pinjaman perumahan bank dan rujukan nilai pasaran hartanah terkini."
-                      }
-                    }
-                  ]
+                        "description": "Kiraan had kelayakan pinjaman perumahan bank dan rujukan nilai pasaran hartanah terkini.",
+                      },
+                    },
+                  ],
                 },
                 {
                   "@type": "Person",
@@ -185,11 +187,11 @@ export default function RootLayout({
                   "worksFor": {
                     "@type": "RealEstateAgent",
                     "name": "Maxxan Realty Sdn Bhd",
-                    "url": "https://maxxan.com.my"
+                    "url": "https://maxxan.com.my",
                   },
                   "image": "https://nextprop4u.com/images/please_follow_my_picture_and_3de36cdc_2K.jpg",
                   "telephone": "+601158683907",
-                  "url": "https://nextprop4u.com"
+                  "url": "https://nextprop4u.com",
                 },
                 {
                   "@type": "FAQPage",
@@ -200,36 +202,36 @@ export default function RootLayout({
                       "name": "Adakah pembeli rumah sub-sale perlu membayar fee ejen?",
                       "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Percuma untuk pembeli sub-sale. Semakan kelayakan DSR, viewing unit dan rundingan Perjanjian Jual Beli (S&P / SPA) tidak dikenakan caj kerana fee agensi dibayar oleh penjual."
-                      }
+                        "text": "Percuma untuk pembeli sub-sale. Semakan kelayakan DSR, viewing unit dan rundingan Perjanjian Jual Beli (S&P / SPA) tidak dikenakan caj kerana fee agensi dibayar oleh penjual.",
+                      },
                     },
                     {
                       "@type": "Question",
                       "name": "Berapakah fee bagi urusan menjual atau menyewakan unit?",
                       "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Tiada bayaran pendahuluan sebelum transaksi selesai. Fee standard ialah 3.24% (termasuk SST) bagi jualan berjaya, atau satu bulan sewa bagi perjanjian setahun."
-                      }
+                        "text": "Tiada bayaran pendahuluan sebelum transaksi selesai. Fee standard ialah 3.24% (termasuk SST) bagi jualan berjaya, atau satu bulan sewa bagi perjanjian setahun.",
+                      },
                     },
                     {
                       "@type": "Question",
                       "name": "Apakah dokumen asas untuk permohonan pinjaman atau sewaan?",
                       "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Sediakan salinan kad pengenalan, slip gaji 3 bulan, penyata bank 3 bulan dan KWSP untuk pinjaman. Sewaan turut melalui saringan penyewa dan stamping rasmi LHDN."
-                      }
+                        "text": "Sediakan salinan kad pengenalan, slip gaji 3 bulan, penyata bank 3 bulan dan KWSP untuk pinjaman. Sewaan turut melalui saringan penyewa dan stamping rasmi LHDN.",
+                      },
                     },
                     {
                       "@type": "Question",
                       "name": "Bagaimana penilaian harga pasaran JPPH dan garis masa berjalan?",
                       "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Harga disemak menerusi rekod transaksi JPPH dan penilai bank KL serta Selangor. Kelulusan pinjaman bank lazimnya 2 hingga 4 minggu; urusan pindah milik S&P / SPA selesai dalam 3 hingga 5 bulan."
-                      }
-                    }
-                  ]
-                }
-              ]
+                        "text": "Harga disemak menerusi rekod transaksi JPPH dan penilai bank KL serta Selangor. Kelulusan pinjaman bank lazimnya 2 hingga 4 minggu; urusan pindah milik S&P / SPA selesai dalam 3 hingga 5 bulan.",
+                      },
+                    },
+                  ],
+                },
+              ],
             }),
           }}
         />
