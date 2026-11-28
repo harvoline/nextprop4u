@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Kalkulator Duti Setem Perjanjian Sewa LHDN 2026 | NextProp4U",
   description:
     "Kira duti setem perjanjian sewa rumah (Tenancy Agreement) mengikut formula rasmi Lembaga Hasil Dalam Negeri (LHDN) untuk tempoh 1 tahun, 2 tahun, atau 3 tahun ke atas.",
+  alternates: {
+    canonical: "https://nextprop4u.com/kalkulator/tenancy-agreement",
+  },
   keywords: [
     "kalkulator tenancy agreement lhdn",
     "duti setem sewa rumah",
@@ -96,7 +99,7 @@ export default function TenancyAgreementPage() {
               <div className="space-y-3 text-xs">
                 <div className="p-3 rounded bg-[var(--color-paper-2)] border border-[var(--color-rule)]/70">
                   <strong className="text-[var(--color-ink)] block mb-1">Langkah 1: Kira Sewa Setahun</strong>
-                  <code>Jumlah Sewa Setahun = Sewa Bulanan Ã 12</code>
+                  <code>Jumlah Sewa Setahun = Sewa Bulanan × 12</code>
                 </div>
                 <div className="p-3 rounded bg-[var(--color-paper-2)] border border-[var(--color-rule)]/70">
                   <strong className="text-[var(--color-ink)] block mb-1">Langkah 2: Tolak Pengecualian Asas RM2,400</strong>
@@ -104,14 +107,14 @@ export default function TenancyAgreementPage() {
                 </div>
                 <div className="p-3 rounded bg-[var(--color-paper-2)] border border-[var(--color-rule)]/70">
                   <strong className="text-[var(--color-ink)] block mb-1">Langkah 3: Bahagi Dengan RM250 (Bundar ke Atas)</strong>
-                  <code>Unit RM250 = Math.ceil(Baki Kena Cukai Ã· 250)</code>
+                  <code>Unit RM250 = Math.ceil(Baki Kena Cukai ÷ 250)</code>
                 </div>
                 <div className="p-3 rounded bg-[var(--color-paper-2)] border border-[var(--color-rule)]/70">
                   <strong className="text-[var(--color-ink)] block mb-1">Langkah 4: Darab Kadar Tempoh</strong>
                   <ul className="list-disc pl-4 space-y-1 mt-1 text-[var(--color-ink-2)]">
-                    <li><strong>1 tahun atau kurang:</strong> Unit RM250 Ã RM1</li>
-                    <li><strong>1 hingga 3 tahun (cth. 2 tahun):</strong> Unit RM250 Ã RM2</li>
-                    <li><strong>Melebihi 3 tahun:</strong> Unit RM250 Ã RM4</li>
+                    <li><strong>1 tahun atau kurang:</strong> Unit RM250 × RM1</li>
+                    <li><strong>1 hingga 3 tahun (cth. 2 tahun):</strong> Unit RM250 × RM2</li>
+                    <li><strong>Melebihi 3 tahun:</strong> Unit RM250 × RM4</li>
                   </ul>
                 </div>
               </div>
