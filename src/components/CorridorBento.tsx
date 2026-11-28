@@ -5,7 +5,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
         <div className="section-head-split" data-reveal>
           <h2 id="heading-liputan">Kawasan Liputan: Setapak, Wangsa Maju, KL &amp; Selangor</h2>
           <p className="lead">
-            Fokus utama di Setapak dengan liputan harian merangkumi kawasan sekitar Kuala Lumpur serta Selangor.
+            Fokus utama di Setapak dengan liputan harian merangkumi kawasan sekitar Kuala Lumpur serta Selangor secara meluas.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                 Setapak, Wangsa Maju &amp; Kuala Lumpur
               </h3>
               <p className="mt-2 text-sm text-[var(--color-ink-2)] max-w-[54ch]">
-                Fokus utama di Setapak meliputi Danau Kota, Setiawangsa, Melawati, Titiwangsa, Mont Kiara, Bangsar, Cheras dan pusat bandar KL.
+                Fokus utama di Setapak meliputi Danau Kota, Setiawangsa, Melawati, Titiwangsa, Mont Kiara, Bangsar, Cheras dan seluruh pusat bandar Kuala Lumpur.
               </p>
             </div>
 
@@ -56,10 +56,10 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                   Petaling Jaya, Subang &amp; Damansara
                 </h3>
                 <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-                  Fokus kepada kediaman sub-sale matang, apartmen transit LRT dan perumahan keluarga berhampiran Damansara, Subang Jaya, Bandar Sunway dan Puchong.
+                  Fokus kepada kediaman sub-sale matang, apartmen transit LRT dan perumahan keluarga berhampiran Damansara, Subang Jaya dan Bandar Sunway.
                 </p>
               </div>
-              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--color-muted)] tabular-nums">
+              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex items-center justify-between text-xs text-[var(--color-muted)] tabular-nums">
                 <span>Sub-sale &amp; Kondominium</span>
                 <span>Sewa RM 700 ke atas</span>
               </div>
@@ -71,10 +71,10 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                   Aktif Menerima Listing Pemilik
                 </h3>
                 <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-                  Pemilik di KL dan Selangor boleh menyemak nilai pasaran semasa JPPH bagi merancang harga jualan atau kadar sewaan dalam tempoh 24 jam.
+                  Pemilik di Setapak, KL dan Selangor boleh menyemak nilai pasaran semasa JPPH bagi merancang harga jualan atau kadar sewaan dalam tempoh 24 jam.
                 </p>
               </div>
-              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--color-muted)]">
+              <div className="pt-3 mt-2 border-t border-[var(--color-rule)] flex items-center justify-between text-xs text-[var(--color-muted)]">
                 <span>Maklum balas 24 jam</span>
                 <a
                   href="#kalkulator"
@@ -90,14 +90,14 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
           <article className="sheet bento-cell bento-bottom-a" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
             <div>
               <h3 className="font-display text-[var(--text-title)] text-[var(--color-ink)] leading-[1.15]">
-                Shah Alam, Klang &amp; Setia Alam
+                Puchong, Cyberjaya &amp; Putrajaya
               </h3>
               <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-                Unit kediaman teres keluarga, rumah berkembar serta lot sudut di Shah Alam, Setia Alam, Bandar Bukit Raja dan Klang.
+                Kondominium moden, kediaman keluarga teres serta apartmen berdekatan koridor teknologi, universiti dan stesen pengangkutan awam.
               </p>
             </div>
             <div className="pt-3 mt-2 border-t border-[var(--color-rule)] text-xs text-[var(--color-muted)] tabular-nums">
-              Jualan sehingga RM 2.0M
+              Jualan &amp; Sewaan
             </div>
           </article>
 
@@ -121,11 +121,11 @@ export function CorridorBento({ whatsappUrl }: { whatsappUrl: string }) {
                 Gombak, Selayang &amp; Rawang
               </h3>
               <p className="mt-2 text-sm text-[var(--color-ink-2)]">
-                Liputan harian dari Setapak merentasi Batu Caves, Gombak, Kepong, Selayang sehingga ke kawasan utara Selangor.
+                Liputan harian dari Setapak merentasi Batu Caves, Gombak, Kepong, Selayang sehingga ke kawasan utara Selangor &amp; koridor Rawang.
               </p>
             </div>
             <div className="pt-3 mt-2 border-t border-[var(--color-rule)] text-xs text-[var(--color-muted)]">
-              Fokus Setapak KL
+              Pangkalan Setapak KL
             </div>
           </article>
         </div>
