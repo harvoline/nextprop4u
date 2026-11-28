@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Kalkulator Duti Setem (MOT) & Kos Guaman SPA 2026 | NextProp4U",
   description:
     "Kira kos guaman beli rumah, duti setem MOT pindah milik (LHDN), kos peguam SPA mengikut SRO 2023, duti setem loan, serta pengecualian pembeli rumah pertama di Malaysia.",
+  alternates: {
+    canonical: "https://nextprop4u.com/kalkulator/duti-setem-legal-fee",
+  },
   keywords: [
     "kalkulator duti setem",
     "kalkulator mot",
