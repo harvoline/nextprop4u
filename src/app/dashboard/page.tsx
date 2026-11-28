@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "../../lib/supabase/client";
@@ -27,7 +27,6 @@ import {
   MapPin,
   Calendar,
   Layers,
-  X,
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -37,365 +36,105 @@ export default function DashboardPage() {
   const [approach, setApproach] = useState<"A" | "B">("A");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // Status overrides stored in localStorage
-  const [leadStatuses, setLeadStatuses] = useState<Record<string, string>>({});
-  const [ownerStatuses, setOwnerStatuses] = useState<Record<string, string>>({});
-  const [invStatuses, setInvStatuses] = useState<Record<string, string>>({});
-  const [matchStatuses, setMatchStatuses] = useState<Record<string, string>>({});
+  // Live Sync state connected to Supabase
+  const [liveData, setLiveData] = useState<any>(portalData);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState<string | null>(portalData.updated_at || null);
 
-  // Filters for Leads (Default: active_only)
+  const fetchLive = useCallback(async () => {
+    try {
+      setIsSyncing(true);
+      const res = await fetch("/api/sync?full=true", { cache: "no-store" });
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.stats) {
+          setLiveData(json);
+          setLastSyncedAt(json.updated_at || new Date().toISOString());
+        }
+      }
+    } catch (err) {
+      console.warn("Live sync error, using cached data:", err);
+    } finally {
+      setIsSyncing(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLive();
+  }, [fetchLive]);
+
+  // Filters for Leads
   const [leadSearch, setLeadSearch] = useState("");
   const [leadPlatformFilter, setLeadPlatformFilter] = useState("all");
-  const [leadStatusFilter, setLeadStatusFilter] = useState("active_only");
   const [leadPage, setLeadPage] = useState(1);
 
-  // Filters for Telegram Inventory (Default: available)
+  // Filters for Telegram Inventory
   const [invSearch, setInvSearch] = useState("");
-  const [invCategoryFilter, setInvCategoryFilter] = useState("all");
-  const [invStatusFilter, setInvStatusFilter] = useState("available");
+  const [invStatusFilter, setInvStatusFilter] = useState("all");
   const [invSortOrder, setInvSortOrder] = useState<"desc" | "asc">("desc");
   const [invPage, setInvPage] = useState(1);
   const [expandedInvId, setExpandedInvId] = useState<number | null>(null);
-  const [copiedKeywordId, setCopiedKeywordId] = useState<string | null>(null);
-  const [expandedMatchId, setExpandedMatchId] = useState<string | null>(null);
 
-  // Filters for Landlords (Default: active_only)
+  // Filters for Landlords
   const [ownerSearch, setOwnerSearch] = useState("");
-  const [ownerStatusFilter, setOwnerStatusFilter] = useState("active_only");
   const [ownerPage, setOwnerPage] = useState(1);
 
   const PAGE_SIZE = 10;
 
-  // Load status overrides from localStorage on client mount
-  useEffect(() => {
-    try {
-      const savedLeads = localStorage.getItem("nextprop_lead_statuses");
-      if (savedLeads) setLeadStatuses(JSON.parse(savedLeads));
-
-      const savedOwners = localStorage.getItem("nextprop_owner_statuses");
-      if (savedOwners) setOwnerStatuses(JSON.parse(savedOwners));
-
-      const savedInv = localStorage.getItem("nextprop_inv_statuses");
-      if (savedInv) setInvStatuses(JSON.parse(savedInv));
-
-      const savedMatches = localStorage.getItem("nextprop_match_statuses");
-      if (savedMatches) setMatchStatuses(JSON.parse(savedMatches));
-    } catch (e) {
-      console.error("Failed to load local storage status:", e);
-    }
-  }, []);
-
-  // Update handlers with persistent storage
-  const updateLeadStatus = (leadId: string, newStatus: string) => {
-    setLeadStatuses((prev) => {
-      const next = { ...prev, [leadId]: newStatus };
-      try {
-        localStorage.setItem("nextprop_lead_statuses", JSON.stringify(next));
-      } catch (e) {}
-      return next;
-    });
-  };
-
-  const updateOwnerStatus = (ownerId: string, newStatus: string) => {
-    setOwnerStatuses((prev) => {
-      const next = { ...prev, [ownerId]: newStatus };
-      try {
-        localStorage.setItem("nextprop_owner_statuses", JSON.stringify(next));
-      } catch (e) {}
-      return next;
-    });
-  };
-
-  const updateInvStatus = (invId: string | number, newStatus: string) => {
-    setInvStatuses((prev) => {
-      const next = { ...prev, [String(invId)]: newStatus };
-      try {
-        localStorage.setItem("nextprop_inv_statuses", JSON.stringify(next));
-      } catch (e) {}
-      return next;
-    });
-  };
-
-  const updateMatchStatus = (matchId: string, newStatus: string) => {
-    setMatchStatuses((prev) => {
-      const next = { ...prev, [matchId]: newStatus };
-      try {
-        localStorage.setItem("nextprop_match_statuses", JSON.stringify(next));
-      } catch (e) {}
-      return next;
-    });
-  };
-
-  // Helpers for search keywords, clipboard & date formatting
-  const getSearchKeyword = (title?: string, explicitKeyword?: string) => {
-    if (explicitKeyword && explicitKeyword.trim()) return explicitKeyword.trim();
-    if (!title) return "";
-    let clean = title.split(" / ")[0].split(" @ ")[0].split(" - ")[0];
-    clean = clean.replace(/\([^)]*\)/g, "").trim();
-    return clean || title.split(" / ")[0].trim();
-  };
-
-  const copyKeyword = (keyword: string, id: string) => {
-    if (!keyword) return;
-    navigator.clipboard.writeText(keyword);
-    setCopiedKeywordId(id);
-    setTimeout(() => setCopiedKeywordId(null), 2000);
-  };
-
-  const formatListingDate = (dateStr?: string) => {
-    if (!dateStr) return "Terkini";
-    try {
-      const d = new Date(dateStr.replace(" ", "T"));
-      if (isNaN(d.getTime())) return dateStr.split("T")[0] || dateStr;
-      return d.toLocaleDateString("ms-MY", { day: "numeric", month: "short", year: "numeric" });
-    } catch {
-      return dateStr.split("T")[0] || dateStr;
-    }
-  };
-
-  const formatPostDate = (dateStr?: string) => {
-    if (!dateStr) return "Terkini";
-    try {
-      const clean = dateStr.replace(" ", "T");
-      const d = new Date(clean);
-      if (isNaN(d.getTime())) return dateStr.split("T")[0] || dateStr;
-      const dateFormatted = d.toLocaleDateString("ms-MY", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      });
-      const hasTime = dateStr.includes(":") && (d.getHours() !== 0 || d.getMinutes() !== 0);
-      if (hasTime) {
-        const timeFormatted = d.toLocaleTimeString("ms-MY", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        });
-        return `${dateFormatted}, ${timeFormatted}`;
-      }
-      return dateFormatted;
-    } catch {
-      return dateStr.split("T")[0] || dateStr;
-    }
-  };
-
-  const getAgeLabel = (dateStr?: string) => {
-    if (!dateStr) return null;
-    try {
-      const d = new Date(dateStr.replace(" ", "T"));
-      if (isNaN(d.getTime())) return null;
-      const now = new Date("2026-11-27T09:30:00");
-      const diffMs = now.getTime() - d.getTime();
-      if (diffMs < 0) return "Terkini";
-      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      if (diffDays === 0) return "Hari Ini";
-      if (diffDays === 1) return "Semalam";
-      if (diffDays < 7) return `${diffDays} hari lalu`;
-      const diffWeeks = Math.floor(diffDays / 7);
-      if (diffWeeks < 4) return `${diffWeeks} minggu lalu`;
-      const diffMonths = Math.floor(diffDays / 30);
-      return `${diffMonths} bulan lalu`;
-    } catch {
-      return null;
-    }
-  };
-
-  // Helper status resolution and active checks
-  const getLeadStatus = (lead: any) => {
-    if (leadStatuses[lead.id]) return leadStatuses[lead.id];
-    const raw = (lead.status || "").toLowerCase();
-    if (raw.includes("close") || raw.includes("selesai") || raw.includes("closed")) return "selesai";
-    if (raw.includes("drop") || raw.includes("batal") || raw.includes("tak berminat")) return "tak_berminat";
-    if (raw.includes("follow")) return "follow_up";
-    if (raw.includes("view")) return "viewing";
-    return "baru";
-  };
-
-  const isLeadActive = (status: string) => {
-    return ["baru", "draf_disalin", "follow_up", "viewing"].includes(status);
-  };
-
-  const getOwnerStatus = (owner: any) => {
-    if (ownerStatuses[owner.id]) return ownerStatuses[owner.id];
-    const raw = (owner.status || "").toLowerCase();
-    const priceRaw = (owner.price || "").toLowerCase();
-    if (raw.includes("rented") || raw.includes("disewa") || priceRaw.includes("rented") || priceRaw.includes("disewa")) return "rented";
-    if (raw.includes("sold") || raw.includes("terjual") || priceRaw.includes("sold") || priceRaw.includes("terjual")) return "sold";
-    if (raw.includes("runding") || raw.includes("nego")) return "negotiating";
-    if (raw.includes("inactive") || raw.includes("batal")) return "inactive";
-    return "available";
-  };
-
-  const isOwnerActive = (status: string) => {
-    return ["available", "negotiating"].includes(status);
-  };
-
-  const getInvStatus = (item: any) => {
-    if (invStatuses[String(item.id)]) return invStatuses[String(item.id)];
-    const isBooked =
-      (item.title && item.title.toUpperCase().includes("BOOKED")) ||
-      (item.status && item.status.toUpperCase().includes("BOOKED"));
-    return isBooked ? "booked" : "available";
-  };
-
-  const isInvActive = (status: string) => {
-    return status === "available";
-  };
-
-  // Match lookup map - HANYA PADANKAN UNIT YANG MASIH AKTIF
+  // Match lookup map
   const matchesByInquiryId = useMemo(() => {
     const map = new Map<string, any[]>();
-    for (const match of portalData.matches || []) {
+    for (const match of liveData.matches || []) {
       const inqId = match.inquiry_id;
-
-      // 1. Direct match status check
-      const mStatus = matchStatuses[match.id] || "available";
-      if (mStatus === "inactive" || mStatus === "rented" || mStatus === "booked") {
-        continue;
-      }
-
-      // 2. Filter out if matched owner listing is no longer active
-      if (match.contact_person || match.source_url) {
-        const matchingOwner = (portalData.owner_listings || []).find(
-          (o: any) =>
-            (match.source_url && o.source_url === match.source_url) ||
-            (o.author && match.contact_person && match.contact_person.toLowerCase().includes(o.author.toLowerCase()))
-        );
-        if (matchingOwner) {
-          const oStatus = getOwnerStatus(matchingOwner);
-          if (!isOwnerActive(oStatus)) {
-            continue; // Owner is already rented / sold / inactive!
-          }
-        }
-      }
-
-      // 3. Filter out if matched Telegram inventory item is booked
-      if (match.property_title) {
-        const matchingInv = (portalData.inventory || []).find(
-          (inv: any) =>
-            inv.title &&
-            (match.property_title.toLowerCase().includes(inv.title.toLowerCase()) ||
-              inv.title.toLowerCase().includes(match.property_title.toLowerCase()))
-        );
-        if (matchingInv) {
-          const iStatus = getInvStatus(matchingInv);
-          if (!isInvActive(iStatus)) {
-            continue; // Inventory item is booked or expired!
-          }
-        }
-      }
-
       if (!map.has(inqId)) {
         map.set(inqId, []);
       }
       map.get(inqId)!.push(match);
     }
     return map;
-  }, [matchStatuses, ownerStatuses, invStatuses]);
+  }, [liveData.matches]);
 
-  // Filtered Leads (with punctuation-flexible token matching)
+  // Filtered Leads
   const filteredLeads = useMemo(() => {
-    return (portalData.inquiries || []).filter((item: any) => {
+    return (liveData.inquiries || []).filter((item: any) => {
       const q = leadSearch.toLowerCase().trim();
-      let matchSearch = true;
-      if (q) {
-        const qTokens = q.replace(/[.@_\-\/]/g, " ").split(/\s+/).filter(Boolean);
-        const blob = [
-          item.author,
-          item.location_target,
-          item.raw_text,
-          item.property_type,
-          item.special_requirements,
-          item.id,
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-        const blobNorm = blob.replace(/[.@_\-\/]/g, " ");
-
-        matchSearch =
-          blob.includes(q) ||
-          blobNorm.includes(q.replace(/[.@_\-\/]/g, " ")) ||
-          (qTokens.length > 0 && qTokens.every((tok) => blobNorm.includes(tok) || blob.includes(tok)));
-      }
+      const matchSearch =
+        !q ||
+        (item.author && item.author.toLowerCase().includes(q)) ||
+        (item.location_target && item.location_target.toLowerCase().includes(q)) ||
+        (item.raw_text && item.raw_text.toLowerCase().includes(q)) ||
+        (item.property_type && item.property_type.toLowerCase().includes(q));
 
       const matchPlatform =
         leadPlatformFilter === "all" ||
         (item.platform &&
           item.platform.toLowerCase().includes(leadPlatformFilter.toLowerCase()));
 
-      const currentStatus = getLeadStatus(item);
-      const matchStatus =
-        leadStatusFilter === "all" ||
-        (leadStatusFilter === "active_only" && isLeadActive(currentStatus)) ||
-        leadStatusFilter === currentStatus;
-
-      return matchSearch && matchPlatform && matchStatus;
+      return matchSearch && matchPlatform;
     });
-  }, [leadSearch, leadPlatformFilter, leadStatusFilter, leadStatuses]);
-
-  // Cross-tab discovery: check if inventory search matches any social lead
-  const leadMatchForInvSearch = useMemo(() => {
-    const q = invSearch.toLowerCase().trim();
-    if (!q || q.length < 3) return null;
-    const qNorm = q.replace(/[.@_\-\/]/g, " ");
-    return (portalData.inquiries || []).find((item: any) => {
-      const author = (item.author || "").toLowerCase();
-      const authorNorm = author.replace(/[.@_\-\/]/g, " ");
-      return (
-        author.includes(q) ||
-        authorNorm.includes(qNorm) ||
-        (qNorm.length > 3 && authorNorm.includes(qNorm.split(" ")[0]))
-      );
-    });
-  }, [invSearch]);
+  }, [leadSearch, leadPlatformFilter, liveData.inquiries]);
 
   // Filtered Telegram Inventory
   const filteredInventory = useMemo(() => {
-    const list = (portalData.inventory || []).filter((item: any) => {
+    const list = (liveData.inventory || []).filter((item: any) => {
       const q = invSearch.toLowerCase().trim();
-      let matchSearch = true;
-      if (q) {
-        const qTokens = q.replace(/[.@_\-\/]/g, " ").split(/\s+/).filter(Boolean);
-        const blob = [
-          item.title,
-          item.search_keyword,
-          item.location_line,
-          item.source_excerpt,
-          item.asking_price,
-          item.source_channel,
-          String(item.id),
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-        const blobNorm = blob.replace(/[.@_\-\/]/g, " ");
+      const matchSearch =
+        !q ||
+        (item.title && item.title.toLowerCase().includes(q)) ||
+        (item.location_line && item.location_line.toLowerCase().includes(q)) ||
+        (item.source_excerpt && item.source_excerpt.toLowerCase().includes(q)) ||
+        (item.asking_price && item.asking_price.toLowerCase().includes(q));
 
-        matchSearch =
-          blob.includes(q) ||
-          blobNorm.includes(q.replace(/[.@_\-\/]/g, " ")) ||
-          (qTokens.length > 0 && qTokens.every((tok) => blobNorm.includes(tok) || blob.includes(tok)));
-      }
+      const isBooked =
+        (item.title && item.title.toUpperCase().includes("BOOKED")) ||
+        (item.status && item.status.toUpperCase().includes("BOOKED"));
 
-      const currentStatus = getInvStatus(item);
       const matchStatus =
         invStatusFilter === "all" ||
-        (invStatusFilter === "available" && currentStatus === "available") ||
-        (invStatusFilter === "booked" && currentStatus === "booked") ||
-        invStatusFilter === currentStatus;
+        (invStatusFilter === "booked" && isBooked) ||
+        (invStatusFilter === "available" && !isBooked);
 
-      const isRental =
-        item.deal_type === "rental" ||
-        (item.category && item.category.toLowerCase().includes("sewa")) ||
-        (item.asking_price &&
-          (item.asking_price.toLowerCase().includes("/mo") ||
-            item.asking_price.toLowerCase().includes("/ month")));
-
-      const matchCategory =
-        invCategoryFilter === "all" ||
-        (invCategoryFilter === "rental" ? isRental : !isRental);
-
-      return matchSearch && matchStatus && matchCategory;
+      return matchSearch && matchStatus;
     });
 
     list.sort((a: any, b: any) => {
@@ -405,44 +144,21 @@ export default function DashboardPage() {
     });
 
     return list;
-  }, [invSearch, invStatusFilter, invCategoryFilter, invSortOrder, invStatuses]);
+  }, [invSearch, invStatusFilter, invSortOrder, liveData.inventory]);
 
   // Filtered Direct Landlords
   const filteredOwners = useMemo(() => {
-    return (portalData.owner_listings || []).filter((item: any) => {
+    return (liveData.owner_listings || []).filter((item: any) => {
       const q = ownerSearch.toLowerCase().trim();
-      let matchSearch = true;
-      if (q) {
-        const qTokens = q.replace(/[.@_\-\/]/g, " ").split(/\s+/).filter(Boolean);
-        const blob = [
-          item.property_title,
-          item.location,
-          item.raw_text,
-          item.author,
-          item.contact_phone,
-          item.price,
-          item.id,
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-        const blobNorm = blob.replace(/[.@_\-\/]/g, " ");
-
-        matchSearch =
-          blob.includes(q) ||
-          blobNorm.includes(q.replace(/[.@_\-\/]/g, " ")) ||
-          (qTokens.length > 0 && qTokens.every((tok) => blobNorm.includes(tok) || blob.includes(tok)));
-      }
-
-      const currentStatus = getOwnerStatus(item);
-      const matchStatus =
-        ownerStatusFilter === "all" ||
-        (ownerStatusFilter === "active_only" && isOwnerActive(currentStatus)) ||
-        ownerStatusFilter === currentStatus;
-
-      return matchSearch && matchStatus;
+      return (
+        !q ||
+        (item.author && item.author.toLowerCase().includes(q)) ||
+        (item.location && item.location.toLowerCase().includes(q)) ||
+        (item.property_type && item.property_type.toLowerCase().includes(q)) ||
+        (item.price && item.price.toLowerCase().includes(q))
+      );
     });
-  }, [ownerSearch, ownerStatusFilter, ownerStatuses]);
+  }, [ownerSearch, liveData.owner_listings]);
 
   // Curated Resident Groups & Telegram Channels
   const residentGroups = [
@@ -530,39 +246,13 @@ export default function DashboardPage() {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
-
-    // Auto-advance lead to draf_disalin if currently baru
-    if (leadStatuses[id] === "baru" || !leadStatuses[id]) {
-      updateLeadStatus(id, "draf_disalin");
-    }
   };
-
-  // Active counts for KPIs
-  const totalActiveLeads = useMemo(() => {
-    return (portalData.inquiries || []).filter((l: any) => isLeadActive(getLeadStatus(l))).length;
-  }, [leadStatuses]);
-
-  const totalActiveInventory = useMemo(() => {
-    return (portalData.inventory || []).filter((i: any) => isInvActive(getInvStatus(i))).length;
-  }, [invStatuses]);
-
-  const totalActiveMatches = useMemo(() => {
-    let count = 0;
-    for (const list of matchesByInquiryId.values()) {
-      count += list.length;
-    }
-    return count;
-  }, [matchesByInquiryId]);
-
-  const totalActiveOwners = useMemo(() => {
-    return (portalData.owner_listings || []).filter((o: any) => isOwnerActive(getOwnerStatus(o))).length;
-  }, [ownerStatuses]);
 
   return (
     <div className="min-h-screen bg-[var(--color-paper)] text-[var(--color-ink)] flex flex-col">
       {/* Top Navbar */}
-      <nav className="bg-[var(--color-ink)] text-[var(--color-paper)] px-4 sm:px-6 py-3 border-b border-[color-mix(in_oklab,var(--color-paper)_18%,transparent)] flex items-center justify-between gap-3 sticky top-0 z-30 shadow-sm">
-        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+      <nav className="bg-[var(--color-ink)] text-[var(--color-paper)] px-4 sm:px-6 py-3 border-b border-[color-mix(in_oklab,var(--color-paper)_18%,transparent)] flex items-center justify-between sticky top-0 z-30 shadow-sm">
+        <div className="flex items-center gap-3">
           <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[var(--color-accent)] shrink-0">
             <Image
               src="/images/please_follow_my_picture_and_3de36cdc_2K.jpg"
@@ -572,26 +262,35 @@ export default function DashboardPage() {
               className="object-cover object-top"
             />
           </div>
-          <div className="min-w-0">
-            <div className="font-display text-sm sm:text-base leading-tight truncate">
+          <div>
+            <div className="font-display text-sm sm:text-base leading-tight">
               Muhammad Norafif · Portal Ejen &amp; CRM
             </div>
-            <div className="text-[11px] text-[var(--color-accent)] font-medium flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+            <div className="text-[11px] text-[var(--color-accent)] font-medium flex items-center gap-1.5">
               <span>Maxxan Realty Sdn Bhd</span>
-              <span className="hidden sm:inline">·</span>
+              <span>·</span>
               <span className="inline-flex items-center gap-1 text-green-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shrink-0"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
                 Auto-Sync Rakazo Aktif
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => fetchLive()}
+            disabled={isSyncing}
+            title="Segar semula data daripada Supabase CRM"
+            className="text-xs text-[var(--color-paper)] hover:text-[var(--color-accent)] flex items-center gap-1.5 border border-[color-mix(in_oklab,var(--color-paper)_25%,transparent)] px-3 py-1.5 rounded-[2px] transition cursor-pointer hover:bg-white/5 disabled:opacity-60"
+          >
+            <RefreshCw className={isSyncing ? "w-3 h-3 animate-spin text-[var(--color-accent)]" : "w-3 h-3"} />
+            <span className="hidden sm:inline">{isSyncing ? "Menyegerak..." : "Segar Semula"}</span>
+          </button>
           <Link
             href="/"
             target="_blank"
-            className="text-xs text-[var(--color-paper)] hover:text-[var(--color-accent)] hidden sm:flex items-center gap-1 border border-[color-mix(in_oklab,var(--color-paper)_25%,transparent)] px-3 py-1.5 rounded-[2px] whitespace-nowrap"
+            className="text-xs text-[var(--color-paper)] hover:text-[var(--color-accent)] hidden sm:flex items-center gap-1 border border-[color-mix(in_oklab,var(--color-paper)_25%,transparent)] px-3 py-1.5 rounded-[2px]"
           >
             <span>Laman Utama</span>
             <ExternalLink className="w-3 h-3" />
@@ -606,9 +305,9 @@ export default function DashboardPage() {
               }
               window.location.href = "/login";
             }}
-            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1.5 cursor-pointer bg-white/10 px-2.5 sm:px-3 py-1.5 rounded-[2px] whitespace-nowrap"
+            className="text-xs text-[var(--color-paper-2)] hover:text-[var(--color-accent)] flex items-center gap-1 cursor-pointer bg-white/10 px-3 py-1.5 rounded-[2px]"
           >
-            <LogOut className="w-3.5 h-3.5 shrink-0" />
+            <LogOut className="w-3.5 h-3.5" />
             <span>Log Keluar</span>
           </button>
         </div>
@@ -624,10 +323,10 @@ export default function DashboardPage() {
               <Users className="w-3.5 h-3.5 text-[var(--color-muted)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-ink)] mt-1 tabular-nums">
-              {totalActiveLeads}
+              {liveData.stats?.total_inquiries || 0}
             </div>
             <div className="text-xs text-[var(--color-accent)] font-medium mt-0.5">
-              {totalActiveLeads} Aktif ({portalData.inquiries?.length || 120} Jumlah)
+              Facebook, Threads, IG
             </div>
           </div>
 
@@ -637,10 +336,10 @@ export default function DashboardPage() {
               <Layers className="w-3.5 h-3.5 text-[var(--color-muted)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-ink)] mt-1 tabular-nums">
-              {totalActiveInventory}
+              {liveData.stats?.total_inventory || 0}
             </div>
             <div className="text-xs text-[var(--color-accent)] font-medium mt-0.5">
-              {totalActiveInventory} Tersedia ({portalData.inventory?.length || 75} Jumlah)
+              Saluran Telegram Maxxan
             </div>
           </div>
 
@@ -650,10 +349,10 @@ export default function DashboardPage() {
               <Sparkles className="w-3.5 h-3.5 text-[var(--color-accent)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-accent)] mt-1 tabular-nums">
-              {totalActiveMatches}
+              {liveData.stats?.total_matches || 0}
             </div>
             <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
-              Hanya Padanan Unit Aktif
+              Padanan Telegram &amp; Leads
             </div>
           </div>
 
@@ -663,30 +362,30 @@ export default function DashboardPage() {
               <Home className="w-3.5 h-3.5 text-[var(--color-muted)]" />
             </div>
             <div className="font-display text-2xl sm:text-3xl text-[var(--color-ink)] mt-1 tabular-nums">
-              {totalActiveOwners}
+              {liveData.stats?.total_owners || 0}
             </div>
             <div className="text-xs text-[var(--color-ink-2)] font-medium mt-0.5">
-              {totalActiveOwners} Tersedia ({portalData.owner_listings?.length || 44} Jumlah)
+              Direct Landlords (Off-Market)
             </div>
           </div>
         </div>
 
         {/* Tab & Filter Bar */}
-        <div className="sheet p-3 sm:p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-1.5 w-full lg:w-auto">
+        <div className="sheet p-3 sm:p-4 flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             <button
               onClick={() => {
                 setActiveTab("leads");
                 setLeadPage(1);
               }}
-              className={`px-2 sm:px-3 py-2 rounded-[2px] text-[11px] sm:text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
+              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "leads"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Users className="w-3.5 h-3.5 shrink-0" />
-              <span className="truncate">Leads ({filteredLeads.length})</span>
+              <Users className="w-3.5 h-3.5" />
+              <span>Leads Sosial CRM ({filteredLeads.length})</span>
             </button>
 
             <button
@@ -694,14 +393,14 @@ export default function DashboardPage() {
                 setActiveTab("inventory");
                 setInvPage(1);
               }}
-              className={`px-2.5 sm:px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
+              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "inventory"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Layers className="w-3.5 h-3.5 shrink-0" />
-              <span className="truncate">Inventori ({filteredInventory.length})</span>
+              <Layers className="w-3.5 h-3.5" />
+              <span>Inventori Telegram ({filteredInventory.length})</span>
             </button>
 
             <button
@@ -709,35 +408,35 @@ export default function DashboardPage() {
                 setActiveTab("landlords");
                 setOwnerPage(1);
               }}
-              className={`px-2.5 sm:px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
+              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "landlords"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Home className="w-3.5 h-3.5 shrink-0" />
-              <span className="truncate">Pemilik ({filteredOwners.length})</span>
+              <Home className="w-3.5 h-3.5" />
+              <span>Pemilik Langsung ({filteredOwners.length})</span>
             </button>
 
             <button
               onClick={() => setActiveTab("groups")}
-              className={`px-2.5 sm:px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center justify-center sm:justify-start gap-1.5 min-w-0 ${
+              className={`px-3 py-2 rounded-[2px] text-xs font-medium border transition flex items-center gap-1.5 whitespace-nowrap ${
                 activeTab === "groups"
                   ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-ink)] shadow-[inset_0_-2px_0_var(--color-accent)]"
                   : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)] hover:bg-[var(--color-paper-2)]"
               }`}
             >
-              <Building className="w-3.5 h-3.5 shrink-0" />
-              <span className="truncate">Komuniti ({residentGroups.length})</span>
+              <Building className="w-3.5 h-3.5" />
+              <span>Saluran Komuniti ({residentGroups.length})</span>
             </button>
           </div>
 
           {activeTab === "leads" && (
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full lg:w-auto lg:justify-end">
-              <span className="text-xs font-medium text-[var(--color-muted)] shrink-0">Mod Draf:</span>
+            <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+              <span className="text-xs font-medium text-[var(--color-muted)]">Mod Draf:</span>
               <button
                 onClick={() => setApproach("A")}
-                className={`flex-1 sm:flex-initial px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition text-center ${
+                className={`px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition ${
                   approach === "A"
                     ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)] border-[var(--color-ink)]"
                     : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)]"
@@ -747,7 +446,7 @@ export default function DashboardPage() {
               </button>
               <button
                 onClick={() => setApproach("B")}
-                className={`flex-1 sm:flex-initial px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition text-center ${
+                className={`px-2.5 py-1.5 rounded-[2px] text-xs font-medium border transition ${
                   approach === "B"
                     ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)] border-[var(--color-ink)]"
                     : "bg-[var(--color-paper-hi)] text-[var(--color-ink-2)] border-[var(--color-rule)]"
@@ -765,7 +464,7 @@ export default function DashboardPage() {
             {/* Search and Filter Row */}
             <div className="flex flex-col sm:flex-row items-center gap-2">
               <div className="relative flex-1 w-full">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
                 <input
                   type="text"
                   placeholder="Cari mengikut nama klien, lokasi (contoh: Setapak, Meru, Klang), atau jenis rumah..."
@@ -774,20 +473,8 @@ export default function DashboardPage() {
                     setLeadSearch(e.target.value);
                     setLeadPage(1);
                   }}
-                  className="studio-input studio-input--search w-full text-xs pr-8"
+                  className="studio-input w-full pl-9 text-xs"
                 />
-                {leadSearch && (
-                  <button
-                    onClick={() => {
-                      setLeadSearch("");
-                      setLeadPage(1);
-                    }}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5"
-                    title="Kosongkan carian"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
               </div>
               <select
                 value={leadPlatformFilter}
@@ -803,24 +490,6 @@ export default function DashboardPage() {
                 <option value="tiktok">TikTok</option>
                 <option value="instagram">Instagram</option>
               </select>
-              <select
-                value={leadStatusFilter}
-                onChange={(e) => {
-                  setLeadStatusFilter(e.target.value);
-                  setLeadPage(1);
-                }}
-                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
-              >
-                <option value="active_only">Status Aktif Sahaja (Default)</option>
-                <option value="baru">Baru Sahaja</option>
-                <option value="draf_disalin">Draf Disalin / Dihantar</option>
-                <option value="follow_up">Perlu Follow-up</option>
-                <option value="viewing">Viewing / Temujanji</option>
-                <option value="all">Semua Status (Termasuk Arkib)</option>
-                <option value="selesai">Arkib: Selesai / Dapat Unit</option>
-                <option value="sudah_jumpa">Arkib: Sudah Jumpa Sendiri</option>
-                <option value="tak_berminat">Arkib: Tidak Berminat / Batal</option>
-              </select>
             </div>
 
             {/* Leads Cards */}
@@ -832,7 +501,6 @@ export default function DashboardPage() {
                   const matchedList = matchesByInquiryId.get(lead.id) || [];
                   const author = lead.author || "Klien";
                   const loc = lead.location_target || "Kuala Lumpur / Selangor";
-                  const currentLeadStatus = getLeadStatus(lead);
                   const budgetText =
                     lead.budget_max > 100000
                       ? `RM${lead.budget_max.toLocaleString()}`
@@ -853,11 +521,11 @@ export default function DashboardPage() {
                   const waUrl = `https://wa.me/601158683907?text=${encodeURIComponent(waCustomText)}`;
 
                   return (
-                    <div key={lead.id} className="sheet p-4 sm:p-5 space-y-4 border border-[var(--color-rule)] min-w-0">
+                    <div key={lead.id} className="sheet p-5 space-y-4 border border-[var(--color-rule)]">
                       {/* Top Header of Card */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-3">
-                        <div className="flex items-center gap-2 flex-wrap min-w-0">
-                          <span className="font-display text-lg text-[var(--color-ink)] break-words">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-display text-lg text-[var(--color-ink)]">
                             {author}
                           </span>
                           <span className="text-xs px-2 py-0.5 rounded-[2px] border border-[var(--color-rule)] bg-[var(--color-paper-2)] text-[var(--color-ink-2)] font-medium">
@@ -878,76 +546,11 @@ export default function DashboardPage() {
                               <span>{matchedList.length} Unit Dipadankan</span>
                             </span>
                           )}
-                          {lead.source_url && (
-                            <a
-                              href={lead.source_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--color-ink)] bg-[var(--color-paper-2)] hover:bg-[var(--color-paper-hi)] px-2 py-0.5 rounded-[2px] border border-[var(--color-rule)] hover:border-[var(--color-accent)] transition shrink-0"
-                              title="Buka post/komen asal klien di media sosial"
-                            >
-                              <span>Buka Post Klien</span>
-                              <ExternalLink className="w-3 h-3 text-[var(--color-accent)]" />
-                            </a>
-                          )}
                         </div>
 
-                        {/* Right side: Status Selector & Clock */}
-                        <div className="flex items-center gap-2.5 flex-wrap">
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
-                            <select
-                              value={currentLeadStatus}
-                              onChange={(e) => updateLeadStatus(lead.id, e.target.value)}
-                              className={`text-xs px-2 py-1 rounded-[2px] font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] ${
-                                currentLeadStatus === "baru"
-                                  ? "bg-amber-100 text-amber-900 border-amber-300"
-                                  : currentLeadStatus === "draf_disalin"
-                                    ? "bg-sky-100 text-sky-900 border-sky-300"
-                                    : currentLeadStatus === "follow_up"
-                                      ? "bg-purple-100 text-purple-900 border-purple-300"
-                                      : currentLeadStatus === "viewing"
-                                        ? "bg-emerald-100 text-emerald-900 border-emerald-300"
-                                        : currentLeadStatus === "selesai"
-                                          ? "bg-stone-200 text-stone-800 border-stone-400"
-                                          : "bg-rose-100 text-rose-900 border-rose-300"
-                              }`}
-                            >
-                              <optgroup label="── Status Aktif ──">
-                                <option value="baru">Baru (Belum Dihubungi)</option>
-                                <option value="draf_disalin">Draf Disalin / Dihantar</option>
-                                <option value="follow_up">Perlu Follow-up</option>
-                                <option value="viewing">Viewing / Temujanji</option>
-                              </optgroup>
-                              <optgroup label="── Selesai / Tidak Aktif ──">
-                                <option value="selesai">Selesai (Dapat Unit)</option>
-                                <option value="sudah_jumpa">Sudah Jumpa Sendiri</option>
-                                <option value="tak_berminat">Tidak Berminat / Batal</option>
-                              </optgroup>
-                            </select>
-                          </div>
-
-                          <div className="flex flex-col sm:items-end gap-0.5 text-xs shrink-0">
-                            <div className="flex items-center gap-1 font-medium text-[var(--color-ink)]">
-                              <Calendar className="w-3.5 h-3.5 text-[var(--color-muted)] shrink-0" />
-                              <span>
-                                Tarikh Post:{" "}
-                                <strong>
-                                  {formatPostDate(lead.posted_date || lead.first_seen)}
-                                </strong>
-                              </span>
-                              {getAgeLabel(lead.posted_date || lead.first_seen) && (
-                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-semibold shrink-0">
-                                  {getAgeLabel(lead.posted_date || lead.first_seen)}
-                                </span>
-                              )}
-                            </div>
-                            {lead.posted_date && lead.first_seen && lead.posted_date !== lead.first_seen && (
-                              <span className="text-[10px] text-[var(--color-muted)]">
-                                Dikutip bot: {formatListingDate(lead.first_seen)}
-                              </span>
-                            )}
-                          </div>
+                        <div className="flex items-center gap-2 text-xs text-[var(--color-muted)]">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>{lead.first_seen || lead.posted_date || "Baru Sahaja"}</span>
                         </div>
                       </div>
 
@@ -984,290 +587,42 @@ export default function DashboardPage() {
                       {/* Matched Telegram / Owner Inventory Box */}
                       {matchedList.length > 0 && (
                         <div className="space-y-2">
-                          <div className="text-xs font-semibold text-[var(--color-ink)] flex items-center justify-between gap-1.5 flex-wrap">
-                            <div className="flex items-center gap-1.5">
-                              <Layers className="w-3.5 h-3.5 text-[var(--color-accent)]" />
-                              <span>Padanan Unit dari Inventori Telegram &amp; Pemilik:</span>
-                            </div>
-                            <span className="text-[11px] text-[var(--color-muted)]">
-                              {matchedList.length} cadangan unit tersedia
-                            </span>
+                          <div className="text-xs font-semibold text-[var(--color-ink)] flex items-center gap-1.5">
+                            <Layers className="w-3.5 h-3.5 text-[var(--color-accent)]" />
+                            <span>Padanan Unit dari Inventori Telegram &amp; Pemilik:</span>
                           </div>
-                          <div className="space-y-2.5">
-                            {matchedList.map((m: any, mIdx: number) => {
-                              const matchingInv = (portalData.inventory || []).find(
-                                (inv: any) =>
-                                  inv.title &&
-                                  (m.property_title.toLowerCase().includes(inv.title.toLowerCase()) ||
-                                    inv.title.toLowerCase().includes(m.property_title.toLowerCase()))
-                              );
-                              const matchingOwner = (portalData.owner_listings || []).find(
-                                (o: any) =>
-                                  (m.source_url && o.source_url === m.source_url) ||
-                                  (o.author && m.contact_person && m.contact_person.toLowerCase().includes(o.author.toLowerCase()))
-                              );
-                              const cleanKeyword = getSearchKeyword(m.property_title, matchingInv?.search_keyword);
-                              // Prioritize actual original post date from inventory/owner over match creation date
-                              const actualPostDate =
-                                matchingInv?.date ||
-                                matchingInv?.day ||
-                                matchingOwner?.post_date ||
-                                m.posted_date ||
-                                m.post_date ||
-                                m.date ||
-                                m.created_at;
-                              const matchCardId = `m_${m.id || mIdx}`;
-                              const isMatchExpanded = expandedMatchId === matchCardId;
-                              const fullExcerpt = matchingInv?.source_excerpt || m.details || "";
-
-                              const isTelegramSource =
-                                (m.match_source && m.match_source.toLowerCase().includes("telegram")) ||
-                                (m.source_group && m.source_group.toLowerCase().includes("telegram")) ||
-                                (m.source_url && m.source_url.includes("t.me"));
-
-                              const isThreadsSource =
-                                (m.match_source && m.match_source.toLowerCase().includes("threads")) ||
-                                (m.source_url && m.source_url.includes("threads.net"));
-
-                              const isOwnerDirect =
-                                (m.match_source &&
-                                  (m.match_source.toLowerCase().includes("owner") ||
-                                    m.match_source.toLowerCase().includes("landlord"))) ||
-                                (m.contact_person &&
-                                  (m.contact_person.toLowerCase().includes("owner") ||
-                                    m.contact_person.toLowerCase().includes("landlord")));
-
-                              // Format owner/lister phone for WhatsApp
-                              let rawPhone = m.contact_phone
-                                ? String(m.contact_phone).replace(/[^0-9]/g, "")
-                                : "";
-                              if (rawPhone.startsWith("0")) {
-                                rawPhone = "60" + rawPhone.slice(1);
-                              } else if (rawPhone.length > 0 && !rawPhone.startsWith("60")) {
-                                rawPhone = "60" + rawPhone;
-                              }
-
-                              const waListerText = `Salam ${m.contact_person || "Tuan/Puan"}, saya Afif dari Maxxan Realty (+601158683907). Saya mempunyai klien berpotensi yang mencari unit di ${m.location || loc} dan berminat dengan unit "${m.property_title}" (${m.asking_price || "sewa"}). Boleh saya tahu jika unit ini masih available untuk viewing?`;
-                              const waListerUrl = rawPhone
-                                ? `https://wa.me/${rawPhone}?text=${encodeURIComponent(waListerText)}`
-                                : null;
-
-                              return (
-                                <div
-                                  key={m.id || mIdx}
-                                  className="p-3.5 bg-amber-50/70 border border-amber-200/90 rounded-[2px] text-xs text-[var(--color-ink)] space-y-2.5 shadow-xs"
-                                >
-                                  {/* Title & Price */}
-                                  <div className="flex items-start sm:items-center justify-between gap-2 flex-wrap">
-                                    <div className="font-bold text-amber-950 text-sm leading-snug">
-                                      {m.property_title || "Unit Hartanah"}
-                                    </div>
-                                    <span className="font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 tabular-nums shrink-0">
-                                      {m.asking_price || "Tanya Harga"}
-                                    </span>
-                                  </div>
-
-                                  {/* Traceback Origin Badges & Match Details */}
-                                  <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-                                    {/* Date Badge */}
-                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] bg-stone-100 text-stone-700 border border-stone-300 font-medium">
-                                      <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                                      <span>Tarikh Post: <strong>{formatPostDate(actualPostDate)}</strong></span>
-                                      {getAgeLabel(actualPostDate) && (
-                                        <span className="text-[10px] text-stone-500 font-normal">({getAgeLabel(actualPostDate)})</span>
-                                      )}
-                                    </span>
-
-                                    {/* Origin / Source Badge */}
-                                    <span
-                                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] font-semibold border ${
-                                        isThreadsSource
-                                          ? "bg-neutral-900 text-white border-neutral-800"
-                                          : isTelegramSource
-                                            ? "bg-sky-100 text-sky-900 border-sky-300"
-                                            : isOwnerDirect
-                                              ? "bg-amber-100 text-amber-900 border-amber-300"
-                                              : "bg-stone-100 text-stone-800 border-stone-300"
-                                      }`}
-                                    >
-                                      <span>{m.match_source || "Sumber Unit"}</span>
-                                    </span>
-
-                                    {m.match_score && (
-                                      <span className="px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-900 border border-emerald-300 font-medium">
-                                        Padanan {m.match_score}
-                                      </span>
-                                    )}
-
-                                    <span className="text-[var(--color-muted)] flex items-center gap-1">
-                                      <MapPin className="w-3 h-3 text-[var(--color-muted)]" />
-                                      <span>{m.location || loc}</span>
-                                    </span>
-
-                                    {m.source_group && (
-                                      <span
-                                        className="text-[var(--color-muted)] truncate max-w-[220px]"
-                                        title={m.source_group}
-                                      >
-                                        · 📢 {m.source_group}
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  {/* Quick Search Keyword & Copy Button */}
-                                  {cleanKeyword && (
-                                    <div className="flex items-center gap-2 flex-wrap bg-white/90 p-2 rounded-[2px] border border-amber-300/80 text-[11px]">
-                                      <span className="text-[var(--color-muted)] font-medium">🔍 Keyword Carian:</span>
-                                      <span className="font-semibold text-amber-950 font-mono select-all bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
-                                        {cleanKeyword}
-                                      </span>
-                                      <button
-                                        onClick={() => copyKeyword(cleanKeyword, `kw_${matchCardId}`)}
-                                        className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold bg-amber-200/80 hover:bg-amber-300 text-amber-900 rounded-[2px] transition cursor-pointer"
-                                        title="Salin keyword ringkas untuk carian segera di Telegram atau Portal"
-                                      >
-                                        {copiedKeywordId === `kw_${matchCardId}` ? (
-                                          <>
-                                            <Check className="w-3 h-3 text-emerald-700" />
-                                            <span className="text-emerald-800 font-bold">Disalin!</span>
-                                          </>
-                                        ) : (
-                                          <>
-                                            <Copy className="w-3 h-3 text-amber-800" />
-                                            <span>Salin Keyword</span>
-                                          </>
-                                        )}
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {/* Lister / Contact Person Info & Traceback Action Buttons */}
-                                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs bg-amber-100/60 p-2.5 rounded-[2px] border border-amber-200">
-                                    <div className="flex items-center gap-2 flex-wrap min-w-0">
-                                      <span className="text-[var(--color-muted)]">Kontak / Lister:</span>
-                                      <span className="font-semibold text-[var(--color-ink)] break-words">
-                                        {m.contact_person || "Tiada maklumat nama"}
-                                      </span>
-                                      {m.contact_phone && (
-                                        <span className="font-mono text-emerald-800 bg-emerald-100/90 px-1.5 py-0.5 rounded border border-emerald-300 font-medium">
-                                          {m.contact_phone}
-                                        </span>
-                                      )}
-                                    </div>
-
-                                    {/* Action Links */}
-                                    <div className="flex items-center gap-1.5 flex-wrap shrink-0">
-                                      {/* 1. Direct Link to Original Post/Source */}
-                                      {m.source_url && (() => {
-                                        const isGroupOnlyUrl =
-                                          m.source_url.includes("facebook.com/groups/") &&
-                                          !m.source_url.includes("/posts/") &&
-                                          !m.source_url.includes("/permalink/");
-
-                                        const linkLabel = isGroupOnlyUrl
-                                          ? "Buka Kumpulan FB"
-                                          : isTelegramSource
-                                            ? "Buka Mesej TG"
-                                            : isThreadsSource
-                                              ? "Buka Post Threads"
-                                              : "Buka Sumber Asal";
-
-                                        const linkTitle = isGroupOnlyUrl
-                                          ? "Pautan ke kumpulan Facebook rasmi. Gunakan butang Salin Keyword untuk cari post dalam grup."
-                                          : `Buka post atau iklan asal di ${m.match_source || "media sosial"}`;
-
-                                        return (
-                                          <a
-                                            href={m.source_url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold border rounded-[2px] transition cursor-pointer ${
-                                              isGroupOnlyUrl
-                                                ? "bg-blue-50/80 hover:bg-blue-100 text-blue-900 border-blue-300"
-                                                : "bg-[var(--color-paper)] hover:bg-[var(--color-paper-hi)] text-[var(--color-ink)] border-[var(--color-rule)] hover:border-[var(--color-accent)]"
-                                            }`}
-                                            title={linkTitle}
-                                          >
-                                            <span>{linkLabel}</span>
-                                            <ExternalLink className="w-3 h-3 text-[var(--color-accent)]" />
-                                          </a>
-                                        );
-                                      })()}
-
-                                      {/* 2. Direct WhatsApp to Owner/Lister */}
-                                      {waListerUrl && (
-                                        <a
-                                          href={waListerUrl}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold bg-emerald-700 hover:bg-emerald-800 text-white rounded-[2px] transition cursor-pointer"
-                                          title={`Hubungi ${m.contact_person || "Lister"} di WhatsApp`}
-                                        >
-                                          <MessageCircle className="w-3 h-3" />
-                                          <span>WhatsApp Lister</span>
-                                        </a>
-                                      )}
-
-                                      {/* 3. Telegram Inventory Tab Search */}
-                                      {isTelegramSource && (
-                                        <button
-                                          onClick={() => {
-                                            setActiveTab("inventory");
-                                            setInvSearch(cleanKeyword || m.property_title || "");
-                                            setInvCategoryFilter("all");
-                                            setInvPage(1);
-                                            window.scrollTo({ top: 300, behavior: "smooth" });
-                                          }}
-                                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-300 rounded-[2px] transition cursor-pointer"
-                                          title="Cari unit ini dalam tab Inventori Telegram"
-                                        >
-                                          <Layers className="w-3 h-3 text-sky-600" />
-                                          <span>Lihat di Inventori TG</span>
-                                        </button>
-                                      )}
-                                    </div>
-                                  </div>
-
-                                  {/* Unit Details & Expandable Lister Excerpt */}
-                                  <div className="space-y-1.5 pt-1 border-t border-amber-200/70">
-                                    {m.details && (
-                                      <p className="text-[11px] text-[var(--color-ink-2)] leading-relaxed font-normal">
-                                        <span className="font-semibold text-amber-950">
-                                          Spesifikasi &amp; Nota Unit:{" "}
-                                        </span>
-                                        {m.details}
-                                      </p>
-                                    )}
-
-                                    {fullExcerpt && (
-                                      <div>
-                                        <button
-                                          onClick={() => setExpandedMatchId(isMatchExpanded ? null : matchCardId)}
-                                          className="inline-flex items-center gap-1 text-[11px] text-amber-900 hover:text-amber-950 font-semibold cursor-pointer underline decoration-amber-300"
-                                        >
-                                          {isMatchExpanded ? (
-                                            <>
-                                              <ChevronUp className="w-3.5 h-3.5" />
-                                              <span>Tutup Mesej Asal Lister</span>
-                                            </>
-                                          ) : (
-                                            <>
-                                              <ChevronDown className="w-3.5 h-3.5" />
-                                              <span>Lihat Mesej Asal Lister ▾</span>
-                                            </>
-                                          )}
-                                        </button>
-                                        {isMatchExpanded && (
-                                          <div className="mt-2 p-3 bg-white/95 border border-amber-300 rounded-[2px] text-[11px] text-[var(--color-ink)] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed">
-                                            {fullExcerpt}
-                                          </div>
-                                        )}
-                                      </div>
-                                    )}
-                                  </div>
+                          <div className="space-y-2">
+                            {matchedList.map((m: any, mIdx: number) => (
+                              <div
+                                key={m.id || mIdx}
+                                className="p-3 bg-amber-50/50 border border-amber-200 rounded-[2px] text-xs text-[var(--color-ink)] space-y-1"
+                              >
+                                <div className="flex items-center justify-between gap-2 flex-wrap">
+                                  <span className="font-bold text-amber-950">
+                                    {m.property_title || "Unit Hartanah"}
+                                  </span>
+                                  <span className="font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 tabular-nums">
+                                    {m.asking_price || "Tanya Harga"}
+                                  </span>
                                 </div>
-                              );
-                            })}
+                                <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-3">
+                                  <span>📍 {m.location || loc}</span>
+                                  <span>·</span>
+                                  <span>🎯 {m.match_score || "Good Match"}</span>
+                                  {m.source_group && (
+                                    <>
+                                      <span>·</span>
+                                      <span>📢 {m.source_group}</span>
+                                    </>
+                                  )}
+                                </div>
+                                {m.details && (
+                                  <p className="text-[11px] text-[var(--color-ink-2)] pt-1 border-t border-amber-100">
+                                    {m.details}
+                                  </p>
+                                )}
+                              </div>
+                            ))}
                           </div>
                         </div>
                       )}
@@ -1296,7 +651,7 @@ export default function DashboardPage() {
                           </button>
                         </div>
 
-                        <div className="p-3 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono leading-relaxed select-all break-words [overflow-wrap:anywhere]">
+                        <div className="p-3 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono leading-relaxed select-all">
                           {draftText}
                         </div>
                       </div>
@@ -1305,9 +660,9 @@ export default function DashboardPage() {
                       <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-[var(--color-rule)]">
                         <button
                           onClick={() => copyToClipboard(draftText, lead.id)}
-                          className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                          className="btn btn--quiet btn--sm"
                         >
-                          <Copy className="w-3.5 h-3.5 shrink-0" />
+                          <Copy className="w-3.5 h-3.5" />
                           <span>{copiedId === lead.id ? "Disalin" : "Salin Draf"}</span>
                         </button>
 
@@ -1316,10 +671,10 @@ export default function DashboardPage() {
                             href={lead.source_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                            className="btn btn--quiet btn--sm"
                           >
                             <span>Buka Post Asal</span>
-                            <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                            <ExternalLink className="w-3.5 h-3.5" />
                           </a>
                         )}
 
@@ -1327,9 +682,9 @@ export default function DashboardPage() {
                           href={waUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn btn--primary btn--sm w-full sm:w-auto sm:ml-auto"
+                          className="btn btn--primary btn--sm ml-auto"
                         >
-                          <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+                          <MessageCircle className="w-3.5 h-3.5" />
                           <span>WhatsApp Klien Sekarang</span>
                         </a>
                       </div>
@@ -1338,54 +693,29 @@ export default function DashboardPage() {
                 })}
             </div>
 
-            {/* Empty State for Leads */}
-            {filteredLeads.length === 0 && (
-              <div className="sheet p-8 text-center space-y-3">
-                <p className="text-sm font-semibold text-stone-800">
-                  Tiada lead ditemui untuk carian atau penapis semasa.
-                </p>
-                <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
-                  Semak sama ada lead telah diarkibkan (status &quot;Selesai&quot; atau &quot;Tidak Berminat&quot; disembunyikan secara lalai) atau klik butang di bawah untuk menunjukkan semua rekod.
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-                  <button
-                    onClick={() => {
-                      setLeadSearch("");
-                      setLeadPlatformFilter("all");
-                      setLeadStatusFilter("all");
-                      setLeadPage(1);
-                    }}
-                    className="btn btn--primary btn--sm"
-                  >
-                    Set Semula Penapis (Tunjuk Semua {portalData.inquiries?.length || 0} Leads)
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* Pagination */}
             {filteredLeads.length > PAGE_SIZE && (
-              <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
-                <div className="text-center sm:text-left">
+              <div className="sheet p-3 flex items-center justify-between text-xs">
+                <div>
                   Menunjukkan {(leadPage - 1) * PAGE_SIZE + 1} –{" "}
                   {Math.min(leadPage * PAGE_SIZE, filteredLeads.length)} daripada{" "}
                   {filteredLeads.length} leads
                 </div>
-                <div className="flex items-center justify-center gap-2 w-full sm:w-auto">
+                <div className="flex items-center gap-2">
                   <button
                     disabled={leadPage <= 1}
                     onClick={() => setLeadPage((p) => p - 1)}
-                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                    className="btn btn--quiet btn--sm"
                   >
                     Sebelumnya
                   </button>
-                  <span className="font-semibold px-2 whitespace-nowrap tabular-nums">
+                  <span className="font-semibold px-2">
                     {leadPage} / {Math.ceil(filteredLeads.length / PAGE_SIZE)}
                   </span>
                   <button
                     disabled={leadPage >= Math.ceil(filteredLeads.length / PAGE_SIZE)}
                     onClick={() => setLeadPage((p) => p + 1)}
-                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                    className="btn btn--quiet btn--sm"
                   >
                     Seterusnya
                   </button>
@@ -1401,43 +731,18 @@ export default function DashboardPage() {
             {/* Search and Filters */}
             <div className="flex flex-col sm:flex-row items-center gap-2">
               <div className="relative flex-1 w-full">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
                 <input
                   type="text"
-                  placeholder="Cari unit Telegram (contoh: Pandan Mas, Shah Alam, Bukit Raja, Klang, Suri Puteri, RM1,350)..."
+                  placeholder="Cari unit Telegram (contoh: Shah Alam, Bukit Raja, Klang, Suri Puteri, Bangi, RM390k)..."
                   value={invSearch}
                   onChange={(e) => {
                     setInvSearch(e.target.value);
                     setInvPage(1);
                   }}
-                  className="studio-input studio-input--search w-full text-xs pr-8"
+                  className="studio-input w-full pl-9 text-xs"
                 />
-                {invSearch && (
-                  <button
-                    onClick={() => {
-                      setInvSearch("");
-                      setInvPage(1);
-                    }}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5"
-                    title="Kosongkan carian"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
               </div>
-
-              <select
-                value={invCategoryFilter}
-                onChange={(e) => {
-                  setInvCategoryFilter(e.target.value);
-                  setInvPage(1);
-                }}
-                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
-              >
-                <option value="all">Semua Kategori (Sewa &amp; Jual)</option>
-                <option value="rental">Unit Sewa (WTL) Sahaja</option>
-                <option value="subsale">Unit Jual (Subsale) Sahaja</option>
-              </select>
 
               <select
                 value={invStatusFilter}
@@ -1445,10 +750,10 @@ export default function DashboardPage() {
                   setInvStatusFilter(e.target.value);
                   setInvPage(1);
                 }}
-                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
+                className="studio-input text-xs w-full sm:w-auto py-2"
               >
-                <option value="available">Tersedia Sahaja (Default)</option>
-                <option value="all">Semua Status (Termasuk Booked)</option>
+                <option value="all">Semua Status</option>
+                <option value="available">Tersedia (Available)</option>
                 <option value="booked">Booked / Terjual</option>
               </select>
 
@@ -1471,8 +776,9 @@ export default function DashboardPage() {
                 .slice((invPage - 1) * PAGE_SIZE, invPage * PAGE_SIZE)
                 .map((item: any) => {
                   const isExpanded = expandedInvId === item.id;
-                  const currentInvStatus = getInvStatus(item);
-                  const isAvailable = currentInvStatus === "available";
+                  const isBooked =
+                    (item.title && item.title.toUpperCase().includes("BOOKED")) ||
+                    (item.status && item.status.toUpperCase().includes("BOOKED"));
 
                   const waPropUrl = `https://wa.me/601158683907?text=${encodeURIComponent(
                     `Salam Afif, saya berminat nak tanya mengenai unit Telegram: "${item.title || item.location_line}" (Harga: ${item.asking_price}). Boleh semak sama ada masih available?`
@@ -1482,40 +788,23 @@ export default function DashboardPage() {
                     <div
                       key={item.id}
                       className={`sheet p-5 space-y-3 transition border ${
-                        !isAvailable ? "opacity-75 bg-[var(--color-paper-2)] border-dashed" : "border-[var(--color-rule)]"
+                        isBooked ? "opacity-75 bg-[var(--color-paper-2)] border-dashed" : "border-[var(--color-rule)]"
                       }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2.5">
-                        <div className="flex items-center gap-2 flex-wrap min-w-0">
-                          <span className="font-display text-base text-[var(--color-ink)] break-words">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-display text-base text-[var(--color-ink)]">
                             {item.title || item.location_line || "Unit Hartanah"}
                           </span>
-                          <span
-                            className={`text-xs px-2 py-0.5 rounded-[2px] font-semibold border ${
-                              item.deal_type === "rental" ||
-                              (item.category && item.category.toLowerCase().includes("sewa"))
-                                ? "bg-blue-50 text-blue-800 border-blue-200"
-                                : "bg-emerald-50 text-emerald-800 border-emerald-200"
-                            }`}
-                          >
-                            {item.category || (item.deal_type === "rental" ? "Sewa (WTL)" : "Jual (Subsale)")}
-                          </span>
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
-                            <select
-                              value={currentInvStatus}
-                              onChange={(e) => updateInvStatus(item.id, e.target.value)}
-                              className={`text-xs px-2 py-0.5 rounded-[2px] font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] ${
-                                isAvailable
-                                  ? "bg-emerald-100 text-emerald-900 border-emerald-300"
-                                  : "bg-red-100 text-red-900 border-red-300"
-                              }`}
-                            >
-                              <option value="available">✓ Tersedia (Available)</option>
-                              <option value="booked">❌ Booked / Terjual</option>
-                              <option value="expired">Tamat Tempoh / Delisted</option>
-                            </select>
-                          </div>
+                          {isBooked ? (
+                            <span className="text-xs px-2 py-0.5 rounded-[2px] bg-red-100 text-red-800 border border-red-200 font-semibold">
+                              ❌ BOOKED
+                            </span>
+                          ) : (
+                            <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold">
+                              ✓ AVAILABLE
+                            </span>
+                          )}
                           <span className="text-xs px-2 py-0.5 rounded-[2px] bg-[var(--color-paper-2)] text-[var(--color-ink-2)] border border-[var(--color-rule)] font-mono">
                             TG #{item.message_id || item.id}
                           </span>
@@ -1536,67 +825,19 @@ export default function DashboardPage() {
                         </div>
                       )}
 
-                      {/* Date & Group Information */}
-                      <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-2 flex-wrap">
-                        <span className="inline-flex items-center gap-1 text-[var(--color-ink)] font-semibold bg-stone-100 px-2 py-0.5 rounded-[2px] border border-stone-300">
-                          <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                          <span>Tarikh Post Telegram: <strong>{formatPostDate(item.date || item.day || item.sort_date)}</strong></span>
-                          {getAgeLabel(item.date || item.day || item.sort_date) && (
-                            <span className="text-[10px] text-stone-500 font-normal">({getAgeLabel(item.date || item.day || item.sort_date)})</span>
-                          )}
+                      {/* Date */}
+                      <div className="text-[11px] text-[var(--color-muted)] flex items-center gap-3">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          <span>{item.day || item.date?.split("T")[0] || "Terkini"}</span>
                         </span>
-                        <span className="inline-flex items-center gap-1 text-sky-900 font-semibold bg-sky-50 px-2 py-0.5 rounded-[2px] border border-sky-300">
-                          <Layers className="w-3 h-3 text-sky-600" />
-                          <span>Kumpulan: {item.source_channel || "Telegram: Share Listing Maxxan (@sharelistingmaxxan)"}</span>
-                        </span>
-                        {item.source_url && (
-                          <a
-                            href={item.source_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-sky-700 hover:text-sky-900 font-semibold underline decoration-sky-300 cursor-pointer ml-auto sm:ml-0"
-                            title="Buka pautan asal Telegram"
-                          >
-                            <span>Buka Saluran Telegram</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )}
+                        <span>·</span>
+                        <span>Saluran Telegram Co-Broke</span>
                       </div>
-
-                      {/* Quick Search Keyword & Copy */}
-                      {(() => {
-                        const invKw = getSearchKeyword(item.title, item.search_keyword);
-                        const invKwId = `inv_kw_${item.id}`;
-                        return invKw ? (
-                          <div className="flex items-center gap-2 flex-wrap bg-[var(--color-paper-2)] p-2 rounded-[2px] border border-[var(--color-rule)] text-[11px]">
-                            <span className="text-[var(--color-muted)] font-medium">🔍 Keyword Carian:</span>
-                            <span className="font-semibold text-[var(--color-ink)] font-mono select-all bg-[var(--color-paper)] px-1.5 py-0.5 rounded border border-[var(--color-rule)]">
-                              {invKw}
-                            </span>
-                            <button
-                              onClick={() => copyKeyword(invKw, invKwId)}
-                              className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold bg-[var(--color-paper-hi)] hover:bg-[var(--color-paper)] text-[var(--color-ink)] border border-[var(--color-rule)] rounded-[2px] transition cursor-pointer"
-                              title="Salin keyword ringkas carian"
-                            >
-                              {copiedKeywordId === invKwId ? (
-                                <>
-                                  <Check className="w-3 h-3 text-emerald-600" />
-                                  <span className="text-emerald-700 font-bold">Disalin!</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Copy className="w-3 h-3 text-[var(--color-muted)]" />
-                                  <span>Salin Keyword</span>
-                                </>
-                              )}
-                            </button>
-                          </div>
-                        ) : null;
-                      })()}
 
                       {/* Expandable Excerpt / Specs */}
                       {isExpanded && item.source_excerpt && (
-                        <div className="mt-3 p-3.5 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono whitespace-pre-wrap break-words [overflow-wrap:anywhere] leading-relaxed">
+                        <div className="mt-3 p-3.5 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-[2px] text-xs text-[var(--color-ink)] font-mono whitespace-pre-wrap leading-relaxed">
                           {item.source_excerpt}
                         </div>
                       )}
@@ -1605,37 +846,22 @@ export default function DashboardPage() {
                       <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[var(--color-rule)]">
                         <button
                           onClick={() => setExpandedInvId(isExpanded ? null : item.id)}
-                          className="inline-flex items-center gap-1 text-xs text-[var(--color-ink)] hover:text-[var(--color-accent)] font-medium cursor-pointer text-left"
+                          className="inline-flex items-center gap-1 text-xs text-[var(--color-ink)] hover:text-[var(--color-accent)] font-medium cursor-pointer"
                         >
                           {isExpanded ? (
                             <>
-                              <ChevronUp className="w-3.5 h-3.5 shrink-0" />
+                              <ChevronUp className="w-3.5 h-3.5" />
                               <span>Tutup Spesifikasi Penuh</span>
                             </>
                           ) : (
                             <>
-                              <ChevronDown className="w-3.5 h-3.5 shrink-0" />
+                              <ChevronDown className="w-3.5 h-3.5" />
                               <span>Lihat Spesifikasi &amp; Mesej Asal Telegram</span>
                             </>
                           )}
                         </button>
 
-                        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto sm:ml-auto">
-                          <button
-                            onClick={() =>
-                              updateInvStatus(
-                                item.id,
-                                isAvailable ? "booked" : "available"
-                              )
-                            }
-                            className={`btn btn--sm text-xs font-medium ${
-                              isAvailable
-                                ? "btn--quiet text-red-700 hover:text-red-900"
-                                : "bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100"
-                            }`}
-                          >
-                            <span>{isAvailable ? "Tanda Booked" : "Tanda Tersedia"}</span>
-                          </button>
+                        <div className="flex items-center gap-2 ml-auto">
                           <button
                             onClick={() =>
                               copyToClipboard(
@@ -1643,30 +869,18 @@ export default function DashboardPage() {
                                 `inv_${item.id}`
                               )
                             }
-                            className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                            className="btn btn--quiet btn--sm"
                           >
-                            <Copy className="w-3.5 h-3.5 shrink-0" />
+                            <Copy className="w-3.5 h-3.5" />
                             <span>{copiedId === `inv_${item.id}` ? "Disalin" : "Salin Info"}</span>
                           </button>
-                          {item.source_url && (
-                            <a
-                              href={item.source_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="btn btn--quiet btn--sm flex-1 sm:flex-initial text-sky-800 border-sky-300 hover:bg-sky-50"
-                              title="Buka pautan mesej atau saluran Telegram"
-                            >
-                              <ExternalLink className="w-3.5 h-3.5 text-sky-600" />
-                              <span>Buka Telegram</span>
-                            </a>
-                          )}
                           <a
                             href={waPropUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn--primary btn--sm flex-1 sm:flex-initial"
+                            className="btn btn--primary btn--sm"
                           >
-                            <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+                            <MessageCircle className="w-3.5 h-3.5" />
                             <span>Kongsi ke WhatsApp</span>
                           </a>
                         </div>
@@ -1676,75 +890,29 @@ export default function DashboardPage() {
                 })}
             </div>
 
-            {/* Empty State for Inventory */}
-            {filteredInventory.length === 0 && (
-              <div className="sheet p-8 text-center space-y-3">
-                {leadMatchForInvSearch ? (
-                  <div className="space-y-3">
-                    <p className="text-sm font-semibold text-stone-800">
-                      Tiada unit inventori untuk carian &quot;{invSearch}&quot;.
-                    </p>
-                    <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
-                      Namun terdapat klien bernama <span className="font-bold text-stone-900">{leadMatchForInvSearch.author}</span> di tab <span className="font-semibold text-amber-800">Leads</span> ({leadMatchForInvSearch.location_target}).
-                    </p>
-                    <button
-                      onClick={() => {
-                        setActiveTab("leads");
-                        setLeadSearch(leadMatchForInvSearch.author.replace("@", ""));
-                        setLeadPage(1);
-                      }}
-                      className="btn btn--primary btn--sm mt-2"
-                    >
-                      Buka Tab Leads untuk {leadMatchForInvSearch.author}
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-sm font-semibold text-stone-800">
-                      Tiada unit inventori ditemui untuk carian atau penapis semasa.
-                    </p>
-                    <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
-                      Cuba cari mengikut nama kawasan (contoh: Pandan, Wangsa Maju, Setapak, Cheras) atau kosongkan carian.
-                    </p>
-                    <button
-                      onClick={() => {
-                        setInvSearch("");
-                        setInvCategoryFilter("all");
-                        setInvStatusFilter("all");
-                        setInvPage(1);
-                      }}
-                      className="btn btn--primary btn--sm mt-2"
-                    >
-                      Set Semula Penapis Inventori
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
-
             {/* Pagination */}
             {filteredInventory.length > PAGE_SIZE && (
-              <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
-                <div className="text-center sm:text-left">
+              <div className="sheet p-3 flex items-center justify-between text-xs">
+                <div>
                   Menunjukkan {(invPage - 1) * PAGE_SIZE + 1} –{" "}
                   {Math.min(invPage * PAGE_SIZE, filteredInventory.length)} daripada{" "}
                   {filteredInventory.length} unit
                 </div>
-                <div className="flex items-center justify-center gap-2 w-full sm:w-auto">
+                <div className="flex items-center gap-2">
                   <button
                     disabled={invPage <= 1}
                     onClick={() => setInvPage((p) => p - 1)}
-                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                    className="btn btn--quiet btn--sm"
                   >
                     Sebelumnya
                   </button>
-                  <span className="font-semibold px-2 whitespace-nowrap tabular-nums">
+                  <span className="font-semibold px-2">
                     {invPage} / {Math.ceil(filteredInventory.length / PAGE_SIZE)}
                   </span>
                   <button
                     disabled={invPage >= Math.ceil(filteredInventory.length / PAGE_SIZE)}
                     onClick={() => setInvPage((p) => p + 1)}
-                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                    className="btn btn--quiet btn--sm"
                   >
                     Seterusnya
                   </button>
@@ -1757,58 +925,24 @@ export default function DashboardPage() {
         {/* TAB 3: DIRECT LANDLORD LISTINGS */}
         {activeTab === "landlords" && (
           <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row items-center gap-2">
-              <div className="relative flex-1 w-full">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)] pointer-events-none" />
-                <input
-                  type="text"
-                  placeholder="Cari pemilik langsung, lokasi rumah, atau bajet sewa..."
-                  value={ownerSearch}
-                  onChange={(e) => {
-                    setOwnerSearch(e.target.value);
-                    setOwnerPage(1);
-                  }}
-                  className="studio-input studio-input--search w-full text-xs pr-8"
-                />
-                {ownerSearch && (
-                  <button
-                    onClick={() => {
-                      setOwnerSearch("");
-                      setOwnerPage(1);
-                    }}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5"
-                    title="Kosongkan carian"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-
-              <select
-                value={ownerStatusFilter}
+            <div className="relative w-full">
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted)]" />
+              <input
+                type="text"
+                placeholder="Cari pemilik langsung, lokasi rumah, atau bajet sewa..."
+                value={ownerSearch}
                 onChange={(e) => {
-                  setOwnerStatusFilter(e.target.value);
+                  setOwnerSearch(e.target.value);
                   setOwnerPage(1);
                 }}
-                className="studio-input text-xs w-full sm:w-auto py-2 font-medium"
-              >
-                <option value="active_only">Unit Aktif Sahaja (Default)</option>
-                <option value="available">Tersedia Sahaja</option>
-                <option value="negotiating">Dalam Rundingan</option>
-                <option value="all">Semua Status (Termasuk Disewa/Dijual)</option>
-                <option value="rented">Sudah Disewa</option>
-                <option value="sold">Sudah Dijual</option>
-                <option value="inactive">Batal / Delisted</option>
-              </select>
+                className="studio-input w-full pl-9 text-xs"
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredOwners
                 .slice((ownerPage - 1) * PAGE_SIZE, ownerPage * PAGE_SIZE)
                 .map((owner: any, idx: number) => {
-                  const currentOwnerStatus = getOwnerStatus(owner);
-                  const isAvailable = currentOwnerStatus === "available";
-
                   const waOwnerUrl = owner.contact_info?.includes("+60")
                     ? `https://wa.me/${owner.contact_info.replace(/[^0-9]/g, "")}`
                     : `https://wa.me/601158683907?text=${encodeURIComponent(
@@ -1818,67 +952,19 @@ export default function DashboardPage() {
                   return (
                     <div
                       key={owner.id || idx}
-                      className={`sheet p-5 flex flex-col justify-between space-y-3 border transition ${
-                        !isAvailable ? "opacity-75 bg-[var(--color-paper-2)] border-dashed" : "border-[var(--color-rule)]"
-                      }`}
+                      className="sheet p-5 flex flex-col justify-between space-y-3 border border-[var(--color-rule)]"
                     >
                       <div>
-                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
-                          <div className="flex items-center gap-2 flex-wrap min-w-0">
-                            <span className="font-display text-base text-[var(--color-ink)] break-words min-w-0">
-                              {owner.author || "Tuan Rumah"}
-                            </span>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              <span className="text-[11px] text-[var(--color-muted)] font-medium">Status:</span>
-                              <select
-                                value={currentOwnerStatus}
-                                onChange={(e) => updateOwnerStatus(owner.id, e.target.value)}
-                                className={`text-xs px-2 py-0.5 rounded-[2px] font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] ${
-                                  currentOwnerStatus === "available"
-                                    ? "bg-emerald-100 text-emerald-900 border-emerald-300"
-                                    : currentOwnerStatus === "negotiating"
-                                      ? "bg-sky-100 text-sky-900 border-sky-300"
-                                      : currentOwnerStatus === "rented"
-                                        ? "bg-stone-200 text-stone-800 border-stone-400"
-                                        : currentOwnerStatus === "sold"
-                                          ? "bg-stone-200 text-stone-800 border-stone-400"
-                                          : "bg-rose-100 text-rose-900 border-rose-300"
-                                }`}
-                              >
-                                <optgroup label="── Unit Aktif ──">
-                                  <option value="available">✓ Tersedia (Aktif)</option>
-                                  <option value="negotiating">Dalam Rundingan</option>
-                                </optgroup>
-                                <optgroup label="── Selesai / Tidak Aktif ──">
-                                  <option value="rented">Sudah Disewa</option>
-                                  <option value="sold">Sudah Dijual</option>
-                                  <option value="inactive">Batal / Delisted</option>
-                                </optgroup>
-                              </select>
-                            </div>
-                          </div>
-                          <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200 tabular-nums whitespace-nowrap shrink-0">
+                        <div className="flex items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
+                          <span className="font-display text-base text-[var(--color-ink)]">
+                            {owner.author || "Tuan Rumah"}
+                          </span>
+                          <span className="text-xs px-2 py-0.5 rounded-[2px] bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200 tabular-nums">
                             {owner.price || "Sila Hubungi"}
                           </span>
                         </div>
 
                         <div className="mt-2 space-y-1 text-xs text-[var(--color-ink-2)]">
-                          <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="text-[var(--color-muted)]">Tarikh Post Asal:</span>{" "}
-                            <span className="font-semibold text-[var(--color-ink)] inline-flex items-center gap-1">
-                              <Calendar className="w-3 h-3 text-[var(--color-muted)]" />
-                              <span>{formatPostDate(owner.post_date || owner.first_seen)}</span>
-                            </span>
-                            {getAgeLabel(owner.post_date || owner.first_seen) && (
-                              <span className={`text-[10px] px-1.5 py-0.2 rounded font-medium border ${
-                                (getAgeLabel(owner.post_date || owner.first_seen) || "").includes("bulan")
-                                  ? "bg-amber-100 text-amber-900 border-amber-300"
-                                  : "bg-emerald-100 text-emerald-900 border-emerald-300"
-                              }`}>
-                                {getAgeLabel(owner.post_date || owner.first_seen)}
-                              </span>
-                            )}
-                          </div>
                           <div>
                             <span className="text-[var(--color-muted)]">Jenis:</span>{" "}
                             <span className="font-medium text-[var(--color-ink)]">
@@ -1908,22 +994,7 @@ export default function DashboardPage() {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[var(--color-rule)]">
-                        <button
-                          onClick={() =>
-                            updateOwnerStatus(
-                              owner.id,
-                              isAvailable ? "rented" : "available"
-                            )
-                          }
-                          className={`btn btn--sm flex-1 text-center font-medium ${
-                            isAvailable
-                              ? "btn--quiet text-amber-900"
-                              : "bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100"
-                          }`}
-                        >
-                          <span>{isAvailable ? "Tanda Sudah Disewa" : "Aktifkan Semula"}</span>
-                        </button>
+                      <div className="flex items-center gap-2 pt-2 border-t border-[var(--color-rule)]">
                         {owner.source_url && (
                           <a
                             href={owner.source_url}
@@ -1932,7 +1003,7 @@ export default function DashboardPage() {
                             className="btn btn--quiet btn--sm flex-1 text-center"
                           >
                             <span>Post Asal</span>
-                            <ExternalLink className="w-3 h-3 shrink-0" />
+                            <ExternalLink className="w-3 h-3" />
                           </a>
                         )}
                         <a
@@ -1941,7 +1012,7 @@ export default function DashboardPage() {
                           rel="noopener noreferrer"
                           className="btn btn--primary btn--sm flex-1 text-center"
                         >
-                          <Phone className="w-3.5 h-3.5 shrink-0" />
+                          <Phone className="w-3.5 h-3.5" />
                           <span>Hubungi Pemilik</span>
                         </a>
                       </div>
@@ -1950,51 +1021,29 @@ export default function DashboardPage() {
                 })}
             </div>
 
-            {/* Empty State for Owners */}
-            {filteredOwners.length === 0 && (
-              <div className="sheet p-8 text-center space-y-3">
-                <p className="text-sm font-semibold text-stone-800">
-                  Tiada unit pemilik langsung ditemui untuk carian atau penapis semasa.
-                </p>
-                <p className="text-xs text-[var(--color-muted)] max-w-md mx-auto">
-                  Semak status penapis anda (unit yang ditandakan sebagai Disewa atau Batal disembunyikan secara lalai).
-                </p>
-                <button
-                  onClick={() => {
-                    setOwnerSearch("");
-                    setOwnerStatusFilter("all");
-                    setOwnerPage(1);
-                  }}
-                  className="btn btn--primary btn--sm mt-2"
-                >
-                  Set Semula Penapis Pemilik
-                </button>
-              </div>
-            )}
-
             {/* Pagination */}
             {filteredOwners.length > PAGE_SIZE && (
-              <div className="sheet p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
-                <div className="text-center sm:text-left">
+              <div className="sheet p-3 flex items-center justify-between text-xs">
+                <div>
                   Menunjukkan {(ownerPage - 1) * PAGE_SIZE + 1} –{" "}
                   {Math.min(ownerPage * PAGE_SIZE, filteredOwners.length)} daripada{" "}
                   {filteredOwners.length} pemilik
                 </div>
-                <div className="flex items-center justify-center gap-2 w-full sm:w-auto">
+                <div className="flex items-center gap-2">
                   <button
                     disabled={ownerPage <= 1}
                     onClick={() => setOwnerPage((p) => p - 1)}
-                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                    className="btn btn--quiet btn--sm"
                   >
                     Sebelumnya
                   </button>
-                  <span className="font-semibold px-2 whitespace-nowrap tabular-nums">
+                  <span className="font-semibold px-2">
                     {ownerPage} / {Math.ceil(filteredOwners.length / PAGE_SIZE)}
                   </span>
                   <button
                     disabled={ownerPage >= Math.ceil(filteredOwners.length / PAGE_SIZE)}
                     onClick={() => setOwnerPage((p) => p + 1)}
-                    className="btn btn--quiet btn--sm flex-1 sm:flex-initial"
+                    className="btn btn--quiet btn--sm"
                   >
                     Seterusnya
                   </button>
@@ -2013,11 +1062,11 @@ export default function DashboardPage() {
                 className="sheet p-5 flex flex-col justify-between space-y-3 border border-[var(--color-rule)]"
               >
                 <div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
-                    <h4 className="font-display text-base text-[var(--color-ink)] min-w-0 break-words">
+                  <div className="flex items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-2">
+                    <h4 className="font-display text-base text-[var(--color-ink)]">
                       {grp.name}
                     </h4>
-                    <span className="text-[11px] px-2 py-0.5 rounded-[2px] bg-[var(--color-paper-2)] border border-[var(--color-rule)] font-medium whitespace-nowrap shrink-0">
+                    <span className="text-[11px] px-2 py-0.5 rounded-[2px] bg-[var(--color-paper-2)] border border-[var(--color-rule)] font-medium">
                       {grp.platform}
                     </span>
                   </div>
