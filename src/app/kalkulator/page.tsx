@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "Kalkulator Hartanah Malaysia 2026 | NextProp4U - Muhammad Norafif",
   description:
     "Koleksi kalkulator hartanah percuma Malaysia: Semak kelayakan pinjaman rumah & DSR, duti setem (MOT), kos guaman SPA (SRO 2023), rental yield, dan duti setem tenancy agreement LHDN.",
+  alternates: {
+    canonical: "https://nextprop4u.com/kalkulator",
+  },
   keywords: [
     "kalkulator hartanah",
     "kalkulator pinjaman perumahan",
@@ -65,58 +68,58 @@ const CALCULATOR_DIRECTORY = [
     title: "Kalkulator Duti Setem (MOT) & Kos Guaman SPA",
     shortTitle: "Duti Setem & Guaman",
     slug: "/kalkulator/duti-setem-legal-fee",
-    badge: "LHDN & SRO 2023",
+    badge: "SRO 2023",
     badgeColor: "bg-blue-100 text-blue-800",
     icon: FileText,
     iconColor: "text-blue-600",
-    desc: "Kira kos keseluruhan kemasukan beli rumah: Duti setem surat cara pindah milik (MOT), kos guaman SPA mengikut SRO 2023, duti setem pinjaman bank, dan semakan pengecualian pembeli rumah pertama.",
+    desc: "Kira anggaran duti setem pindah milik (MOT) mengikut skala bertingkat LHDN, fi peguam SPA berpandukan Solicitors' Remuneration Order (SRO 2023), duti setem loan, dan semak pengecualian rumah pertama.",
     highlights: [
-      "Kadar bertingkat MOT LHDN terkini (1% hingga 4%)",
-      "Skala rasmi fi peguam SRO 2023",
-      "Semakan pengecualian 100% duti setem rumah pertama",
-      "Ringkasan anggaran tunai deposit & kos guaman",
+      "Jadual kadar bertingkat MOT (1% - 4%)",
+      "Skala fi guaman rasmi SRO 2023 (1.25% - 0.5%)",
+      "Duti setem pinjaman 0.5% & anggaran disbursement",
+      "Pengecualian 100% untuk Pembeli Rumah Pertama (< RM500k)",
     ],
   },
   {
     id: "rental-yield",
     title: "Kalkulator Pulangan Sewa (Rental Yield & Aliran Tunai)",
-    shortTitle: "Rental Yield & Tunai",
+    shortTitle: "Rental Yield & Cash Flow",
     slug: "/kalkulator/rental-yield",
     badge: "Pelaburan Hartanah",
     badgeColor: "bg-amber-100 text-amber-800",
     icon: TrendingUp,
     iconColor: "text-amber-600",
-    desc: "Kira kadar pulangan sewa kasar (Gross Rental Yield) dan pulangan sewa bersih (Net Rental Yield) selepas ditolak caj penyelenggaraan, sinking fund, cukai pintu, cukai tanah & insurans.",
+    desc: "Kira Gross Rental Yield, Net Rental Yield, dan baki aliran tunai bersih bulanan selepas menolak yuran penyelenggaraan, cukai pintu/tanah, dan ansuran pinjaman bank.",
     highlights: [
-      "Kiraan Gross vs Net Rental Yield",
-      "Analisis baki aliran tunai bulanan bersih (Cashflow)",
-      "Tolak fi maintenance, cukai taksiran & perbelanjaan",
-      "Indikator kelayakan pelaburan hartanah sewa",
+      "Gross Rental Yield vs Net Rental Yield sebenar",
+      "Tolak maintenance, sinking fund, cukai pintu & insurans",
+      "Anggaran cuti sewa (vacancy buffer)",
+      "Kiraan aliran tunai positif/negatif setiap bulan",
     ],
   },
   {
     id: "tenancy-agreement",
-    title: "Kalkulator Duti Setem Perjanjian Sewa Rumah LHDN",
-    shortTitle: "Tenancy Agreement LHDN",
+    title: "Kalkulator Duti Setem Perjanjian Sewa LHDN",
+    shortTitle: "Stamping Tenancy LHDN",
     slug: "/kalkulator/tenancy-agreement",
-    badge: "Formula Rasmi LHDN",
+    badge: "Rasmi LHDN",
     badgeColor: "bg-purple-100 text-purple-800",
     icon: Receipt,
     iconColor: "text-purple-600",
-    desc: "Kira caj duti setem rasmi LHDN bagi mematikan setem perjanjian sewa rumah (Tenancy Agreement) untuk tempoh 1 tahun, 2 tahun, atau 3+ tahun termasuk bayaran salinan pendua.",
+    desc: "Kira bayaran duti setem rasmi Lembaga Hasil Dalam Negeri (LHDN) untuk surat perjanjian sewa rumah bagi tempoh 1 tahun, 2 tahun, atau 3 tahun ke atas mengikut formula Akta Setem.",
     highlights: [
-      "Pengecualian asas RM2,400 pertama sewaan setahun",
-      "Kadar tepat RM1 / RM2 / RM4 bagi setiap RM250",
-      "Kiraan kos salinan pendua (RM10 per salinan)",
-      "Anggaran caj guaman / pengurusan perjanjian sewa",
+      "Formula rasmi LHDN (Pengecualian asas RM2,400)",
+      "Kadar mengikut tempoh: RM1 / RM2 / RM4 per unit RM250",
+      "Kiraan salinan pendua rasmi (RM10 per salinan)",
+      "Anggaran caj draf perjanjian sewa profesional",
     ],
   },
 ];
 
-export default function CalculatorHubPage() {
+export default function CalculatorIndexPage() {
   const whatsappNumber = "601158683907";
   const generalWhatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Hai Afif, saya ingin bertanyakan tentang kiraan kos hartanah dan semakan kelayakan pinjaman di KL / Selangor."
+    "Hai Afif, saya ingin mendapatkan panduan dan semakan kiraan hartanah di KL / Selangor."
   )}`;
 
   return (
@@ -132,14 +135,14 @@ export default function CalculatorHubPage() {
               Laman Utama
             </Link>
             <span>/</span>
-            <span className="text-[var(--color-ink)] font-medium">Koleksi Kalkulator Hartanah</span>
+            <span className="text-[var(--color-ink)] font-medium">Kalkulator Hartanah</span>
           </nav>
 
-          {/* Header */}
+          {/* Hero Header */}
           <div className="max-w-3xl mb-12" data-reveal>
             <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mb-3">
               <ShieldCheck className="w-3.5 h-3.5" />
-              Alat Semakan Kewangan &amp; Perundangan Hartanah 2026
+              Alat Kewangan Hartanah Percuma 2026
             </div>
             <h1
               style={{
@@ -154,89 +157,77 @@ export default function CalculatorHubPage() {
             >
               Koleksi Kalkulator Hartanah Malaysia
             </h1>
-            <p className="lead text-[var(--color-ink-2)] max-w-2xl text-base sm:text-lg">
-              Kira anggaran kos pembelian, duti setem MOT, kelayakan pinjaman bank, pulangan sewa (rental yield), serta perjanjian sewa rumah secara tepat dan percuma.
+            <p className="lead text-[var(--color-ink-2)] text-base sm:text-lg max-w-2xl">
+              Alat pengiraan tepat untuk pembeli, penjual, pelabur dan pemilik hartanah di Setapak, Kuala Lumpur dan Selangor. Berpandukan garis panduan terkini Bank Negara Malaysia, LHDN, dan SRO 2023.
             </p>
           </div>
 
-          {/* 4 Large Interactive Directory Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            {CALCULATOR_DIRECTORY.map((calc, idx) => {
-              const Icon = calc.icon;
-              return (
-                <div
-                  key={calc.id}
-                  className="sheet p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-lg border border-[var(--color-rule)]/60"
-                  data-reveal
-                  style={{ "--i": idx } as React.CSSProperties}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-[var(--color-paper-2)] flex items-center justify-center">
-                        <Icon className={`w-5 h-5 ${calc.iconColor}`} />
-                      </div>
-                      <span className={`text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded ${calc.badgeColor}`}>
-                        {calc.badge}
-                      </span>
+          {/* Calculator Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" data-reveal>
+            {CALCULATOR_DIRECTORY.map((item) => (
+              <div
+                key={item.id}
+                className="sheet p-6 sm:p-8 flex flex-col justify-between border border-[var(--color-rule)]/70 hover:border-emerald-600/60 transition-all duration-200 group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="p-3 rounded-lg bg-[var(--color-paper-2)] border border-[var(--color-rule)]/60 group-hover:scale-105 transition-transform">
+                      <item.icon className={`w-6 h-6 ${item.iconColor}`} />
                     </div>
-
-                    <h2 className="font-display text-xl sm:text-2xl font-medium text-[var(--color-ink)] mb-3 leading-snug">
-                      {calc.title}
-                    </h2>
-                    <p className="text-sm text-[var(--color-ink-2)] leading-relaxed mb-6">
-                      {calc.desc}
-                    </p>
-
-                    <div className="space-y-2 mb-8 bg-[var(--color-paper-2)]/60 p-4 rounded-md">
-                      <span className="text-[11px] font-semibold text-[var(--color-muted)] uppercase tracking-wider block mb-2">
-                        Ciri &amp; Kandungan Kiraan:
-                      </span>
-                      {calc.highlights.map((h, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs text-[var(--color-ink-2)]">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                          <span>{h}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-[var(--color-rule)]/60 flex items-center justify-between">
-                    <span className="text-xs text-[var(--color-muted)] font-medium">
-                      Percuma â¢ Tanpa Log Masuk
+                    <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${item.badgeColor}`}>
+                      {item.badge}
                     </span>
-                    <Link
-                      href={calc.slug}
-                      className="btn btn--primary btn--sm inline-flex items-center gap-1.5 whitespace-nowrap"
-                    >
-                      Buka Kalkulator
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
                   </div>
+
+                  <h2 className="font-display text-xl font-medium text-[var(--color-ink)] group-hover:text-emerald-700 transition-colors mb-2">
+                    {item.title}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-[var(--color-ink-2)] leading-relaxed mb-6">
+                    {item.desc}
+                  </p>
+
+                  <ul className="space-y-2 mb-6 text-xs text-[var(--color-muted)] pl-0 list-none">
+                    {item.highlights.map((h, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              );
-            })}
+
+                <div className="pt-4 border-t border-[var(--color-rule)]/60">
+                  <Link
+                    href={item.slug}
+                    className="btn btn--primary w-full text-center inline-flex items-center justify-center gap-2 text-xs py-2.5"
+                  >
+                    Buka Kalkulator {item.shortTitle}
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Advisory & Maxxan Trust Bar */}
-          <div className="sheet p-6 sm:p-8 bg-gradient-to-br from-[var(--color-paper-hi)] to-[var(--color-paper-2)] border border-[var(--color-rule)]" data-reveal>
+          {/* Advisory Box */}
+          <div className="p-6 sm:p-8 rounded-xl bg-[var(--color-paper-2)] border border-[var(--color-rule)] mb-16" data-reveal>
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="max-w-2xl">
-                <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wider block mb-1">
-                  Konsultasi Peribadi Bersama Ejen Berdaftar
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 block mb-1">
+                  Konsultasi Percuma Tanpa Obligasi
                 </span>
-                <h3 className="text-xl font-display text-[var(--color-ink)] font-medium m-0">
-                  Perlukan Semakan Dokumen atau Penilaian Pasaran JPPH?
+                <h3 className="text-lg sm:text-xl font-display text-[var(--color-ink)] m-0 font-medium">
+                  Perlukan Semakan Rekod CCRIS / CTOS atau Nilai Pasaran JPPH?
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--color-ink-2)] mt-2 m-0 leading-relaxed">
-                  Kalkulator memberikan anggaran awal. Untuk semakan kelayakan pinjaman menyeluruh (CCRIS, CTOS &amp; DSR bank) serta khidmat jual-beli di Setapak, KL &amp; Selangor, hubungi Muhammad Norafif secara terus.
+                <p className="text-xs sm:text-sm text-[var(--color-ink-2)] mt-2 mb-0 leading-relaxed">
+                  Kiraan kalkulator memberi anggaran indikatif awal. Untuk semakan terperinci margin pinjaman bank sebenar dan nilai pasaran bank bagi hartanah anda di Setapak, KL &amp; Selangor, hubungi Muhammad Norafif secara terus.
                 </p>
               </div>
               <a
                 href={generalWhatsappUrl}
-                className="btn btn--primary whitespace-nowrap inline-flex items-center justify-center gap-2 self-stretch md:self-auto"
+                className="btn btn--primary whitespace-nowrap self-stretch md:self-auto text-center text-xs py-3 px-6"
               >
-                Konsultasi Melalui WhatsApp
-                <ArrowRight className="w-4 h-4" />
+                WhatsApp Konsultasi Percuma
               </a>
             </div>
           </div>
